@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Abstracts\Repository;
 use App\Models\Employee;
 use App\Models\Enquiry;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class EnquiryRepository extends Repository
@@ -26,22 +27,51 @@ class EnquiryRepository extends Repository
         $this->model = $model;
     }
 
-    public function setAddress(array $array, $type): bool
+    public function setOrUpdateAddress(array $array, $type): bool
     {
         unset($array['country_id']);
         $attributes = array_merge($array, [
             'type' => $type
         ]);
         DB::table('enquiry_address')
-            ->insert($attributes);
+            ->updateOrInsert([
+                'enquiry_id' => $array['enquiry_id'],
+                'type' => $type
+            ], $attributes);
         return true;
     }
 
-    public function getById($id)
+    public function findById($id): array
     {
-        return $this->query()
+        $a = $this->query()
             ->where('e.id', '=', $id)
-            ->first();
+            ->get();
+        return $this->transform($a);
+    }
+
+    public function transform($enquiry): array
+    {
+        $pickUp = $enquiry->where('type', '=', Enquiry::PICKUP)->first();
+        $delivery = $enquiry->where('type', '=', Enquiry::DELIVERY)->first();
+        return [
+            'id' => $enquiry->first()->id,
+            'title' => $enquiry->first()->title,
+            'description' => $enquiry->first()->description,
+            'email' => $enquiry->first()->email,
+            'name' => $enquiry->first()->user_name,
+            'pickup_address' => [
+                'country' => $pickUp->country ?? '',
+                'state' => $pickUp->state ?? '',
+                'city' => $pickUp->city ?? '',
+                'postal_code' => $pickUp->postal_code ?? '',
+            ],
+            'delivery_address' => [
+                'country' => $delivery->country ?? '',
+                'state' => $delivery->state ?? '',
+                'city' => $delivery->city ?? '',
+                'postal_code' => $delivery->postal_code ?? '',
+            ]
+        ];
     }
 
     public function query(): \Illuminate\Database\Query\Builder
@@ -62,28 +92,8 @@ class EnquiryRepository extends Repository
         return $this->query()
             ->get()
             ->groupBy('id')
-            ->mapWithKeys(function ($enquiry) {
-                $pickUp = $enquiry->where('type', '=', Enquiry::PICKUP)->first();
-                $delivery = $enquiry->where('type', '=', Enquiry::DELIVERY)->first();
-                return [
-                    'id' => $enquiry->first()->id,
-                    'title' => $enquiry->first()->title,
-                    'description' => $enquiry->first()->description,
-                    'email' => $enquiry->first()->email,
-                    'name' => $enquiry->first()->user_name,
-                    'pickup_address' => [
-                        'country' => $pickUp->country ?? '',
-                        'state' => $pickUp->state ?? '',
-                        'city' => $pickUp->city ?? '',
-                        'postal_code' => $pickUp->postal_code ?? '',
-                    ],
-                    'delivery_address' => [
-                        'country' => $delivery->country ?? '',
-                        'state' => $delivery->state ?? '',
-                        'city' => $delivery->city ?? '',
-                        'postal_code' => $delivery->postal_code ?? '',
-                    ]
-                ];
+            ->map(function ($enquiry) {
+                return $this->transform($enquiry);
             });
     }
 }
