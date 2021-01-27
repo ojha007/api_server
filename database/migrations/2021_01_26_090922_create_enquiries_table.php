@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Enquiry;
 use Database\MigrationHelper;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -33,7 +32,7 @@ class CreateEnquiriesTable extends Migration
             (new MigrationHelper())->setForeignKey($table, 'countries', 'country_id');
             $table->string('name');
         });
-        Schema::create('enquiry_address', function (Blueprint $table) {
+        Schema::create('pickup_address', function (Blueprint $table) {
             $table->id();
             (new MigrationHelper())->setForeignKey($table, 'enquiries', 'enquiry_id');
             (new MigrationHelper())->setForeignKey($table, 'states', 'state_id');
@@ -41,7 +40,15 @@ class CreateEnquiriesTable extends Migration
             $table->longText('street_two')->nullable();
             $table->integer('postal_code');
             $table->string('city');
-            $table->enum('type', [Enquiry::PICKUP, Enquiry::DELIVERY]);
+        });
+        Schema::create('delivery_address', function (Blueprint $table) {
+            $table->id();
+            (new MigrationHelper())->setForeignKey($table, 'enquiries', 'enquiry_id');
+            (new MigrationHelper())->setForeignKey($table, 'states', 'state_id');
+            $table->mediumText('street_one');
+            $table->longText('street_two')->nullable();
+            $table->integer('postal_code');
+            $table->string('city');
         });
     }
 
@@ -52,7 +59,8 @@ class CreateEnquiriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enquiry_address');
+        Schema::dropIfExists('delivery_address');
+        Schema::dropIfExists('pickup_address');
         Schema::dropIfExists('states');
         Schema::dropIfExists('countries');
         Schema::dropIfExists('enquiries');

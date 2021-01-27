@@ -19,7 +19,6 @@ class SuccessResponse implements Responsable
 
     public function toResponse($request)
     {
-
         $response = [
             'status' => 201,
             'message' => 'SUCCESS'

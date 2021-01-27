@@ -1,19 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::group(['middleware' => 'auth'], function ($router) {
+    $router->any('/home', 'DashboardController@dashboard')->name('dashboard');
+    $router->resource('upcoming-schedule', 'UpcomingScheduleController');
+    $router->resource('enquiries', 'EnquiryController');
+    $router->resource('quotations', 'QuotationController');
+    $router->get('enquiries/{id}/quotations', 'EnquiryController@sendQuotations')->name('enquiries.quotations');
+//    $router->get('countries', 'CountryController@getAllCountries');
+//    $router->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');
 
-Route::get('/', function () {
-    return view('welcome');
 });
+
+Auth::routes();
 

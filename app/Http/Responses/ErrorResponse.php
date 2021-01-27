@@ -13,7 +13,7 @@ class ErrorResponse implements Responsable
     /**
      * @var \Exception
      */
-    private $exception;
+    protected $exception;
 
     public function __construct(\Exception $exception)
     {
@@ -22,12 +22,15 @@ class ErrorResponse implements Responsable
 
     public function toResponse($request)
     {
-        $response = [
-            'status' => $this->exception->getCode(),
-            'message' => 'ERROR'
-        ];
         if ($request->wantsJson()) {
+            $response = [
+                'status' => $this->exception->getCode(),
+                'message' => 'ERROR'
+            ];
             return response($response, Response::HTTP_INTERNAL_SERVER_ERROR);
+        } else {
+            return redirect()->back()
+                ->with('error', 'Whoops Something Went wrong');
         }
     }
 }
