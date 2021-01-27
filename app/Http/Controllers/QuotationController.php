@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Responses\Quotation\CreateResponse;
+use App\Http\Responses\Quotation\IndexResponse;
 
 class QuotationController extends Controller
 {
@@ -20,9 +21,10 @@ class QuotationController extends Controller
     {
     }
 
-    public function index()
+    public function index($enquiry_id = null): IndexResponse
     {
 
+        return new IndexResponse($this->viewPath, $enquiry_id);
     }
 
     public function create(): CreateResponse

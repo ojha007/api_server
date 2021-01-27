@@ -1,11 +1,16 @@
-{!! Form::bsText('test',old('test'),['autofocus']) !!}
-{!! Form::bsText('test') !!}
-{!! Form::bsText('test') !!}
-{!! Form::bsText('test') !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
-{!! Form::component('text','components.form.text',['name'=>'test']) !!}
+{!! Form::bsText('title',old('test'),['autofocus']) !!}
+<div class="col-md-12" style="padding: 0">
+    {!! Form::bsTextArea('description',old('description')) !!}
+</div>
+@push('scripts')
+    <script src="{{asset('backend/js/ckeditor.js')}}" rel="script"></script>
+    <script>
+        $(function () {
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            // CKEDITOR.replace('description')
+
+        })
+    </script>
+@endpush
 

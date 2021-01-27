@@ -83,16 +83,8 @@ class EnquiryController extends Controller
         }
     }
 
-    public function sendQuotations($id)
+    public function sendQuotations($id): \App\Http\Responses\Quotation\IndexResponse
     {
-        try {
-            $enquiry = $this->repository->getById($id);
-            return view($this->viewPath . 'quotations.index');
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error($exception->getMessage() . '-' . $exception->getTraceAsString());
-            return new ErrorResponse($exception);
-        }
-
+        return (new QuotationController())->index($id);
     }
 }

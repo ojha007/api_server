@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title_postfix') | Quotations @endsection
 @section('header')Quotations @endsection
-@section('subHeader') Quotations @endsection
+@section('subHeader') List of Quotations @endsection
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0">
@@ -16,15 +16,28 @@
             </div>
         </div>
         <div class="box-body">
-            <div class="row">
-                <div class="col-md-12">
-                    {!!  Form::open()!!}
-                    <div class="form-group">
-                        {{--                        {{Form::lable('A','A')}}--}}
-                    </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
+            <table class="table table-responsive table-bordered">
+                <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Description</td>
+                    <td> Action</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        @isset($enquiry_id)
+                            <a class="btn btn-flat btn-primary" title="Send Quotation">
+                                <i class="fa fa-send-o"></i>
+                            </a>
+                        @endisset
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection
