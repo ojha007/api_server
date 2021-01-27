@@ -49,7 +49,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview {{request()->routeIs('workers.index','workers.create') ? 'active': ''}}">
             <a href="#">
                 <i class="fa fa-users" aria-hidden="true"></i>
                 <span>Task Team</span>
