@@ -57,12 +57,18 @@
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
             </a>
+            <ul class="treeview-menu">
+                <li class="{{request()->routeIs('workers.index') ? 'active': ''}}">
+                    <a href="{{route('workers.index')}}">
+                        <i class="fa fa-circle-o"></i>Workers</a>
+                </li>
+            </ul>
 
         </li>
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
-                <span>Tasks </span>
+                <span>Tasks</span>
                 <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
