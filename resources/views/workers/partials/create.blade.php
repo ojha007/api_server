@@ -10,7 +10,7 @@
 @section('content')
     <div class="box box-default border-0">
         {!! Form::open() !!}
-        @include('workers.partials.form')
+         @include('workers.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}
     </div>
