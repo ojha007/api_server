@@ -27,5 +27,6 @@ class FormHelperProvider extends ServiceProvider
         Form::component('bsText', 'components.form.text', ['name', 'value', 'attributes']);
         Form::component('formButton', 'components.form.button', ['text']);
         Form::component('bsTextArea', 'components.form.textarea', ['name', 'value', 'attributes']);
+        Form::component('bsEmail', 'components.form.email', ['name', 'value', 'attributes']);
     }
 }

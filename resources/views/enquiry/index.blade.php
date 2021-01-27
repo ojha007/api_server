@@ -15,6 +15,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Email</td>
+                    <td>Title</td>
                     <td>Pickup Address</td>
                     <td>Delivery Address</td>
                     <td>Date/Time</td>
@@ -26,6 +27,7 @@
                     <tr>
                         <td>{{$enquiry->user->name}}</td>
                         <td>{{$enquiry->user->email}}</td>
+                        <td>{{$enquiry->title}}</td>
                         <td>{{$enquiry->pickup_detail}}</td>
                         <td>{{$enquiry->delivery_detail}}</td>
                         <td>{{$enquiry->date}}</td>

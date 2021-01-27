@@ -1,17 +1,18 @@
 @extends('layouts.master')
-@section('title_postfix') | Workers @endsection
+@section('title_postfix') | Campaign @endsection
 @section('header')
-    Workers
+    Campaign
 @endsection
 @section('subHeader')
-    Create Worker
+    Create Campaign
 @endsection
 @section('breadcrumb') @endsection
 @section('content')
-    <div class="box box-default border-0">
+    <div class="box box-default border-0 ">
         {!! Form::open() !!}
-        @include('workers.partials.form')
+        @include('campaign.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}
     </div>
+
 @endsection

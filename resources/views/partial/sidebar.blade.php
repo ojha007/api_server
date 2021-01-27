@@ -85,7 +85,7 @@
             </a>
 
         </li>
-        <li class="treeview {{request()->routeIs('campaign.index','campaign.reports') ? 'active': ''}}">
+        <li class="treeview {{request()->routeIs('campaigns.index','campaigns.reports') ? 'active': ''}}">
             <a href="#">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                 <span>Campaign</span>
@@ -94,11 +94,11 @@
                     </span>
             </a>
             <ul class="treeview-menu">
-                <li class="{{request()->routeIs('campaign.index') ? 'active': ''}}">
-                    <a href="#">
+                <li class="{{request()->routeIs('campaigns.index') ? 'active': ''}}">
+                    <a href="{{route('campaigns.index')}}">
                         <i class="fa fa-circle-o"></i>Campaign</a>
                 </li>
-                <li class="{{request()->routeIs('campaign.reports') ? 'active': ''}}">
+                <li class="{{request()->routeIs('campaigns.reports') ? 'active': ''}}">
                     <a href="#">
                         <i class="fa fa-circle-o"></i>Campaign Report</a>
                 </li>
