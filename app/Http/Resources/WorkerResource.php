@@ -13,7 +13,7 @@ class WorkerResource extends JsonResource
         return [
             'id' => $this->id ?? '',
             'code' => $this->code ?? '',
-            'name' => $this->date ?? '',
+            'name' => $this->name ?? '',
             'email' => $this->email ?? ''
         ];
     }

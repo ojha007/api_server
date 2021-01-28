@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WorkerRequest;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\Worker\IndexResponse;
+use App\Http\Responses\Worker\ShowResponse;
 use App\Http\Responses\Worker\StoreResponse;
 use App\Models\Worker;
 use App\Repositories\WorkerRepository;
@@ -75,6 +76,10 @@ class WorkerController extends Controller
 
     public function destroy()
     {
+    }
+    public function show($id): ShowResponse
+    {
+        return new  ShowResponse($this->viewPath,$id);
     }
 
 }

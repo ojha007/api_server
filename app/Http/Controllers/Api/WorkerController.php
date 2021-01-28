@@ -4,11 +4,11 @@
 namespace App\Http\Controllers\Api;
 
 
-class EnquiryController extends \App\Http\Controllers\EnquiryController
+class WorkerController extends \App\Http\Controllers\WorkerController
 {
-
     public function __construct()
     {
         $this->middleware('auth:api');
     }
+
 }

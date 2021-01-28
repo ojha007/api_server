@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
-class EnquiryController extends \App\Http\Controllers\EnquiryController
+class CampaignController extends \App\Http\Controllers\CampaignController
 {
 
     public function __construct()

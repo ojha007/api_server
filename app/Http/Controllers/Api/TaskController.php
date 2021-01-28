@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Api;
 
 
-class EnquiryController extends \App\Http\Controllers\EnquiryController
+class TaskController extends \App\Http\Controllers\TaskController
 {
 
     public function __construct()

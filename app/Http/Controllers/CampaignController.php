@@ -60,7 +60,6 @@ class CampaignController extends Controller
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
             return new ErrorResponse($exception);
         }
         return new StoreResponse($this->routerPath);
