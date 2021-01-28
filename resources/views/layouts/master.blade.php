@@ -37,13 +37,13 @@
 
     <link rel="stylesheet" href="{{asset('backend/css/AdminLTE.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('backend/css/_all-skins.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('backend/css/fullcalendar.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('backend/css/fullcalendar.print.min.css')}}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
           integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/ionicons.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     @stack('styles')
     <style>
         .box.border-0 {
@@ -125,8 +125,7 @@ desired effect
 <script src="{{asset('backend/js/jquery.min.js')}}"></script>
 <script src="{{asset('/backend/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('backend/js/adminlte.min.js')}}"></script>
-{{--<script src="{{asset('backend/js/fullcalendar.min.js')}}"></script>--}}
-<script src="{{asset('backend/js/moment.min.js')}}"></script>
+
 @stack('scripts')
 </body>
 </html>

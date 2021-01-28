@@ -44,8 +44,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-//dd($e);
-        if ($request->wantsJson()) {   //add Accept: application/json in request
+
+        if ($request->wantsJson()) {
+            dd($e);
+            //add Accept: application/json in request
             return $this->handleApiException($request, $e);
 
         }

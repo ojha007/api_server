@@ -34,7 +34,17 @@
                         <td>{{$worker->code}}</td>
                         <td>{{$worker->name}}</td>
                         <td>{{$worker->email}}</td>
-                        <td></td>
+                        <td>
+                            <button class="btn btn-default btn-flat">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="btn btn-primary btn-flat">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <button class="btn btn-danger btn-flat">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </td>
                         {{--                        <td>--}}
                         {{--                            <a class="btn btn-success btn-flat btn-sm"--}}
                         {{--                               href="{{route('enquiries.quotations',$enquiry->id)}}"--}}
