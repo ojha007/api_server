@@ -180,7 +180,7 @@
             {{--                    </ul>--}}
             {{--                </li>--}}
             <!-- User Account: style can be found in dropdown.less -->
-{{--                @include('partial.userDropDown')--}}
+                @include('partial.userDropDown')
                 {{--                <li>--}}
                 {{--                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--}}
                 {{--                </li>--}}
