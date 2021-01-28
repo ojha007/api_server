@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
     {
 
         if ($request->wantsJson()) {
-            dd($e);
+
             //add Accept: application/json in request
             return $this->handleApiException($request, $e);
 
