@@ -112,8 +112,32 @@
                         <i class="fa fa-circle-o"></i>Campaign Report</a>
                 </li>
             </ul>
-
         </li>
+
+        <li class="header">SETTINGS</li>
+        {{--@if(Auth::user()->hasAnyPermission(['user-view','role-view']))--}}
+        <li class="treeview {{ Request::is('users','roles','roles/*') ? 'active' : '' }}">
+            <a href="#"><i
+                    class="fa fa-user"></i>
+                <span>Users and Roles</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu" style="">
+{{--                @can('student-view')--}}
+                    <li class="{{ Request::is('users') ? 'active' : '' }}"><a
+                            href="{{route('users.index')}}"> <i class="fa fa-circle-o"></i>Users</a></li>
+
+{{--                @endcan--}}
+{{--                @can('student-view')--}}
+                    <li class="{{ Request::is('roles', 'roles/*') ? 'active' : '' }}"><a
+                            href="{{route('roles.index')}}"> <i class="fa fa-circle-o"></i>Roles</a></li>
+{{--                @endcan--}}
+
+            </ul>
+        </li
+
 
     </ul>
 </section>
