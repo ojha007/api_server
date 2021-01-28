@@ -6,7 +6,8 @@
 @section('subHeader')
     List of all Campaign
 @endsection
-@section('breadcrumb') @endsection
+@section('breadcrumb')
+@endsection
 @section('content')
     <div class="box box-default border-0">
         <div class="box-header">
