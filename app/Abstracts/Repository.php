@@ -132,7 +132,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function getWith(...$relation)
     {
-        return $this->model->with($relation)->get();
+        return $this->model->with($relation)->orderByDesc('id')->get();
     }
 
     /**
@@ -145,4 +145,16 @@ abstract class Repository implements RepositoryInterface
         return $this->model->with($relation)->paginate($limit);
     }
 
+    public function maxId()
+    {
+        return $this->model->max('id');
+    }
+
+    public function getSelectItems($text)
+    {
+        return $this->model->all()
+            ->mapWithKeys(function ($item) use ($text) {
+                return [$item->id => $item->$text];
+            });
+    }
 }

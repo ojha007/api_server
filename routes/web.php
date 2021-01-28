@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->resource('quotations', 'QuotationController');
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');
+    $router->resource('tasks', 'TaskController');
     $router->get('enquiries/{id}/quotations', 'EnquiryController@sendQuotations')->name('enquiries.quotations');
 //    $router->get('countries', 'CountryController@getAllCountries');
 //    $router->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');

@@ -7,7 +7,10 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="treeview {{request()->routeIs('enquiries.index','upcoming-schedule.index','enquiries.quotations') ? 'active': ''}}">
+        <li class="treeview {{request()->routeIs('enquiries.index',
+                        'upcoming-schedule.index',
+                        'enquiries.quotations',
+                        'enquiries.create') ? 'active': ''}}">
             <a href="#">
                 <i class="fa fa-question-circle" aria-hidden="true"></i>
                 <span>Enquiries</span>
@@ -65,7 +68,7 @@
             </ul>
 
         </li>
-        <li class="treeview">
+        <li class="treeview {{request()->routeIs('tasks.index','tasks.create') ? 'active' :''}}">
             <a href="#">
                 <i class="fa fa-tasks" aria-hidden="true"></i>
                 <span>Tasks</span>
@@ -73,6 +76,12 @@
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
             </a>
+            <ul class="treeview-menu">
+                <li class="{{request()->routeIs('tasks.index') ? 'active': ''}}">
+                    <a href="{{route('tasks.index')}}">
+                        <i class="fa fa-circle-o"></i>All Tasks</a>
+                </li>
+            </ul>
 
         </li>
         <li class="treeview">

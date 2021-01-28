@@ -30,6 +30,7 @@ class ErrorResponse implements Responsable
             return response($response, Response::HTTP_INTERNAL_SERVER_ERROR);
         } else {
             return redirect()->back()
+                ->withInput()
                 ->with('error', 'Whoops Something Went wrong');
         }
     }

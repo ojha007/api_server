@@ -9,6 +9,14 @@
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+            <div class="box-tools pull-right">
+                <a href="{{route('enquiries.create')}}">
+                    <i class="fa fa-plus"></i>
+                    Add Enquiry
+                </a></div>
+        </div>
         <div class="box-body">
             <table class="table table-bordered table-responsive">
                 <thead>
@@ -41,7 +49,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">
+                        <td colspan="7" class="text-center">
                             <strong>No Enquiries is recorded .</strong>
                         </td>
                     </tr>

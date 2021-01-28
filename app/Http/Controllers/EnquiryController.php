@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\EnquiryRequest;
+use App\Http\Responses\Enquiry\CreateResponse;
 use App\Http\Responses\Enquiry\DeleteResponse;
 use App\Http\Responses\Enquiry\IndexResponse;
 use App\Http\Responses\Enquiry\ShowResponse;
@@ -56,6 +57,11 @@ class EnquiryController extends Controller
     public function show(Enquiry $enquiry): ShowResponse
     {
         return new ShowResponse($enquiry, $this->viewPath);
+    }
+
+    public function create(): CreateResponse
+    {
+        return new CreateResponse($this->viewPath);
     }
 
     public function destroy(Enquiry $enquiry): DeleteResponse

@@ -45,6 +45,9 @@
         },
         "classmap": [
             "database/MigrationHelper.php"
+        ],
+        "files": [
+            "app/helpers.php"
         ]
     },
     "autoload-dev": {

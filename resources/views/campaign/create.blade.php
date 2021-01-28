@@ -9,7 +9,7 @@
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0 ">
-        {!! Form::open() !!}
+        {!! Form::open(['route'=>'campaigns.store']) !!}
         @include('campaign.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}

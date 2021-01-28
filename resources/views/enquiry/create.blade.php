@@ -1,16 +1,16 @@
 @extends('layouts.master')
-@section('title_postfix') | Workers @endsection
+@section('title_postfix') | Enquiry @endsection
 @section('header')
-    Workers
+    Enquiry
 @endsection
 @section('subHeader')
-    Create Worker
+    Create enquiry
 @endsection
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0">
-        {!! Form::open(['route'=>'workers.store']) !!}
-         @include('workers.partials.form')
+        {!! Form::open(['route'=>'enquiries.store']) !!}
+        @include('enquiry.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}
     </div>
