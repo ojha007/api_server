@@ -5,7 +5,7 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{config('app.domain')}}"><b>Registered</b>REMIT</a>
+            <a href="{{config('app.domain')}}"><b>Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
