@@ -1,16 +1,14 @@
 @extends('auth.master')
-@section('page')login-page @endsection
+@section('page') login-page @endsection
 @section('title_postfix', '| Login')
-
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{config('app.domain')}}"><b>Login</a>
+            <a href="{{config('app.domain')}}">Login</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
-
             <form action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="form-group has-feedback">
