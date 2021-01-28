@@ -2,11 +2,9 @@
 
 namespace App\Exceptions;
 
-use App\Notifications\SendServerErrorMail;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Modules\Auth\Entities\User;
 use Throwable;
 
 class Handler extends ExceptionHandler

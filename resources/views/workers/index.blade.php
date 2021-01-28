@@ -11,7 +11,7 @@
     <div class="box box-default border-0">
         <div class="box-header">
             <h3 class="box-title"></h3>
-            <div class="box-tools pull-right p-3">
+            <div class="box-tools pull-right">
                 <a href="{{route('workers.create')}}">
                     <i class="fa fa-plus"></i>
                     Create Worker
@@ -35,23 +35,30 @@
                         <td>{{$worker->name}}</td>
                         <td>{{$worker->email}}</td>
                         <td>
-                            <button class="btn btn-default btn-flat">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                            <button class="btn btn-primary btn-flat">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                            <button class="btn btn-danger btn-flat">
-                                <i class="fa fa-eye"></i>
-                            </button>
+                            {!! Form::open(['route'=>['workers.destroy',$worker->id],'class'=>'form-horizontal']) !!}
+                            @method('DELETE')
+                            @can('worker-view')
+                                <a class="btn btn-default btn-flat"
+                                   href="{{route('workers.show',$worker->id)}}" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            @endcan
+                            @can('worker-edit')
+                                <a class="btn btn-primary btn-flat "
+                                   href="{{route('workers.edit',$worker->id)}}"
+                                   title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            @endcan
+                            @can('worker-delete')
+                                <button type="submit"
+                                        onclick="return confirm('Are you sure to delete ?')"
+                                        class="btn btn-danger btn-flat">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            @endcan
+                            {!! Form::close() !!}
                         </td>
-                        {{--                        <td>--}}
-                        {{--                            <a class="btn btn-success btn-flat btn-sm"--}}
-                        {{--                               href="{{route('enquiries.quotations',$enquiry->id)}}"--}}
-                        {{--                               title="Send Quotations">--}}
-                        {{--                                <i class="fa fa-file-text"></i>--}}
-                        {{--                            </a>--}}
-                        {{--                        </td>--}}
                     </tr>
                 @empty
                     <tr>

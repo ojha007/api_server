@@ -7,15 +7,11 @@
         <tbody>
         <tr>
             <th class="col-md-2"></th>
-            <th class="col-md-1 text-center">Full Access</th>
-            <th class="col-md-1 text-center">View</th>
-            <th class="col-md-1 text-center">Create</th>
-            <th class="col-md-1 text-center">Edit</th>
-            <th class="col-md-1 text-center">Delete</th>
-            <th class="col-md-1 text-center"
-                style="border: none; border-right-style: hidden;  border-top-style: hidden"></th>
-            <th class="col-md-1 text-center"
-                style="border: none; border-right-style: hidden;  border-top-style: hidden"></th>
+            <th class="col-md-2 text-center">Full Access</th>
+            <th class="col-md-2 text-center">View</th>
+            <th class="col-md-2 text-center">Create</th>
+            <th class="col-md-2 text-center">Edit</th>
+            <th class="col-md-2 text-center">Delete</th>
         </tr>
         @include('permissions.permission_template',['permission_name'=>'user'])
         @include('permissions.permission_template',['permission_name'=>'role'])

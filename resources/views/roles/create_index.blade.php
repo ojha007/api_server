@@ -1,9 +1,7 @@
 @extends('layouts.master')
-
 @section('header')
     <i class="fa fa-fw fa-key"></i> Add Role
 @endsection
-
 @section('subHeader')
     Add new role
 @endsection

@@ -19,7 +19,7 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        Permission::firstOrCreate(['name' => 'backend-permission']);
+        Permission::firstOrCreate(['name' => 'dashboard-permission']);
         $role = Role::firstOrCreate(['name' => 'Administrator', 'guard_name' => 'web']);
         $permissions = Permission::where('guard_name', 'web')->get();
         $role->syncPermissions($permissions);

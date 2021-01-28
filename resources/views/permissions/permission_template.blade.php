@@ -1,4 +1,4 @@
-@php($access = [
+    @php($access = [
     'view','create','edit','delete'
 ])
 <tr>
