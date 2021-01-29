@@ -118,13 +118,8 @@ class EnquiryController extends Controller
         }
     }
 
-    public function confirmed($id)
+    public function confirmed($id): void
     {
-        try {
 
-            dd($id);
-        } catch (Exception $exception) {
-            return new ErrorResponse($exception);
-        }
     }
 }
