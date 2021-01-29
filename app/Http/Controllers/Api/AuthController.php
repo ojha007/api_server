@@ -30,6 +30,8 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $data['user'] = $user;
+            $data['role'] = $user->getRoleNames();
+            $data['permissions'] = $user->getPermissionNames();
             $data['token'] = $user->createToken('MyApp')->accessToken;
             return new SuccessResponse($data);
         } else {
@@ -51,7 +53,7 @@ class AuthController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $user->assignRole('Customer', 'api');
+        $user->assignRole('Customer');
         $data['user'] = $user;
         $data['token'] = $user->createToken('MyApp')->accessToken;
         return new SuccessResponse($data);

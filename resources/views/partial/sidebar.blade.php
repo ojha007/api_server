@@ -1,3 +1,4 @@
+{{--@dd(auth()->user()->)--}}
 <section class="sidebar" style="height: auto;">
     <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
@@ -7,6 +8,7 @@
                 <span>Dashboard</span>
             </a>
         </li>
+
         <li class="treeview {{request()->routeIs('enquiries.index',
                         'upcoming-schedule.index',
                         'enquiries.quotations',
