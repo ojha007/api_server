@@ -97,11 +97,6 @@ class EnquiryController extends Controller
             DB::beginTransaction();
             $attributes['enquiry'] = $request->except('pickup_address', 'delivery_address');
             $enquiry = $this->repository->update($id, $attributes['enquiry']);
-            $a = ['enquiry_id' => $enquiry->id];
-            $pickup_address = array_merge($request->get('pickup_address'), $a);
-            $delivery_address = array_merge($request->get('delivery_address'), $a);
-//            $this->repository->setOrUpdateAddress($pickup_address, Enquiry::PICKUP);
-//            $this->repository->setOrUpdateAddress($delivery_address, Enquiry::DELIVERY);
             DB::commit();
             return new SuccessResponse(null);
         } catch (Exception $exception) {
