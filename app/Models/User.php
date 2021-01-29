@@ -11,6 +11,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    const WORKER = 'Worker';
+    const CUSTOMER = 'Customer';
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
@@ -22,6 +24,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'super',
+        'status'
     ];
 
     /**
@@ -45,17 +51,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function applicationPermissions()
+    public static function applicationPermissions(): array
     {
         return ['permission'];
     }
 
-    public function isSuper()
+    public function isSuper(): bool
     {
-        return $this->super == 1;
+        return $this->getAttribute('super') == 1;
     }
 
-    public function assignRole($roles, string $guard = null)
+    public function assignRole($roles, string $guard = null): User
     {
         $roles = is_string($roles) ? [$roles] : $roles;
         $guard = $guard ?: $this->getDefaultGuardName();
@@ -118,5 +124,10 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Task::class, 'task_user');
     }
 }

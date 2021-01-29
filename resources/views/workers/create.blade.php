@@ -8,10 +8,11 @@
 @endsection
 @section('breadcrumb') @endsection
 @section('content')
-    <div class="box box-default border-0 ">
+    <div class="box box-default border-0">
         {!! Form::open(['route'=>'workers.store']) !!}
-         @include('workers.partials.form')
+        @include('workers.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}
     </div>
+
 @endsection

@@ -9,6 +9,8 @@ use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\Worker\IndexResponse;
 use App\Http\Responses\Worker\ShowResponse;
 use App\Http\Responses\Worker\StoreResponse;
+use App\Http\Responses\Worker\UpdateResponse;
+use App\Models\User;
 use App\Models\Worker;
 use App\Repositories\WorkerRepository;
 use Illuminate\Support\Facades\DB;
@@ -36,22 +38,36 @@ class WorkerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->model = new Worker();
-        $this->repository = new WorkerRepository($this->model);
+        $this->middleware('permission:worker-view', ['only' => 'index', 'show']);
+        $this->middleware('permission:worker-edit', ['expect' => 'destroy']);
+        $this->model = new User();
+        $this->repository = new WorkerRepository(new User());
     }
 
     public function index(): IndexResponse
     {
-        return new IndexResponse($this->viewPath);
+        try {
+            $workers = $this->repository->getAllWorkers();
+            return new IndexResponse($this->viewPath, $workers);
+        } catch (\Exception $exception) {
+
+        }
+
     }
 
     public function create()
     {
-        return view('workers.partials.create');
+        return view($this->viewPath . 'create');
     }
 
-    public function edit()
+    public function edit($id)
     {
+        try {
+            $worker = $this->repository->getById($id);
+            return view($this->viewPath . 'edit', compact('worker'));
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 
     public function store(WorkerRequest $request)
@@ -59,9 +75,10 @@ class WorkerController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
-            $maxId = $this->repository->maxId();
-            $attributes['code'] = Worker::CODE .str_pad(($maxId + 1), 4, '0', STR_PAD_LEFT);
-            $this->repository->create($attributes);
+            $attributes['password'] = bcrypt($attributes['password']);
+            $attributes['super'] = false;
+            $worker = $this->repository->create($attributes);
+            $worker->assignRole(User::WORKER);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -70,8 +87,21 @@ class WorkerController extends Controller
         return new StoreResponse($this->routePath);
     }
 
-    public function update()
+    public function update(WorkerRequest $request, $id)
     {
+        try {
+            DB::beginTransaction();
+            $attributes = $request->validated();
+            $attributes['password'] = bcrypt($attributes['password']);
+            $attributes['super'] = false;
+            $worker = $this->repository->update($id, $attributes);
+            $worker->assignRole(User::WORKER);
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
+        return new UpdateResponse($this->routePath);
     }
 
     public function destroy()

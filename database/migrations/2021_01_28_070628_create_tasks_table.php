@@ -23,10 +23,10 @@ class CreateTasksTable extends Migration
             (new \Database\MigrationHelper())->setForeignKey($table, 'states', 'state_id');
             $table->timestamps();
         });
-        Schema::create('task_worker', function (Blueprint $table) {
+        Schema::create('task_user', function (Blueprint $table) {
             $table->id();
             (new \Database\MigrationHelper())->setForeignKey($table, 'tasks', 'task_id');
-            (new \Database\MigrationHelper())->setForeignKey($table, 'workers', 'worker_id');
+            (new \Database\MigrationHelper())->setForeignKey($table, 'users', 'user_id');
         });
         Schema::create('task_status', function (Blueprint $table) {
             $table->id();

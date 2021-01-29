@@ -17,7 +17,7 @@ class TaskRequest extends FormRequestForApi
             'title' => 'required|string|min:5',
             'description' => 'required|string',
             'date' => 'required|date',
-            'worker_id' => 'required|exists:workers,id'
+            'user_id' => 'required|exists:users,id'
         ];
     }
 

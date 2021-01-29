@@ -36,6 +36,21 @@ class RolesAndPermissionsSeederAms extends Seeder
         Permission::firstOrCreate(['name' => 'role-edit', 'guard_name' => 'web']);
         Permission::firstOrCreate(['name' => 'role-delete', 'guard_name' => 'web']);
 
+        Permission::firstOrCreate(['name' => 'task-view', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'task-create', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'task-edit', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'task-delete', 'guard_name' => 'web']);
+
+        Permission::firstOrCreate(['name' => 'worker-view', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'worker-create', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'worker-edit', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'worker-delete', 'guard_name' => 'web']);
+
+        Permission::firstOrCreate(['name' => 'campaign-view', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'campaign-create', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'campaign-edit', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'campaign-delete', 'guard_name' => 'web']);
+
 
         // create roles and assign created permissions
         $role = Role::firstOrCreate(['name' => 'Administrator', 'guard_name' => 'web']);

@@ -17,7 +17,7 @@ class Task extends Model
 
     public function workers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Worker::class, 'task_worker');
+        return $this->belongsToMany(User::class, 'task_user');
     }
 
     public function status(): \Illuminate\Database\Eloquent\Relations\HasOne

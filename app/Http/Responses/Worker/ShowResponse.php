@@ -5,7 +5,7 @@ namespace App\Http\Responses\Worker;
 
 
 use App\Http\Resources\WorkerResource;
-use App\Http\Responses\SuccessResponse;
+use App\Models\User;
 use App\Models\Worker;
 use App\Repositories\WorkerRepository;
 use Illuminate\Contracts\Support\Responsable;
@@ -36,8 +36,7 @@ class ShowResponse implements Responsable
     public function __construct(string $viewPath, int $id)
     {
         $this->viewPath = $viewPath;
-        $this->model = new Worker();
-        $this->repository = new WorkerRepository($this->model);
+        $this->repository = new WorkerRepository(new User());
         $this->id = $id;
     }
 

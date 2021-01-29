@@ -22,7 +22,6 @@
             <table class="table table-bordered table-responsive">
                 <thead>
                 <tr>
-                    <td>Code</td>
                     <td>Name</td>
                     <td>Email</td>
                     <td>Actions</td>
@@ -31,7 +30,6 @@
                 <tbody>
                 @forelse($workers as $worker)
                     <tr>
-                        <td>{{$worker->code}}</td>
                         <td>{{$worker->name}}</td>
                         <td>{{$worker->email}}</td>
                         <td>

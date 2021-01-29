@@ -72,13 +72,13 @@ class TaskController extends Controller
     {
         try {
             DB::beginTransaction();
-            $attributes['tasks'] = $request->except('worker_id');
+            $attributes['tasks'] = $request->except('user_id');
             $maxId = $this->repository->maxId();
             $attributes['tasks']['code'] = Task::CODE . str_pad(($maxId + 1), 4, '0', STR_PAD_LEFT);
             $task = $this->repository->create($attributes['tasks']);
-            if ($request->get('worker_id')) {
+            if ($request->get('user_id')) {
                 $task->workers()->sync([
-                    'worker_id' => $request->get('worker_id'),
+                    'user_id' => $request->get('user_id'),
                 ]);
             }
             $task->status()->create([

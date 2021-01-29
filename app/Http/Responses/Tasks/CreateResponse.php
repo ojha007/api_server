@@ -5,6 +5,7 @@ namespace App\Http\Responses\Tasks;
 
 
 use App\Models\State;
+use App\Models\User;
 use App\Models\Worker;
 use App\Repositories\BaseRepository;
 use App\Repositories\WorkerRepository;
@@ -28,7 +29,7 @@ class CreateResponse implements Responsable
         if ($request->wantsJson()) {
         }
         $selectStates = (new BaseRepository(new State()))->getSelectItems('name');
-        $selectWorkers = (new WorkerRepository(new Worker()))->getSelectItems('name');
+        $selectWorkers = (new WorkerRepository(new User()))->getSelectItems('name');
         return view($this->viewPath . 'create', compact('selectStates', 'selectWorkers'));
     }
 }

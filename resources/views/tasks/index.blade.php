@@ -39,23 +39,41 @@
                         <td>{{$task->date}}</td>
                         <td>{{$task->workers->pluck('name')->implode(',')}}</td>
                         <td>{!! spanByStatus($task->status->status) !!}</td>
-                        <td></td>
+                        <td>
+                            {!! Form::open(['route'=>['tasks.destroy',$task->id],'class'=>'form-horizontal']) !!}
+                            @can('task-view')
+                                <a class="btn btn-default btn-flat"
+                                   href="{{route('tasks.show',$task->id)}}">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            @endcan
+                            @can('task-edit')
+                                <a class="btn btn-primary btn-flat"
+                                   href="{{route('tasks.edit',$task->id)}}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            @endcan
+                            @can('task-delete')
+
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="btn btn-flat btn-danger"
+                                        onclick="return confirm('Are you sure to delete')">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            @endcan
+                            {!! Form::open() !!}
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">
+                        <td colspan="7" class="text-center">
                             <strong>No Tasks is recorded .</strong>
                         </td>
                     </tr>
                 @endforelse
                 </tbody>
             </table>
-        </div>
-        <div class="box-footer">
-            <a class="btn btn-sm btn-flat btn-default"
-               onclick="window.history.go(-1)">
-                Back
-            </a>
         </div>
     </div>
 @endsection

@@ -51,6 +51,7 @@ class AuthController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+        $user->assignRole('Customer', 'api');
         $data['user'] = $user;
         $data['token'] = $user->createToken('MyApp')->accessToken;
         return new SuccessResponse($data);
