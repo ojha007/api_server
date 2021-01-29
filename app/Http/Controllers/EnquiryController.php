@@ -96,7 +96,7 @@ class EnquiryController extends Controller
         try {
             DB::beginTransaction();
             $attributes['enquiry'] = $request->except('pickup_address', 'delivery_address');
-            $enquiry = $this->repository->update($id, $attributes['enquiry']);
+            $this->repository->update($id, $attributes['enquiry']);
             DB::commit();
             return new SuccessResponse(null);
         } catch (Exception $exception) {
