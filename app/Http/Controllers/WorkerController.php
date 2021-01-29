@@ -40,7 +40,6 @@ class WorkerController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:worker-view', ['only' => 'index', 'show']);
         $this->middleware('permission:worker-edit', ['expect' => 'destroy']);
-        $this->model = new User();
         $this->repository = new WorkerRepository(new User());
     }
 
