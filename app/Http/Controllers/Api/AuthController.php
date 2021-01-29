@@ -46,6 +46,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'confirm_password' => 'required|same:password',
+            'role' => 'required|in:Worker,Customer'
         ], ['confirm_password' => "Password Confirmation doesn't match"]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
@@ -53,7 +54,7 @@ class AuthController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $user->assignRole('Customer');
+        $user->assignRole($request->get('role'));
         $data['user'] = $this->transformUser($user);
         $data['role'] = $user->getRoleNames();
         $data['permissions'] = $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [];

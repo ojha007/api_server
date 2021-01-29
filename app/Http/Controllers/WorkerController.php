@@ -108,6 +108,7 @@ class WorkerController extends Controller
     }
     public function show($id): ShowResponse
     {
+
         return new  ShowResponse($this->viewPath,$id);
     }
 
