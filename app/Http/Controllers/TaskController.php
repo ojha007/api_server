@@ -35,8 +35,7 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->model = new Task();
-        $this->repository = new TaskRepository($this->model);
+        $this->repository = new TaskRepository(new Task());
     }
 
     public function index(): IndexResponse
