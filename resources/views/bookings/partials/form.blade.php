@@ -1,33 +1,42 @@
+@php $user=['1'=>1] @endphp
 <div class="box-body">
-    {!! Form::bsEmail('from_email',old('from_email'),['p'=>3]) !!}
-    {!! Form::bsText('subject',old('subject'),['p'=>3]) !!}
+    {!! Form::bsEmail('title',old('title'),['p'=>3]) !!}
+    {!! Form::bsEmail('address',old('address'),['p'=>3]) !!}
+    {{--    {!! Form::bsText('description',old('description'),['p'=>3]) !!}--}}
     <div class="form-group col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-12">
-            <label for="schedule">Schedule :</label>
+            <label for="schedule">User</label>
         </div>
-        <div class="col-md-9">
-            <div class="radio">
-                <label>
-                    <input type="radio" name="schedule_time" value="now" checked="checked">
-                    Send Immediately
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="schedule_time" value="manual" id="manual">
-                    Deliver at following time
-                </label>
-                <label for="schedule_manual"></label>
-                <input class="form-control hide"
-                       type="datetime-local"
-                       name="schedule"
-                       id="schedule_manual"
-                       style="margin-top: 5px">
-            </div>
+        <div class="col-md-9 col-sm-12">
+            {!! Form::select('user_id', $user, null ,array('placeholder' => 'Select User','class' => 'form-control select2','style'=>'width:100%;')) !!}
+        </div>
+    </div>
+    <div class="form-group col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-12">
+            <label for="schedule">Start Time :</label>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <input class="form-control"
+                   type="datetime-local"
+                   name="start_time"
+                   id="start_time" value=" {{old('start_time')}}"
+                   style=" margin-top: 5px">
+        </div>
+    </div>
+    <div class="form-group col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-12">
+            <label for="schedule">End Time :</label>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <input class="form-control"
+                   type="datetime-local"
+                   name="end_time"
+                   id="end_time" value="{{old('end_time')}}"
+                   style="margin-top: 5px">
         </div>
     </div>
     <div class="col-md-12"></div>
-    {!! Form::bsTextArea('message') !!}
+    {!! Form::bsTextArea('description') !!}
 
 </div>
 @push('scripts')

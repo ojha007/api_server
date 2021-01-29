@@ -5,10 +5,15 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Booking extends Model
 {
 
-    protected $fillable = ['from_email', 'subject', 'message', 'schedule'];
+    protected $fillable = ['user_id', 'start_time', 'end_time', 'title', 'description', 'address'];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

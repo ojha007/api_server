@@ -51,6 +51,11 @@ class RolesAndPermissionsSeederAms extends Seeder
         Permission::firstOrCreate(['name' => 'campaign-edit', 'guard_name' => 'web']);
         Permission::firstOrCreate(['name' => 'campaign-delete', 'guard_name' => 'web']);
 
+        Permission::firstOrCreate(['name' => 'booking-view', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'booking-create', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'booking-edit', 'guard_name' => 'web']);
+        Permission::firstOrCreate(['name' => 'booking-delete', 'guard_name' => 'web']);
+
 
         // create roles and assign created permissions
         $role = Role::firstOrCreate(['name' => 'Administrator', 'guard_name' => 'web']);

@@ -12,7 +12,13 @@ class BookingRequest extends FormRequestForApi
     {
 
         return [
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date',
+
         ];
     }
 

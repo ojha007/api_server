@@ -72,22 +72,22 @@
             </ul>
         </li>
         @can('worker-view')
-        <li class="treeview {{request()->routeIs('workers.index','workers.create') ? 'active': ''}}">
-            <a href="#">
-                <i class="fa fa-users" aria-hidden="true"></i>
-                <span>Task Team</span>
-                <span class="pull-right-container">
+            <li class="treeview {{request()->routeIs('workers.index','workers.create') ? 'active': ''}}">
+                <a href="#">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <span>Task Team</span>
+                    <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
-            </a>
-            <ul class="treeview-menu">
-                <li class="{{request()->routeIs('workers.index') ? 'active': ''}}">
-                    <a href="{{route('workers.index')}}">
-                        <i class="fa fa-circle-o"></i>Workers</a>
-                </li>
-            </ul>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{request()->routeIs('workers.index') ? 'active': ''}}">
+                        <a href="{{route('workers.index')}}">
+                            <i class="fa fa-circle-o"></i>Workers</a>
+                    </li>
+                </ul>
 
-        </li>
+            </li>
         @endcan
         @can('task-view')
             <li class="treeview {{request()->routeIs('tasks.index','tasks.create') ? 'active' :''}}">
@@ -168,10 +168,8 @@
                         </a>
                     </li>
                 @endcan
-
             </ul>
-        </li
-
+        </li>
 
     </ul>
 </section>

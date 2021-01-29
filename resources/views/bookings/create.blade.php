@@ -1,17 +1,17 @@
 @extends('layouts.master')
-@section('title_postfix') | Campaign @endsection
+@section('title_postfix') | Booking @endsection
 @section('header')
-    Campaign
+    Booking
 @endsection
 @section('subHeader')
-    Create Campaign
+    Create Booking
 @endsection
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0 ">
         <div class="box-header"></div>
-        {!! Form::open(['route'=>'campaigns.store']) !!}
-        @include('campaign.partials.form')
+        {!! Form::open(['route'=>'bookings.store']) !!}
+        @include('bookings.partials.form')
         {!! Form::formButton('Submit') !!}
         {!! Form::close() !!}
     </div>

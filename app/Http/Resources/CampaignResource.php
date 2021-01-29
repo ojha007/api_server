@@ -12,7 +12,9 @@ class CampaignResource extends JsonResource
     {
         return [
             'id' => $this->id ?? '',
-            'title' => $this->date ?? '',
+            'from_email' => $this->from_email ?? '',
+            'subject' => $this->subject ?? '',
+            'schedule' => $this->schedule ?? '',
 
         ];
     }

@@ -4,6 +4,7 @@
 namespace App\Http\Collection;
 
 
+use App\Http\Resources\BookingResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class BookingCollection extends ResourceCollection
@@ -11,6 +12,6 @@ class BookingCollection extends ResourceCollection
 
     public function toArray($request)
     {
-        return BookingCollection::collection($this->collection);
+        return BookingResource::collection($this->collection);
     }
 }
