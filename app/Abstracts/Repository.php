@@ -28,7 +28,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->orderByDesc('id')->get();
     }
 
     /**

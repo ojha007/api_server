@@ -1,14 +1,11 @@
 <div class="box-body">
     {!! Form::bsEmail('from_email',old('from_email'),['p'=>3]) !!}
-    <div class="col-md-12"></div>
     {!! Form::bsText('subject',old('subject'),['p'=>3]) !!}
-
-    <div class="col-md-12"></div>
-    <div class="form-group col-md-6 col-sm-12">
-        <div class="col-md-3 col-sm-12">
+    <div class="form-group col-md-12 col-sm-12">
+        <div class="col-md-2 col-sm-12">
             <label for="schedule">Schedule :</label>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="radio">
                 <label>
                     <input type="radio" name="schedule_time" value="now" checked="checked">
@@ -45,7 +42,8 @@
                 if ($(this).val() === 'manual') {
                     $('#schedule_manual').removeClass('hide');
                 } else {
-                    $('#schedule_manual').addClass('hide')
+
+                    $('#schedule_manual').val('').addClass('hide')
                 }
             })
         })

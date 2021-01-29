@@ -18,9 +18,6 @@ class CreateTasksTable extends Migration
             $table->string('code')->unique();
             $table->string('title');
             $table->mediumText('description');
-            $table->dateTime('date');
-            $table->string('address');
-            (new \Database\MigrationHelper())->setForeignKey($table, 'states', 'state_id');
             $table->timestamps();
         });
         Schema::create('task_user', function (Blueprint $table) {

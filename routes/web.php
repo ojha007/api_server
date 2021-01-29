@@ -9,7 +9,7 @@ Route::any('/', function () {
 Route::group(['middleware' => 'auth'], function ($router) {
     $router->get('/home', 'DashboardController@dashboard')->name('dashboard');
     $router->resource('upcoming-schedule', 'UpcomingScheduleController');
-    $router->resource('enquiries', 'EnquiryController');
+    include 'subRoutes/enquiry.php';
     $router->resource('quotations', 'QuotationController');
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');

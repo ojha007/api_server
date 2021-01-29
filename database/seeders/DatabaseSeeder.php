@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             RolesAndPermissionsSeederAms::class,
             UserSeeder::class,
-            CountrySeeder::class,
-            StateSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }

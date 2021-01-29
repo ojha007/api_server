@@ -54,8 +54,9 @@ class EnquiryController extends Controller
         return new StoreResponse($this->baseRoute);
     }
 
-    public function show(Enquiry $enquiry): ShowResponse
+    public function show($id): ShowResponse
     {
+        $enquiry = $this->repository->getById($id);
         return new ShowResponse($enquiry, $this->viewPath);
     }
 
@@ -92,5 +93,15 @@ class EnquiryController extends Controller
     public function sendQuotations($id): \App\Http\Responses\Quotation\IndexResponse
     {
         return (new QuotationController())->index($id);
+    }
+
+    public function confirmed($id)
+    {
+        try {
+
+            dd($id);
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 }

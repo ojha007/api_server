@@ -25,6 +25,7 @@
                 <tr>
                     <td>From Mail</td>
                     <td>Subject</td>
+                    <td>Schedule</td>
                     <td>Actions</td>
                 </tr>
                 </thead>
@@ -33,8 +34,30 @@
                     <tr>
                         <td>{{$campaign->from_email}}</td>
                         <td>{{$campaign->subject}}</td>
+                        <td>{{$campaign->schedule}}</td>
                         <td>
-
+                            {!! Form::open(['route'=>['campaigns.destroy',$campaign->id],'class'=>'form-horizontal']) !!}
+                            @can('campaign-view')
+                                <a class="btn btn-default btn-flat"
+                                   href="{{route('tasks.show',$campaign->id)}}">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            @endcan
+                            @can('campaign-edit')
+                                <a class="btn btn-primary btn-flat"
+                                   href="{{route('tasks.edit',$campaign->id)}}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            @endcan
+                            @can('campaign-delete')
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="btn btn-flat btn-danger"
+                                        onclick="return confirm('Are you sure to delete')">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            @endcan
+                            {!! Form::open() !!}
                         </td>
                     </tr>
                 @empty

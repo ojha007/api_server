@@ -57,6 +57,7 @@ class CampaignController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
+            $attributes['schedule'] = $request->get('schedule_time') ? now() : $request->get('schedule');
             $this->repository->create($attributes);
             DB::commit();
         } catch (\Exception $exception) {

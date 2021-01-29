@@ -7,6 +7,7 @@
         {{ Form::textarea($name, $value, array_merge(
         [
         'class' => 'form-control',
+        'id'=>str_replace('_'," ",$name),
         'placeholder'=>'Enter ' . ucwords(str_replace('_'," ",$name))
         ],
         $attributes ?? []

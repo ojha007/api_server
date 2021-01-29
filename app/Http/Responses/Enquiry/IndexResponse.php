@@ -35,7 +35,7 @@ class IndexResponse implements Responsable
 
     public function toResponse($request)
     {
-        $enquiries = $this->repository->getWith('pickupAddress', 'deliveryAddress', 'user');
+        $enquiries = $this->repository->getWith('user');
         if ($request->wantsJson()) {
             return new EnquiryCollection($enquiries);
         } else {
