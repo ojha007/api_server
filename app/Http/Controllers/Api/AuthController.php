@@ -31,7 +31,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $data['user'] = $this->transformUser($user);
             $data['role'] = $user->getRoleNames();
-            $data['permissions'] = $user->getAllPermissions();
+            $data['permissions'] = $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [];
             $data['token'] = $user->createToken('MyApp')->accessToken;
             return new SuccessResponse($data);
         } else {

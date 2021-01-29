@@ -1,4 +1,4 @@
-{{--@dd(auth()->user()->)--}}
+{{--@dd(auth()->user()->getAllPermissions())--}}
 <section class="sidebar" style="height: auto;">
     <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
