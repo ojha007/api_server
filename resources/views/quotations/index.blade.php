@@ -28,7 +28,7 @@
                 @forelse($quotations as $quotation)
                     <tr>
                         <td>{{$quotation->title}}</td>
-                        <td>{{$quotation->description}}</td>
+                        <td>{!! $quotation->description !!}</td>
                         <td>
                             {!! Form::open(['route'=>['quotations.destroy',$quotation->id]]) !!}
                             @isset($enquiry_id)

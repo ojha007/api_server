@@ -8,6 +8,8 @@ use App\Http\Resources\EnquiryResource;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Models\Enquiry;
+use App\Models\Quotation;
+use App\Repositories\QuotationRepository;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Log;
 
@@ -40,7 +42,8 @@ class ShowResponse implements Responsable
             if ($request->wantsJson()) {
                 return new EnquiryResource($this->enquiry);
             } else {
-                return view($this->viewPath . 'show')
+                $selectQuotations = (new QuotationRepository(new Quotation()))->getSelectItems('title');
+                return view($this->viewPath . 'show',compact('selectQuotations'))
                     ->with('enquiry', $this->enquiry);
             }
         } catch (\Exception $exception) {

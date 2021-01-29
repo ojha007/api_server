@@ -29,10 +29,7 @@ class AuthController extends Controller
         }
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $data['user'] = $this->transformUser($user);
-            $data['role'] = $user->getRoleNames();
-            $data['permissions'] = $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [];
-            $data['token'] = $user->createToken('MyApp')->accessToken;
+            $data = $this->transformUser($user);
             return new SuccessResponse($data);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -47,7 +44,10 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
             'confirm_password' => 'required|same:password',
             'role' => 'required|in:Worker,Customer'
-        ], ['confirm_password' => "Password Confirmation doesn't match"]);
+        ], [
+            'confirm_password' => "Password Confirmation doesn't match",
+            "role.in" => "Role can be either Worker or Customer"
+        ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
@@ -55,24 +55,26 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $user->assignRole($request->get('role'));
-        $data['user'] = $this->transformUser($user);
-        $data['role'] = $user->getRoleNames();
-        $data['permissions'] = $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [];
-        $data['token'] = $user->createToken('MyApp')->accessToken;
+        $data = $this->transformUser($user);
         return new SuccessResponse($data);
     }
 
     protected function transformUser($user): array
     {
         return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'super' => $user->super ?? 0,
-            'status' => $user->status ?? 0,
-            'avatar' => $user->avatar ?? 'default.jpg',
-            'phone' => $user->phone,
-            'email_verified_at' => $user->email_verified_at
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'super' => $user->super ?? 0,
+                'status' => $user->status ?? 0,
+                'avatar' => $user->avatar ?? 'default.jpg',
+                'phone' => $user->phone,
+                'email_verified_at' => $user->email_verified_at,
+            ],
+            'role' => $user->getRoleNames(),
+            'permissions' => $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [],
+            'token' => $user->createToken('MyApp')->accessToken
         ];
     }
 }

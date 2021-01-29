@@ -1,15 +1,12 @@
 {!! Form::bsText('title',old('test'),['autofocus']) !!}
-<div class="col-md-12" style="padding: 0">
-    {!! Form::bsTextArea('description',old('description')) !!}
-</div>
+{!! Form::bsTextArea('description',old('description')) !!}
 @push('scripts')
-    <script src="{{asset('backend/js/ckeditor.js')}}" rel="script"></script>
+    <script src="https://cdn.ckeditor.com/4.5.11/full-all/ckeditor.js"></script>
     <script>
-        $(function () {
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
-            // CKEDITOR.replace('description')
-
+        $(document).ready(function () {
+            if ($("#description").length > 0) {
+                CKEDITOR.replace('description');
+            }
         })
     </script>
 @endpush

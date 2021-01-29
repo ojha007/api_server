@@ -14,6 +14,7 @@
             <li class="treeview {{request()->routeIs('enquiries.index',
                         'upcoming-schedule.index',
                         'enquiries.quotations',
+                        'enquiries.show',
                         'enquiries.create') ? 'active': ''}}">
                 <a href="#">
                     <i class="fa fa-question-circle" aria-hidden="true"></i>
@@ -36,6 +37,15 @@
                         </li>
                     @endcan
                 </ul>
+            </li>
+        @endcan
+
+        @can('booking-view')
+            <li class="{{request()->routeIs('bookings.index') ? 'active': ''}}">
+                <a href="{{route('bookings.index')}}">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    Bookings
+                </a>
             </li>
         @endcan
         <li class="treeview">

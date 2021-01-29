@@ -36,10 +36,10 @@
                                 <i class="fa fa-eye"></i>
 
                             </a>
-                            <a class="btn btn-success btn-flat btn-sm"
+                            <a class="btn btn-default btn-flat btn-sm"
                                href="{{route('enquiries.quotations',$enquiry->id)}}"
                                title="Send Quotations">
-                                <i class="fa fa-file-text"></i>
+                                <i class="fa fa-mail-reply"></i>
 
                             </a>
                         </td>

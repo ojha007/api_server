@@ -10,6 +10,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
         $route->apiResource('workers', 'WorkerController');
         $route->apiResource('campaigns', 'CampaignController');
         $route->apiResource('tasks', 'TaskController');
+        $route->apiResource('bookings', 'BookingController');
         $route->get('countries', 'CountryController@getAllCountries');
         $route->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');
     });

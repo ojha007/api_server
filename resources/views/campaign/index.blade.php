@@ -33,7 +33,7 @@
                 @forelse($campaigns as $campaign)
                     <tr>
                         <td>{{$campaign->from_email}}</td>
-                        <td>{{$campaign->subject}}</td>
+                        <td>{!! $campaign->subject !!}</td>
                         <td>{{$campaign->schedule}}</td>
                         <td>
                             {!! Form::open(['route'=>['campaigns.destroy',$campaign->id],'class'=>'form-horizontal']) !!}
