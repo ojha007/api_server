@@ -67,9 +67,9 @@ class AuthController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'super' => $user->super,
-            'status' => $user->status,
-            'avatar' => $user->avatar,
+            'super' => $user->super ?? 0,
+            'status' => $user->status ?? 0,
+            'avatar' => $user->avatar ?? 'default.jpg',
             'phone' => $user->phone,
             'email_verified_at' => $user->email_verified_at
         ];
