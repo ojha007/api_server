@@ -8,6 +8,7 @@ use App\Http\Requests\TaskRequest;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\Tasks\CreateResponse;
 use App\Http\Responses\Tasks\IndexResponse;
+use App\Http\Responses\Tasks\ShowResponse;
 use App\Http\Responses\Tasks\StoreResponse;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
@@ -58,7 +59,13 @@ class TaskController extends Controller
 
     public function destroy()
     {
-
+        try {
+            DB::beginTransaction();
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
     }
 
     public function store(TaskRequest $request)
@@ -84,5 +91,14 @@ class TaskController extends Controller
             return new ErrorResponse($exception);
         }
         return new StoreResponse($this->routePath);
+    }
+
+    public function show($id)
+    {
+        try {
+            return new ShowResponse($this->viewPath, $id);
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 }

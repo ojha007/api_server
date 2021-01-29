@@ -10,6 +10,6 @@ class Campaign extends Model
 {
 
     protected $table = 'campaigns';
-    protected $fillable = ['from_email', 'subject', 'message'];
+    protected $fillable = ['from_email', 'subject', 'message', 'schedule'];
 
 }

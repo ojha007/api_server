@@ -9,14 +9,15 @@
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0">
-        <div class="box-header">
-            <h3 class="box-title"></h3>
-            <div class="box-tools pull-right">
-                <a href="{{route('enquiries.create')}}">
-                    <i class="fa fa-plus"></i>
-                    Add Enquiry
-                </a></div>
-        </div>
+{{--        <div class="box-header">--}}
+{{--            <h3 class="box-title"></h3>--}}
+{{--            <div class="box-tools pull-right">--}}
+{{--                <a href="{{route('enquiries.create')}}"--}}
+{{--                   class="btn btn-flat btn-primary">--}}
+{{--                    <i class="fa fa-plus"></i>--}}
+{{--                    Add Enquiry--}}
+{{--                </a></div>--}}
+{{--        </div>--}}
         <div class="box-body">
             <table class="table table-bordered table-responsive">
                 <thead>
@@ -56,12 +57,6 @@
                 @endforelse
                 </tbody>
             </table>
-        </div>
-        <div class="box-footer">
-            <a class="btn btn-sm btn-flat btn-primary"
-               onclick="window.history.go(-1)">
-                Back
-            </a>
         </div>
     </div>
 @endsection

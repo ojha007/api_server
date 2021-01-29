@@ -12,6 +12,7 @@
 @endsection
 @section('content')
     <div class="row">
-        @include('dashboard.countWidget')
+        @component('dashboard.countWidget',['bg'=>'green','title'=>'Completed Task','count'=>100,'icon'=>'check-square-o'])@endcomponent
+        @component('dashboard.countWidget',['bg'=>'yellow','title'=>'Total Worker','count'=>10,'icon'=>'users'])@endcomponent
     </div>
 @endsection

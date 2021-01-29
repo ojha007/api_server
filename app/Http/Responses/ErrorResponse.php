@@ -6,6 +6,7 @@ namespace App\Http\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ErrorResponse implements Responsable
 {
@@ -22,6 +23,7 @@ class ErrorResponse implements Responsable
 
     public function toResponse($request)
     {
+        Log::error($this->exception->getMessage() . '-' . $this->exception->getTraceAsString());
         if ($request->wantsJson()) {
             $response = [
                 'status' => $this->exception->getCode(),

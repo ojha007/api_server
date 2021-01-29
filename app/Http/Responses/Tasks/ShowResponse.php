@@ -4,12 +4,12 @@
 namespace App\Http\Responses\Tasks;
 
 
-use App\Http\Collection\TasksCollection;
+use App\Http\Resources\TasksResource;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Support\Responsable;
 
-class IndexResponse implements Responsable
+class ShowResponse implements Responsable
 {
     protected $viewPath;
     /**
@@ -20,24 +20,30 @@ class IndexResponse implements Responsable
      * @var TaskRepository
      */
     protected $repository;
+    /**
+     * @var int
+     */
+    private $id;
 
     /**
      * IndexResponse constructor.
-     * @param $viewPath
+     * @param string $viewPath
+     * @param int $id
      */
-    public function __construct($viewPath)
+    public function __construct(string $viewPath, int $id)
     {
         $this->viewPath = $viewPath;
         $this->model = new Task();
         $this->repository = new TaskRepository($this->model);
+        $this->id = $id;
     }
 
     public function toResponse($request)
     {
-        $tasks = $this->repository->getWith('workers','status');
+        $task = $this->repository->getById($this->id);
         if ($request->wantsJson()) {
-            return new TasksCollection($tasks);
+            return new TasksResource($task);
         }
-        return view($this->viewPath . 'index', compact('tasks'));
+        return view($this->viewPath . 'show', compact('task'));
     }
 }

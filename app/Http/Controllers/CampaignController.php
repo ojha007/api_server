@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CampaignRequest;
 use App\Http\Responses\Campaign\CreateResponse;
 use App\Http\Responses\Campaign\IndexResponse;
+use App\Http\Responses\Campaign\ShowResponse;
 use App\Http\Responses\Campaign\StoreResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Models\Campaign;
@@ -63,6 +64,15 @@ class CampaignController extends Controller
             return new ErrorResponse($exception);
         }
         return new StoreResponse($this->routerPath);
+    }
+
+    public function show($id)
+    {
+        try {
+            return new ShowResponse($this->viewPath, $id);
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 }
 

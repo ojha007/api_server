@@ -15,6 +15,7 @@ class CampaignRequest extends FormRequestForApi
             'from_email' => 'required|email',
             'subject' => 'required|string|min:5',
             'message' => 'required|string|min:5',
+            "schedule" => 'required'
         ];
     }
 
