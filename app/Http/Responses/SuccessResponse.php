@@ -29,5 +29,8 @@ class SuccessResponse implements Responsable
         if ($request->wantsJson()) {
             return response($response, Response::HTTP_OK);
         }
+        return redirect()
+            ->back()
+            ->with('success', 'Success.');
     }
 }

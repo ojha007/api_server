@@ -9,8 +9,15 @@ use Illuminate\Contracts\Support\Responsable;
 class UpdateResponse implements Responsable
 {
 
+    /**
+     * @var User
+     */
     protected $user;
 
+    /**
+     * UpdateResponse constructor.
+     * @param User $user
+     */
     public function __construct(User $user)
     {
         $this->user = $user;
@@ -18,7 +25,6 @@ class UpdateResponse implements Responsable
 
     public function toResponse($request)
     {
-        //Log::info($this->user);
         $attribute = [
             'is_reloadable' => true
         ];

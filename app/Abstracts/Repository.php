@@ -157,4 +157,9 @@ abstract class Repository implements RepositoryInterface
                 return [$item->id => $item->$text];
             });
     }
+
+    public function getByIdWith($id, ...$with)
+    {
+        return $this->model->with($with)->find($id);
+    }
 }

@@ -11,7 +11,7 @@ class ShowResponse implements Responsable
 
     /**
      * IndexResponse constructor.
-     * @param Collection $users
+     * @param User $user
      */
     public function __construct(User $user)
     {
@@ -26,7 +26,7 @@ class ShowResponse implements Responsable
         return response()->json($users);
     }
 
-    public function transformUsers()
+    public function transformUsers(): array
     {
         return [
             'id' => $this->user->id,

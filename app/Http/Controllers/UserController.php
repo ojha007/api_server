@@ -69,7 +69,7 @@ class UserController extends Controller
      * Show the specified resource.
      * @return ShowResponse
      */
-    public function show($id)
+    public function show($id): ShowResponse
     {
         $user = $this->repository->getById($id);
         return new ShowResponse($user);
@@ -81,14 +81,13 @@ class UserController extends Controller
      * @param  $id
      * @return UpdateResponse
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, $id): UpdateResponse
     {
         $input = $request->all();
         $user = $this->repository->getById($id);
         if (!isset($input['super']))
             $input['super'] = false;
         $user->update($input);
-        //Log::info($user->getRoleNames()->first());
         $roles = $user->roles->where('guard_name', $this->routePrefix);
         foreach ($roles as $role) {
             $user->removeRole($role);

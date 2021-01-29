@@ -11,24 +11,27 @@
         <div class="box-header"></div>
         <div class="box-body">
             <div class="col-md-12">
+                {!! Form::open(['route'=>'enquiries.send-quotations']) !!}
                 <div class="form-group">
+                    {!! Form::hidden('enquiry_id',$enquiry->id) !!}
                     <div class="col-md-2">
                         <label for="select" class="control-label">Select Quotation :</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 @error('quotation_id') has-error @enderror">
                         {!! Form::select('quotation_id',$selectQuotations,null,
                                 ['class'=>'form-control','placeholder'=>'Select Quotation']) !!}
                     </div>
-                    <a href="" class="btn btn-primary btn-flat">
+                    <button type="submit" class="btn btn-primary btn-flat">
                         <i class="fa fa-mail-reply"></i>
                         Mail
-                    </a>
-                    <button class="btn btn-primary btn-flat  bootstrap-modal-form-open"
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary btn-flat bootstrap-modal-form-open"
                             data-toggle="modal"
                             data-target="#quotation-create"> Create Quotations
                     </button>
-
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

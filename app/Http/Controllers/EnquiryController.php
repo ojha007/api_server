@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\EnquiryRequest;
+use App\Http\Requests\SendQuotationsRequest;
 use App\Http\Responses\Enquiry\CreateResponse;
 use App\Http\Responses\Enquiry\DeleteResponse;
 use App\Http\Responses\Enquiry\IndexResponse;
@@ -13,9 +14,16 @@ use App\Http\Responses\Enquiry\StoreResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Models\Enquiry;
+use App\Models\Quotation;
+use App\Models\User;
+use App\Notifications\EnquiryReceived;
+use App\Notifications\SendQuotation;
 use App\Repositories\EnquiryRepository;
+use App\Repositories\QuotationRepository;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class EnquiryController extends Controller
 {
@@ -49,9 +57,22 @@ class EnquiryController extends Controller
         return new IndexResponse($this->viewPath);
     }
 
-    public function store(EnquiryRequest $request): StoreResponse
+    public function store(EnquiryRequest $request)
     {
-        return new StoreResponse($this->baseRoute);
+        try {
+            DB::beginTransaction();
+            $attributes = $request->validated();
+            $this->repository->create($attributes);
+            $user = User::find($attributes['user_id']);
+            DB::commit();
+            Notification::send($user, new EnquiryReceived());
+            return new StoreResponse($this->baseRoute);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            Log::error($exception->getMessage() . '-' . $exception->getTraceAsString());
+            return new ErrorResponse($exception);
+        }
+
     }
 
     public function show($id): ShowResponse
@@ -83,16 +104,23 @@ class EnquiryController extends Controller
 //            $this->repository->setOrUpdateAddress($delivery_address, Enquiry::DELIVERY);
             DB::commit();
             return new SuccessResponse(null);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             Log::error($exception->getMessage() . '-' . $exception->getTraceAsString());
             return new ErrorResponse($exception);
         }
     }
 
-    public function sendQuotations($id): \App\Http\Responses\Quotation\IndexResponse
+    public function sendQuotations(SendQuotationsRequest $request)
     {
-        return (new QuotationController())->index($id);
+        try {
+            $enquiry = $this->repository->getByIdWith($request->get('enquiry_id'), 'user');
+            $quotations = (new QuotationRepository(new Quotation()))->getById($request->get('quotation_id'));
+            Notification::send($enquiry->user, new SendQuotation($quotations, $enquiry));
+            return new SuccessResponse(null);
+        } catch (Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 
     public function confirmed($id)
@@ -100,7 +128,7 @@ class EnquiryController extends Controller
         try {
 
             dd($id);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
