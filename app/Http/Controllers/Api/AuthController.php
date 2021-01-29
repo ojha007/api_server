@@ -29,7 +29,7 @@ class AuthController extends Controller
         }
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $data['user'] = $user;
+            $data['user'] = $this->transformUser($user);
             $data['role'] = $user->getRoleNames();
             $data['permissions'] = $user->getPermissionNames();
             $data['token'] = $user->createToken('MyApp')->accessToken;
@@ -57,5 +57,19 @@ class AuthController extends Controller
         $data['user'] = $user;
         $data['token'] = $user->createToken('MyApp')->accessToken;
         return new SuccessResponse($data);
+    }
+
+    protected function transformUser($user): array
+    {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'super' => $user->super,
+            'status' => $user->status,
+            'avatar' => $user->avatar,
+            'phone' => $user->phone,
+            'email_verified_at' => $user->email_verified_at
+        ];
     }
 }
