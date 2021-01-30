@@ -39,7 +39,7 @@
         <div class="box-header"></div>
         <div class="box-body">
             <div class="timeline-item" style="margin: 10px">
-                <i class="fa fa-clock-o"></i> {{$enquiry->date}}
+                <i class="fa fa-clock-o"></i> {{$enquiry->pickup_date}}
                 <br>
                 <i class="fa fa-user"></i> {{$enquiry->name}}
                 <br>
