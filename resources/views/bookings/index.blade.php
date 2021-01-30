@@ -25,22 +25,28 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <td>Title</td>
-                    <td>Description</td>
+                    <td>Name</td>
+                    <td>Email</td>
                     <td>Address</td>
-                    <td>Start time</td>
-                    <td>End time</td>
+                    <td>Moving date</td>
+                    <td>Location</td>
+                    <td>Inventory</td>
                     <td>Action</td>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($bookings as $booking)
                     <tr>
-                        <td>{{$booking->title}}</td>
-                        <td>{!! $booking->description !!}</td>
+                        <td>{{$booking->name}}</td>
+                        <td>{!! $booking->email !!}</td>
                         <td>{{$booking->address}}</td>
-                        <td>{{$booking->start_time}}</td>
-                        <td>{{$booking->end_time}}</td>
+                        <td>{{$booking->moving_date}}</td>
+                        <td>
+                            {{$booking->moving_from_suburb}}
+                            <i class="fa fa-send"></i>
+                            {{$booking->moving_to_suburb}}
+                        </td>
+                        <td>{{$booking->inventory}}</td>
                         <td>
                             {!! Form::open(['route'=>['bookings.destroy',$booking->id],'class'=>'form-horizontal']) !!}
                             @can('booking-view')
