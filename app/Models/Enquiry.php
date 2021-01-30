@@ -22,5 +22,10 @@ class Enquiry extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getNameAttribute(): string
+    {
+        return $this->getAttribute('first_name') . ' ' . $this->getAttribute('last_name');
+    }
 }
 

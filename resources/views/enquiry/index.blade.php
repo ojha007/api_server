@@ -15,20 +15,24 @@
                 <tr>
                     <td>Name</td>
                     <td>Email</td>
-                    <td>Title</td>
-                    <td>Description</td>
-                    <td>Date/Time</td>
+                    <td>Phone</td>
+                    <td>Address</td>
+                    <td>City</td>
+                    <td>Pickup Date/Time</td>
+                    <td>Comments</td>
                     <td width="10%">Actions</td>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($enquiries as $enquiry)
                     <tr>
-                        <td>{{$enquiry->user->name}}</td>
-                        <td>{{$enquiry->user->email}}</td>
-                        <td>{{$enquiry->title}}</td>
-                        <td>{{$enquiry->description}}</td>
-                        <td>{{$enquiry->date}}</td>
+                        <td>{{$enquiry->name}}</td>
+                        <td>{{$enquiry->email}}</td>
+                        <td>{{$enquiry->phone}}</td>
+                        <td>{{$enquiry->address1}}</td>
+                        <td>{{$enquiry->city}}</td>
+                        <td>{{$enquiry->pickup_date}}</td>
+                        <td>{{$enquiry->comment}}</td>
                         <td>
                             <a class="btn btn-success btn-flat btn-sm"
                                href="{{route('enquiries.show',$enquiry->id)}}"
