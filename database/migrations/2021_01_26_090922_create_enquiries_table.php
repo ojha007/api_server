@@ -16,10 +16,21 @@ class CreateEnquiriesTable extends Migration
     {
         Schema::create('enquiries', function (Blueprint $table) {
             $table->id();
-            (new MigrationHelper())->setForeignKey($table, 'users', 'user_id');
-            $table->mediumText('title');
-            $table->longText('description');
-            $table->date('date');
+            (new MigrationHelper())->setForeignKey($table, 'users', 'user_id', true);
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('mobile_number');
+            $table->string('email');
+            $table->string('address1');
+            $table->string('address2')->nullable();
+            $table->string('city');
+            $table->string('state');
+            $table->string('postal_code')->nullable();
+            $table->timestamp('pickup_date');
+            $table->timestamp('delivery_date');
+            $table->string('optional_number')->nullable();
+            $table->string('age')->nullable();
+            $table->longText('comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

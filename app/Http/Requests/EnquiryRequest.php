@@ -12,9 +12,20 @@ class EnquiryRequest extends FormRequestForApi
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|min:5',
-            'description' => 'required|string',
-            'date' => 'required|date:Y-m-d',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'city' => 'required|max:255',
+            'state' => 'required|max:255',
+            'postal_code' => 'nullable|max:255',
+            'optional_number' => 'nullable|numeric|max:255',
+            'address1' => 'required|max:255',
+            'address2' => 'nullable|max:255',
+            'comment' => 'nullable',
+            'age' => 'nullable|numeric',
+            'mobile_number' => 'required|numeric',
+            'pickup_date' => 'required|date:Y-m-d',
+            'delivery_date' => 'required|date:Y-m-d',
         ];
     }
 

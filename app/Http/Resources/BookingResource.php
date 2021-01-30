@@ -17,6 +17,7 @@ class BookingResource extends JsonResource
             'start_time' => $this->start_time ?? '',
             'end_time' => $this->end_time ?? '',
             'description' => $this->description ?? '',
+            'is_verified' => $this->is_verified ?? '',
             'address' => $this->address ?? '',
         ];
     }

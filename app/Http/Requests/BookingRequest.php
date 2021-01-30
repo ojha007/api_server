@@ -18,6 +18,7 @@ class BookingRequest extends FormRequestForApi
             'address' => 'required|string',
             'start_time' => 'required|date',
             'end_time' => 'required|date',
+            'is_verified' => 'nullable',
 
         ];
     }

@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Enquiry extends Model
 {
 
-    protected $fillable = ['title', 'description', 'date', 'user_id'];
-
+    protected $fillable = ['first_name', 'last_name',
+        'mobile_number', 'email', 'address1', 'address2',
+        'city', 'state', 'postal_code', 'pickup_date',
+        'delivery_date', 'optional_number', 'age', 'comment', 'user_id'
+    ];
 
     protected $hidden = ['created_at', 'deleted_at', 'updated_at'];
 

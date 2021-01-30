@@ -10,14 +10,16 @@ class EnquiryResource extends JsonResource
 
     public function toArray($request): array
     {
+//        'mobile_number', 'email', 'address1', 'address2',
+//        'city', 'state', 'postal_code', 'pickup_date',
+//        'delivery_date', 'optional_number', 'age', 'comment', 'user_id'
         return [
             'id' => $this->id ?? '',
-            'date' => $this->date ?? '',
-            'title' => $this->title ?? '',
-            'description' => $this->description ?? '',
+            'mobile_number' => $this->mobile_number ?? '',
             'user' => [
                 'email' => $this->user->email ?? '',
-                'name' => $this->user->name ?? '',
+                'first_name' => $this->first_name ?? '',
+                'last_name' => $this->last_name ?? ''
             ],
             'pickup_address' => [
                 'country' => $this->pickUpAddress->state->country->name ?? '',

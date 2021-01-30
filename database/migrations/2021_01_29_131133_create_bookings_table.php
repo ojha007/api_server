@@ -21,6 +21,7 @@ class CreateBookingsTable extends Migration
             $table->timestamp('end_time');
             $table->string('title');
             $table->string('address');
+            $table->boolean('is_verified')->default(0);
             $table->longText('description');
             $table->timestamps();
         });
