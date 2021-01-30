@@ -15,7 +15,6 @@ use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Models\Enquiry;
 use App\Models\Quotation;
-use App\Models\User;
 use App\Notifications\EnquiryReceived;
 use App\Notifications\SendQuotation;
 use App\Repositories\EnquiryRepository;
@@ -63,9 +62,9 @@ class EnquiryController extends Controller
             DB::beginTransaction();
             $attributes = $request->validated();
             $this->repository->create($attributes);
-            $user = User::find($attributes['user_id']);
             DB::commit();
-            Notification::send($user, new EnquiryReceived());
+            Notification::route('mail', $request->get('email'))
+                ->notify(new EnquiryReceived());
             return new StoreResponse($this->baseRoute);
         } catch (Exception $exception) {
             DB::rollBack();

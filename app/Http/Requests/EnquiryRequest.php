@@ -11,7 +11,7 @@ class EnquiryRequest extends FormRequestForApi
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email',

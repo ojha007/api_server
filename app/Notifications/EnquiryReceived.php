@@ -34,7 +34,7 @@ class EnquiryReceived extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Thank You for the enquiry')
             ->line('Our Team will quickly review your enquiry and send you more details.')
-            ->action('For more information Visit us ' . config('app.name'), config('app.url'))
+            ->action('For more information visit us ',config('app.url'))
             ->line('Thank you for using our application!');
     }
 

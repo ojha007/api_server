@@ -18,7 +18,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -32,7 +31,7 @@ class AuthController extends Controller
             $data = $this->transformUser($user);
             return new SuccessResponse($data);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
 

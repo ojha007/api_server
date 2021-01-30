@@ -4,7 +4,6 @@
 namespace App\Http\Responses\Enquiry;
 
 
-use App\Http\Responses\SuccessResponse;
 use Illuminate\Contracts\Support\Responsable;
 
 class StoreResponse implements Responsable
@@ -27,10 +26,12 @@ class StoreResponse implements Responsable
 
     public function toResponse($request)
     {
-
-
         if ($request->wantsJson()) {
-            return new SuccessResponse(null);
+            return response()->json([
+                'data' => [
+                    'status' => 201,
+                    'message' => 'SUCCESS'
+                ]]);
         } else {
             return redirect()->route($this->baseRoute . '.index')
                 ->with('success', 'Enquiry Added Successfully');
