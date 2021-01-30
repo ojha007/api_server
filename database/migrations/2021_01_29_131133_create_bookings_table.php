@@ -17,8 +17,8 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             (new MigrationHelper())->setForeignKey($table, 'users', 'user_id');
-            $table->timestamp('name');
-            $table->timestamp('email');
+            $table->string('name');
+            $table->string('email');
             $table->string('phone');
             $table->date('moving_date');
             $table->string('moving_from_suburb');
@@ -33,7 +33,7 @@ class CreateBookingsTable extends Migration
             $table->string('inventory')->nullable();
             $table->string('comments')->nullable();
             $table->boolean('is_verified')->default(0);
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

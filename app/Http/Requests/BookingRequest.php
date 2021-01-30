@@ -13,12 +13,22 @@ class BookingRequest extends FormRequestForApi
 
         return [
             'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'address' => 'required|string',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date',
-            'is_verified' => 'nullable',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'moving_date' => 'required|date',
+            'moving_from_suburb' => 'required|string',
+            'moving_to_suburb' => 'required|string',
+            'access_parking' => 'required|string',
+            'pickup_address' => 'required|string',
+            'dropoff_address' => 'required|string',
+            'additional_address' => 'nullable',
+            'additional_service' => 'nullable',
+            'size_of_moving' => 'required',
+            'hear_about_us' => 'nullable',
+            'inventory' => 'nullable',
+            'comments' => 'nullable',
+            'description' => 'nullable',
 
         ];
     }

@@ -16,8 +16,6 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->resource('campaigns', 'CampaignController');
     $router->resource('tasks', 'TaskController');
     $router->get('enquiries/{id}/quotations', 'EnquiryController@sendQuotations')->name('enquiries.quotations');
-
-
     Route::resource('users', 'UserController')->except(['edit', 'create']);
     Route::resource('roles', 'RoleController');
 //    $router->get('countries', 'CountryController@getAllCountries');
