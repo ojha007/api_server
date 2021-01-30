@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{$enquiry->name}}</td>
                         <td>{{$enquiry->email}}</td>
-                        <td>{{$enquiry->phone}}</td>
+                        <td>{{$enquiry->mobile_number}}</td>
                         <td>{{$enquiry->address1}}</td>
                         <td>{{$enquiry->city}}</td>
                         <td>{{$enquiry->pickup_date}}</td>
