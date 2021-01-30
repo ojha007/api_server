@@ -41,9 +41,9 @@
             <div class="timeline-item" style="margin: 10px">
                 <i class="fa fa-clock-o"></i> {{$enquiry->date}}
                 <br>
-                <i class="fa fa-user"></i> {{$enquiry->user->name}}
+                <i class="fa fa-user"></i> {{$enquiry->name}}
                 <br>
-                <i class="fa fa-inbox"></i> {{$enquiry->user->email}}
+                <i class="fa fa-inbox"></i> {{$enquiry->email}}
                 <h3 class="timeline-header">
                     <a href="#">
                         {{$enquiry->title}}
