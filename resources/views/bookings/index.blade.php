@@ -72,18 +72,20 @@
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
-                            @can('booking-confirmed')
-                                <a href="{{route('bookings.confirmed',$booking->id)}}"
-                                   title="Confirmed"
-                                   class="btn btn-flat btn-success">
-                                    <i class="fa fa-check"></i>
-                                </a>
-                            @endcan
+{{--                            @if($booking->is_verified == 0)--}}
+{{--                                @can('booking-confirmed')--}}
+{{--                                <a href="{{route('bookings.confirmed',$booking->id)}}"--}}
+{{--                                   title="Confirmed"--}}
+{{--                                   class="btn btn-flat btn-success">--}}
+{{--                                    <i class="fa fa-check"></i>--}}
+{{--                                </a>--}}
+{{--                                @endcan--}}
+{{--                            @endif--}}
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">
+                        <td colspan="10" class="text-center">
                             <strong>No Booking is recorded.</strong>
                         </td>
                     </tr>

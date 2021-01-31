@@ -44,7 +44,7 @@
 
                             </a>
                             <a class="btn btn-default btn-flat btn-sm"
-                               href="{{route('enquiries.quotations',$enquiry->id)}}"
+                               href="{{route('enquiries.show-quotations',$enquiry->id)}}"
                                title="Send Quotations">
                                 <i class="fa fa-mail-reply"></i>
 
@@ -53,7 +53,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">
+                        <td colspan="8" class="text-center">
                             <strong>No Enquiries is recorded .</strong>
                         </td>
                     </tr>

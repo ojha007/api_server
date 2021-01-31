@@ -88,7 +88,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class=" sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
+<body class="sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
 <div class="wrapper">
     <!-- Main Header -->
 

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Booking extends Model
 {
+    protected $hidden = ['created_at', 'updated_at'];
 
     protected $fillable = [
         'is_verified',
@@ -28,10 +29,21 @@ class Booking extends Model
         'hear_about_us',
         'inventory',
         'comments',
+        'quotes'
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(BookingPayment::class);
+    }
+
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class, 'booking_id');
     }
 }

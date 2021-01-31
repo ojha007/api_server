@@ -34,6 +34,7 @@ class CreateBookingsTable extends Migration
             $table->string('comments')->nullable();
             $table->boolean('is_verified')->default(0);
             $table->longText('description')->nullable();
+            $table->longText('quotes')->nullable();
             $table->timestamps();
         });
     }

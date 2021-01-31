@@ -107,6 +107,7 @@ class EnquiryController extends Controller
         }
     }
 
+
     public function sendQuotations(SendQuotationsRequest $request)
     {
         try {
@@ -117,6 +118,12 @@ class EnquiryController extends Controller
         } catch (Exception $exception) {
             return new ErrorResponse($exception);
         }
+    }
+
+    public function showQuotations($id)
+    {
+         return redirect()
+             ->route('quotations.index');
     }
 
 }

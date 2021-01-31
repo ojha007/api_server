@@ -6,15 +6,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Responses\UpcomingSchedule\IndexResponse;
 
-class UpcomingScheduleController extends Controller
+class ScheduleController extends Controller
 {
 
-    protected $routePath = 'upcoming-schedule.';
+    protected $routePath = 'schedules.';
 
-    protected $viewPath = 'enquiry.upcoming-schedule.';
+    protected $viewPath = 'schedule.';
 
     public function __construct()
     {
+        $this->middleware('auth');
     }
 
     public function index(): IndexResponse

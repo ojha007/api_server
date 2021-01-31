@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title_postfix') | Upcoming Schedule @endsection
+@section('title_postfix') | Event & Schedule @endsection
 @section('breadcrumb') @endsection
 @section('header')
-    Schedule
+    Event & Schedule
 @endsection
 @section('subHeader')
-    Schedule
+    Event & Schedule
 @endsection
 @section('content')
     <div class="row">
@@ -98,6 +98,7 @@
 @endpush
 @push('scripts')
     <script src="{{asset('backend/js/calendar.js')}}" type="text/javascript"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const events = document.getElementById('external-events');
@@ -137,11 +138,9 @@
                         title: 'Long Event',
                         start: '2021-01-07',
                         end: '2021-01-10',
-                        class: 'bg-red'
 
                     }
                 ]
-
             });
             calendar.render();
         });

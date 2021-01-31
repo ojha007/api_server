@@ -28,6 +28,7 @@ class BookingResource extends JsonResource
             'hear_about_us' => $this->hear_about_us ?? '',
             'inventory' => $this->inventory ?? '',
             'comments' => $this->comments ?? '',
+            'quotes' => $this->quotes ?? '',
         ];
     }
 

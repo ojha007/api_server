@@ -17,13 +17,13 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('title');
-            $table->mediumText('description');
+            (new \Database\MigrationHelper())->setForeignKey($table, 'bookings', 'booking_id');
             $table->timestamps();
         });
-        Schema::create('task_user', function (Blueprint $table) {
+        Schema::create('task_workers', function (Blueprint $table) {
             $table->id();
             (new \Database\MigrationHelper())->setForeignKey($table, 'tasks', 'task_id');
-            (new \Database\MigrationHelper())->setForeignKey($table, 'users', 'user_id');
+            (new \Database\MigrationHelper())->setForeignKey($table, 'users', 'worker_id');
         });
         Schema::create('task_status', function (Blueprint $table) {
             $table->id();
@@ -33,11 +33,11 @@ class CreateTasksTable extends Migration
             $table->mediumText('reason')->nullable();
             $table->timestamps();
         });
-        Schema::create('task_payment', function (Blueprint $table) {
+        Schema::create('booking_payments', function (Blueprint $table) {
             $table->id();
-            (new \Database\MigrationHelper())->setForeignKey($table, 'tasks', 'task_id');
-            $table->date('date');
+            (new \Database\MigrationHelper())->setForeignKey($table, 'bookings', 'booking_id');
             $table->float('amount', 8, 2);
+            $table->string('payment_currency');
             (new \Database\MigrationHelper())->setForeignKey($table, 'users', 'created_by');
             $table->mediumText('description')->nullable();
             $table->timestamps();
@@ -51,9 +51,9 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_worker');
+        Schema::dropIfExists('task_workers');
         Schema::dropIfExists('task_status');
-        Schema::dropIfExists('task_payment');
+        Schema::dropIfExists('booking_payments');
         Schema::dropIfExists('tasks');
     }
 }

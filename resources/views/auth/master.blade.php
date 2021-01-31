@@ -74,7 +74,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition @yield('sidebar_type')" style="height: auto;">
+<body class="hold-transition" style="height: auto;">
 @yield('content')
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"

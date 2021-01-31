@@ -11,12 +11,15 @@ use App\Http\Responses\Booking\ShowResponse;
 use App\Http\Responses\Booking\StoreResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Models\Booking;
+use App\Models\Task;
 use App\Notifications\BookingConfirmed;
 use App\Repositories\BookingRepository;
+use App\Repositories\TaskRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -103,12 +106,29 @@ class BookingController extends Controller
         }
     }
 
-    public function confirmed(Request $request, $id)
+    public function confirmed(Request $request)
     {
-
         try {
             DB::beginTransaction();
-            $this->repository->update($id, ['is_verified' => 1]);
+            $id = $request->get('booking_id');
+            $attributes['is_verified'] = true;
+            $attributes['quotes'] = $request->get('quotes');
+            $booking = $this->repository->update($id, $attributes);
+            $max = (new TaskRepository(new Task()))->maxId();
+            $booking->task()->create([
+                'code' => 'T' . str_pad($max + 1, 4, 0, STR_PAD_LEFT),
+                'title' => 'New Task' . now()->format('Y-m-d'),
+                'booking_id' => $id,
+                'date' => $booking->moving_date
+            ]);
+            $booking->payment()->create([
+                'amount' => $request->get('amount'),
+                'payment_currency' => $request->get('payment_currency'),
+                'description' => null,
+                'booking_id' => $id,
+                'created_by' => auth()->id(),
+            ]);
+
             $email = $this->repository->getById($id)->email;
             Notification::route('mail', $email)
                 ->notify(new BookingConfirmed());
@@ -124,6 +144,48 @@ class BookingController extends Controller
                     ->with('success', 'Booking is verified');
             }
 
+        } catch (Exception $exception) {
+            dd($exception);
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
+    }
+
+    public function assigned(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'booking_id' => 'required|exists:bookings,id',
+            'worker_id' => 'required|exists:users,id',
+            'assigned_time' => 'required|date',
+        ]);
+        if ($validator->fails()) {
+            if ($request->wantsJson()) {
+                return response()->json(['errors' => $validator->errors()], 401);
+            } else {
+                return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
+        try {
+            DB::beginTransaction();
+            DB::table('booking_worker')
+                ->insert([
+                    'worker_id' => $request->get('worker_id'),
+                    'booking_id' => $request->get('booking_id'),
+                    'assigned_time' => $request->get('assigned_time'),
+                    'status' => 'Pending'
+                ]);
+            DB::commit();
+            if ($request->wantsJson()) {
+                return response()
+                    ->json(['data' => ['message' => 'SUCCESS', 'code' => 201]]);
+            } else {
+                return redirect()
+                    ->back()
+                    ->with('success', 'Worker is successfully assigned to the booking');
+            }
         } catch (Exception $exception) {
             DB::rollBack();
             return new ErrorResponse($exception);

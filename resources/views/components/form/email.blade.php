@@ -1,8 +1,12 @@
-<div class="form-group col-md-12 col-sm-12 @error($name) has-error @enderror">
-    <div class="col-md-2 col-sm-12">
+@php($a= $attributes['p'] ?? '12')
+@php($b= $a !=12 ? 3 : 2)
+@php($c=  $b != 2 ? 9 : 10)
+
+<div class="form-group col-md-{{$a}} col-sm-12 @error($name) has-error @enderror">
+    <div class="col-md-{{$b}} col-sm-12">
         {{ Form::label($name.":", null, ['class' => 'control-label']) }}
     </div>
-    <div class="col-md-9 col-sm-12">
+    <div class="col-md-{{$c}} col-sm-12">
         {{ Form::email($name, $value, array_merge(
         [
         'class' => 'form-control',

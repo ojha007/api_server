@@ -34,7 +34,7 @@ class IndexResponse implements Responsable
 
     public function toResponse($request)
     {
-        $tasks = $this->repository->getWith('workers','status');
+        $tasks = $this->repository->paginateWith(15, 'workers', 'status', 'booking');
         if ($request->wantsJson()) {
             return new TasksCollection($tasks);
         }
