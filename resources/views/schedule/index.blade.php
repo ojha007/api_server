@@ -91,15 +91,92 @@
         </div>
         <!-- /.col -->
     </div>
+    <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Right Sidebar</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                        3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                        laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                        coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
+                        anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
+                        of them accusamus labore sustainable VHS.
+                    </p>
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
 @endsection
 
 @push('styles')
     <link rel="stylesheet" href="{{asset('backend/css/calendar.css')}}"/>
+    <style>
+        .modal.right.fade .modal-dialog {
+            right: -320px;
+            -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+            -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+            -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+            transition: opacity 0.3s linear, right 0.3s ease-out;
+        }
+
+        .modal.right.fade.in .modal-dialog {
+            right: 0;
+        }
+
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 40%;
+            height: 100%;
+            -webkit-transform: translate3d(0%, 0, 0);
+            -ms-transform: translate3d(0%, 0, 0);
+            -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+        }
+
+        .modal.right .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .modal.right .modal-body {
+            padding: 15px 15px 80px;
+        }
+
+    </style>
 @endpush
 @push('scripts')
     <script src="{{asset('backend/js/calendar.js')}}" type="text/javascript"></script>
 
     <script>
+        {{--async function getAllTasks() {--}}
+        {{--    return $.ajax({--}}
+        {{--        'url': '{{route('tasks.index')}}',--}}
+        {{--        'method': 'GET',--}}
+        {{--        'success': function (response) {--}}
+        {{--            return response;--}}
+        {{--        },--}}
+        {{--        'error': function (error) {--}}
+        {{--            console.log(error)--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--}--}}
+        {{--var SITEURL = "{{route('tasks.index')}}";--}}
+
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
         document.addEventListener('DOMContentLoaded', function () {
             const events = document.getElementById('external-events');
             new FullCalendar.Draggable(events, {
@@ -112,7 +189,6 @@
             });
 
             const calendarEl = document.getElementById('calendar');
-
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -120,6 +196,7 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
+                selectable: true,
                 editable: true,
                 droppable: true,
                 drop: function (arg) {
@@ -128,19 +205,13 @@
                     }
                 },
                 eventClick: function (arg) {
-                    if (confirm('Are you sure you want to delete this event?')) {
-                        arg.event.remove()
-                    }
+                    $('#myModal2').modal('show')
+                    // if (confirm('Are you sure you want to delete this event?')) {
+                    //     arg.event.remove()
+                    // }
                 },
                 dayMaxEvents: true,
-                events: [
-                    {
-                        title: 'Long Event',
-                        start: '2021-01-07',
-                        end: '2021-01-10',
-
-                    }
-                ]
+                events: "{{route('tasks.calendar')}}"
             });
             calendar.render();
         });

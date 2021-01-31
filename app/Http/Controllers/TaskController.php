@@ -100,4 +100,12 @@ class TaskController extends Controller
             return new ErrorResponse($exception);
         }
     }
+
+    public function calendar(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json(
+            $this->repository->getTaskForCalendar()
+        );
+
+    }
 }

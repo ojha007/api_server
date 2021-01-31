@@ -4,6 +4,8 @@
 namespace App\Http\Responses\UpcomingSchedule;
 
 
+use App\Models\Task;
+use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Support\Responsable;
 
 class IndexResponse implements Responsable
@@ -21,8 +23,11 @@ class IndexResponse implements Responsable
 
     public function toResponse($request)
     {
-        if($request->wantsJson()){}
-        return view($this->viewPath.'index');
-        // TODO: Implement toResponse() method.
+        if ($request->wantsJson()) {
+
+        }
+        $tasks = (new TaskRepository(new Task()))->getTaskForCalendar();
+        return view($this->viewPath . 'index', compact('tasks'));
+
     }
 }

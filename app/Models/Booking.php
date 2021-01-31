@@ -46,4 +46,26 @@ class Booking extends Model
     {
         return $this->belongsTo(Task::class, 'booking_id');
     }
+
+    public static function allSizeOfMoving(): array
+    {
+        return [
+            'internal_move' => 'Internal move',
+            '1_3_items' => '1-3 Items',
+            '4_9_items' => '4-9 Items',
+            '10_15_items' => '10-15 Items',
+            '1_bedroom_studio_apartment' => '1 Bedroom/Studio apartment',
+            '2_bedroom_apartment_house' => '2 Bedroom apartment / House',
+            '3_bedroom_apartment_house' => '3 Bedroom apartment / House',
+            '4_bedroom_house' => '4+ Bedroom House',
+            'interstate' => 'Interstate (East Coast)',
+            'country' => 'Country',
+            'office' => 'Office / Business'
+        ];
+    }
+
+    public function getSizeofMoving($id): string
+    {
+        return $this::allSizeOfMoving()[$id];
+    }
 }

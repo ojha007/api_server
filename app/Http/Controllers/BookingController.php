@@ -48,7 +48,6 @@ class BookingController extends Controller
     public function index(): IndexResponse
     {
         $bookings = $this->repository->getAllByUser();
-//        dd($bookings);
         return new IndexResponse($this->viewPath, $bookings);
     }
 

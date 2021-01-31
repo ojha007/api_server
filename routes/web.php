@@ -14,6 +14,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     include 'subRoutes/booking.php';
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');
+    $router->get('tasks/calendar', 'TaskController@calendar')->name('tasks.calendar');
     $router->resource('tasks', 'TaskController');
 
     Route::resource('users', 'UserController')->except(['edit', 'create']);
