@@ -36,7 +36,7 @@
                     <td>Moving date</td>
                     <td>Size of moving</td>
                     <td>Status</td>
-                    <td>Inventory</td>
+{{--                    <td>Inventory</td>--}}
                     <td>Action</td>
                 </tr>
                 </thead>
@@ -63,7 +63,7 @@
                         <td>{{$booking->moving_date}}</td>
                         <td>{{$booking->size_of_moving}}</td>
                         <td>{!! spanByStatus($booking->is_verified) !!}</td>
-                        <td>{{$booking->inventory}}</td>
+{{--                        <td>{{$booking->inventory}}</td>--}}
                         <td>
                             @can('booking-view')
                                 <a class="btn btn-default btn-flat"

@@ -35,6 +35,7 @@ class IndexResponse implements Responsable
     public function toResponse($request)
     {
 
+
         if ($request->wantsJson()) {
             return new BookingCollection($this->collection);
         }

@@ -74,7 +74,7 @@
     {{--    @else--}}
     @if($booking->is_verified ==0)
         <div class="box-header">
-            <button type="button" class="btn btn-default btn-flat"
+            <button type="button" class="btn btn-primary btn-flat"
                     data-toggle="modal" data-target="#modal-booking-confirm">
                 Confirmed
             </button>
@@ -85,17 +85,22 @@
             <h3 class="box-title"></h3>
         </div>
         <div class="box-body">
-            <div class="col-md-4">
-                <p>{{$booking->name}}</p>
-                <p>{{$booking->email}}</p>
-                <p>{{$booking->phone}}</p>
-            </div>
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                <p>{{$booking->moving_date}}</p>
-            </div>
+            <blockquote>
+                <p>
+                    <i class="fa fa-user"></i>
+                    {{$booking->name}}
+                </p>
+                <p>
+                    <i class="fa fa-envelope"></i>
+                    {{$booking->email}}
+                </p>
+                <p>
+                    <i class="fa fa-phone"></i>
+                    {{$booking->phone}}
+                </p>
+            </blockquote>
         </div>
+    </div>
     </div>
     @include('bookings.partials.modal')
 @endsection

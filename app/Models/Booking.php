@@ -37,9 +37,9 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function payment(): BelongsTo
+    public function payment(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsTo(BookingPayment::class);
+        return $this->hasMany(BookingPayment::class, 'booking_id');
     }
 
     public function task(): BelongsTo

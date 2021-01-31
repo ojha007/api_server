@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Abstracts\Repository;
 use App\Models\Booking;
 use App\Models\Campaign;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class BookingRepository extends Repository
@@ -24,12 +23,9 @@ class BookingRepository extends Repository
 
     public function getAllByUser(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $auth = Auth::user();
-        return Booking::with('user')
-            ->when($auth->super == 0, function ($query) {
-                if (\auth()->user()->hasRole(User::WORKER)) {
-//                    $query->join('')
-                }
+        $user = Auth::user();
+        return Booking::with('user', 'payment')
+            ->when($user->super == 0, function ($query) use ($user) {
                 $query->where('user_id', \auth()->id());
             })->orderByDesc('id')
             ->paginate(15);
