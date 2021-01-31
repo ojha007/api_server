@@ -25,14 +25,16 @@
             @endcan
         </div>
         <div class="box-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-condensed">
                 <thead>
                 <tr>
                     <td>Name</td>
                     <td>Email</td>
-                    <td>Address</td>
+                    <td>Phone</td>
+                    <td>Shifting Suburb</td>
+                    <td>Shifting Address</td>
                     <td>Moving date</td>
-                    <td>Location</td>
+                    <td>Size of moving</td>
                     <td>Status</td>
                     <td>Inventory</td>
                     <td>Action</td>
@@ -43,13 +45,23 @@
                     <tr>
                         <td>{{$booking->name}}</td>
                         <td>{!! $booking->email !!}</td>
-                        <td>{{$booking->address}}</td>
-                        <td>{{$booking->moving_date}}</td>
+                        <td>{!! $booking->phone !!}</td>
                         <td>
                             {{$booking->moving_from_suburb}}
-                            <i class="fa fa-send"></i>
+                            <strong>
+                                -to-
+                            </strong>
                             {{$booking->moving_to_suburb}}
                         </td>
+                        <td>
+                            {{$booking->pickup_address}}
+                            <strong>
+                                -to-
+                            </strong>
+                            {{$booking->dropoff_address}}
+                        </td>
+                        <td>{{$booking->moving_date}}</td>
+                        <td>{{$booking->size_of_moving}}</td>
                         <td>{!! spanByStatus($booking->is_verified) !!}</td>
                         <td>{{$booking->inventory}}</td>
                         <td>

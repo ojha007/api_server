@@ -5,8 +5,8 @@ namespace App\Http\Responses\Booking;
 
 
 use App\Http\Collection\BookingCollection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class IndexResponse implements Responsable

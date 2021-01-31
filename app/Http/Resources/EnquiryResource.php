@@ -10,9 +10,7 @@ class EnquiryResource extends JsonResource
 
     public function toArray($request): array
     {
-//        'mobile_number', 'email', 'address1', 'address2',
-//        'city', 'state', 'postal_code', 'pickup_date',
-//        'delivery_date', 'optional_number', 'age', 'comment', 'user_id'
+
         return [
             'id' => $this->id ?? '',
             'email' => $this->email ?? '',

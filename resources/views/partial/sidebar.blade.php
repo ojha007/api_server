@@ -10,35 +10,43 @@
                 </a>
             </li>
         @endcan
-        @can('enquiry-create','upcoming-schedule-view')
-            <li class="treeview {{request()->routeIs('enquiries.index',
-                        'upcoming-schedule.index',
-                        'enquiries.quotations',
-                        'enquiries.show',
-                        'enquiries.create') ? 'active': ''}}">
-                <a href="#">
+        @can('enquiry-view')
+            <li class="{{request()->routeIs('enquiries.index') ? 'active': ''}}">
+                <a href="{{route('enquiries.index')}}">
                     <i class="fa fa-question-circle" aria-hidden="true"></i>
                     <span>Enquiries</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
                 </a>
-                <ul class="treeview-menu">
-                    @can('enquiry-view')
-                        <li class="{{request()->routeIs('enquiries.index') ? 'active': ''}}">
-                            <a href="{{route('enquiries.index')}}">
-                                <i class="fa fa-circle-o"></i>All Enquiry</a>
-                        </li>
-                    @endcan
-                    @can('upcoming-schedule-view')
-                        <li class="{{request()->routeIs('upcoming-schedule.index') ? 'active': ''}}">
-                            <a href="{{route('upcoming-schedule.index')}}">
-                                <i class="fa fa-circle-o"></i>Upcoming Schedule</a>
-                        </li>
-                    @endcan
-                </ul>
             </li>
         @endcan
+{{--        @can('enquiry-create','upcoming-schedule-view')--}}
+{{--            <li class="treeview {{request()->routeIs('enquiries.index',--}}
+{{--                        'upcoming-schedule.index',--}}
+{{--                        'enquiries.quotations',--}}
+{{--                        'enquiries.show',--}}
+{{--                        'enquiries.create') ? 'active': ''}}">--}}
+{{--                <a href="#">--}}
+{{--                    <i class="fa fa-question-circle" aria-hidden="true"></i>--}}
+{{--                    <span>Enquiries</span>--}}
+{{--                    <span class="pull-right-container">--}}
+{{--                      <i class="fa fa-angle-left pull-right"></i>--}}
+{{--                    </span>--}}
+{{--                </a>--}}
+{{--                <ul class="treeview-menu">--}}
+{{--                    @can('enquiry-view')--}}
+{{--                        <li class="{{request()->routeIs('enquiries.index') ? 'active': ''}}">--}}
+{{--                            <a href="{{route('enquiries.index')}}">--}}
+{{--                                <i class="fa fa-circle-o"></i>All Enquiry</a>--}}
+{{--                        </li>--}}
+{{--                    @endcan--}}
+{{--                    @can('upcoming-schedule-view')--}}
+{{--                        <li class="{{request()->routeIs('upcoming-schedule.index') ? 'active': ''}}">--}}
+{{--                            <a href="{{route('upcoming-schedule.index')}}">--}}
+{{--                                <i class="fa fa-circle-o"></i>Upcoming Schedule</a>--}}
+{{--                        </li>--}}
+{{--                    @endcan--}}
+{{--                </ul>--}}
+{{--            </li>--}}
+{{--        @endcan--}}
         @can('booking-view')
             <li class="{{request()->routeIs('bookings.index') ? 'active': ''}}">
                 <a href="{{route('bookings.index')}}">

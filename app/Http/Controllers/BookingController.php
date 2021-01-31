@@ -44,7 +44,7 @@ class BookingController extends Controller
 
     public function index(): IndexResponse
     {
-        $bookings = $this->repository->paginateWith(15, 'user');
+        $bookings = $this->repository->getAllByUser();
         return new IndexResponse($this->viewPath, $bookings);
     }
 
