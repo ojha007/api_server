@@ -27,9 +27,12 @@
                             {!! Form::close() !!}
                         </div>
                     @else
-                        <label class="label label-success bg-green btn btn-flat">
+                        <label class="label label-success bg-green btn btn-flat" style="margin-right: 10px">
                             Confirmed
                         </label>
+                        <div>
+                            {!! Form::select('worker_id',[],null,['class'=>'form-control']) !!}
+                        </div>
                     @endif
                 </div>
             </div>

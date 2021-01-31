@@ -61,6 +61,7 @@ class EnquiryController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
+            $attributes['user_id'] = auth()->id();
             $this->repository->create($attributes);
             DB::commit();
             Notification::route('mail', $request->get('email'))
@@ -94,8 +95,9 @@ class EnquiryController extends Controller
     {
         try {
             DB::beginTransaction();
-            $attributes['enquiry'] = $request->except('pickup_address', 'delivery_address');
-            $this->repository->update($id, $attributes['enquiry']);
+            $attributes = $request->except('pickup_address', 'delivery_address');
+            $attributes['user_id'] = auth()->id();
+            $this->repository->update($id, $attributes);
             DB::commit();
             return new SuccessResponse(null);
         } catch (Exception $exception) {
