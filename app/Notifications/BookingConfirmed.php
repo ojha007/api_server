@@ -7,21 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingApproved extends Notification implements ShouldQueue
+class BookingConfirmed extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $email;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @param  $user
-     * @param $password
-     */
-    public function __construct($user)
+    public function __construct()
     {
-        $this->email = $user->email;
+
     }
 
     /**
@@ -30,7 +23,7 @@ class BookingApproved extends Notification implements ShouldQueue
      * @param mixed $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'broadcast', 'database'];
     }
@@ -39,13 +32,14 @@ class BookingApproved extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('User Booking Approval')
-            ->line('You are receiving this email because your booking has been approved .')
+            ->subject('Booking Confirmed')
+            ->line('You are receiving this email because your booking has been confirmed .')
+            ->line('Our team member will be at your door soon.')
             ->action('Go to ' . config('app.name'), config('app.url'))
             ->line('Thank you for using our application!');
     }
@@ -56,7 +50,7 @@ class BookingApproved extends Notification implements ShouldQueue
      * @param mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

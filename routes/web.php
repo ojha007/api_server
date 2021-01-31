@@ -11,7 +11,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->resource('upcoming-schedule', 'UpcomingScheduleController');
     include 'subRoutes/enquiry.php';
     $router->resource('quotations', 'QuotationController');
-    $router->resource('bookings', 'BookingController');
+    include 'subRoutes/booking.php';
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');
     $router->resource('tasks', 'TaskController');

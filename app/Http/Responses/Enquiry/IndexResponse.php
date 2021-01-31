@@ -35,11 +35,13 @@ class IndexResponse implements Responsable
 
     public function toResponse($request)
     {
-        $enquiries = $this->repository->getWith('user');
+
+        $enquiries = $this->repository->getAllByUser();
         if ($request->wantsJson()) {
             return new EnquiryCollection($enquiries);
         } else {
             return view($this->viewPath . 'index', compact('enquiries'));
         }
     }
+
 }

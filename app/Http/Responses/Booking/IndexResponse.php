@@ -6,6 +6,7 @@ namespace App\Http\Responses\Booking;
 
 use App\Http\Collection\BookingCollection;
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class IndexResponse implements Responsable
@@ -22,9 +23,9 @@ class IndexResponse implements Responsable
     /**
      * IndexResponse constructor.
      * @param string $viewPath
-     * @param Collection $collection
+     * @param LengthAwarePaginator $collection
      */
-    public function __construct(string $viewPath, Collection $collection)
+    public function __construct(string $viewPath, LengthAwarePaginator $collection)
     {
 
         $this->viewPath = $viewPath;

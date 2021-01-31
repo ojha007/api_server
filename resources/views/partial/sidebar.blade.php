@@ -39,12 +39,11 @@
                 </ul>
             </li>
         @endcan
-
         @can('booking-view')
             <li class="{{request()->routeIs('bookings.index') ? 'active': ''}}">
                 <a href="{{route('bookings.index')}}">
                     <i class="fa fa-book" aria-hidden="true"></i>
-                    Bookings
+                    <span>Bookings</span>
                 </a>
             </li>
         @endcan

@@ -117,8 +117,4 @@ class EnquiryController extends Controller
         }
     }
 
-    public function confirmed($id): void
-    {
-
-    }
 }

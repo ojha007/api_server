@@ -6,6 +6,9 @@
 @section('subHeader')
     List of all Booking
 @endsection
+@section('sidebar_type')
+    sidebar-collapse
+@endsection
 @section('breadcrumb')
 @endsection
 @section('content')
@@ -30,6 +33,7 @@
                     <td>Address</td>
                     <td>Moving date</td>
                     <td>Location</td>
+                    <td>Status</td>
                     <td>Inventory</td>
                     <td>Action</td>
                 </tr>
@@ -46,30 +50,23 @@
                             <i class="fa fa-send"></i>
                             {{$booking->moving_to_suburb}}
                         </td>
+                        <td>{!! spanByStatus($booking->is_verified) !!}</td>
                         <td>{{$booking->inventory}}</td>
                         <td>
-                            {!! Form::open(['route'=>['bookings.destroy',$booking->id],'class'=>'form-horizontal']) !!}
                             @can('booking-view')
                                 <a class="btn btn-default btn-flat"
+                                   title="View"
                                    href="{{route('bookings.show',$booking->id)}}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
-                            @can('booking-edit')
-                                <a class="btn btn-primary btn-flat"
-                                   href="{{route('bookings.edit',$booking->id)}}">
-                                    <i class="fa fa-edit"></i>
+                            @can('booking-confirmed')
+                                <a href="{{route('bookings.confirmed',$booking->id)}}"
+                                   title="Confirmed"
+                                   class="btn btn-flat btn-success">
+                                    <i class="fa fa-check"></i>
                                 </a>
                             @endcan
-                            @can('booking-delete')
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="btn btn-flat btn-danger"
-                                        onclick="return confirm('Are you sure to delete')">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            @endcan
-                            {!! Form::open() !!}
                         </td>
                     </tr>
                 @empty
@@ -82,6 +79,7 @@
                 </tbody>
 
             </table>
+            {{$bookings->links()}}
         </div>
     </div>
 @endsection
