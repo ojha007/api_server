@@ -58,6 +58,7 @@ class BookingController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
+            $attributes['user_id'] = auth()->id();
             $this->repository->create($attributes);
             DB::commit();
         } catch (Exception $exception) {
@@ -92,6 +93,7 @@ class BookingController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
+            $attributes['user_id'] = auth()->id();
             $booking = $this->repository->update($id, $attributes);
             DB::commit();
             return view($this->viewPath . 'edit', compact('booking'));
