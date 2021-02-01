@@ -209,8 +209,16 @@
                             let modal = $('#task_modal');
                             $('#task_modal_title').html(response.title);
                             modal.find('form input[name="task_id"]').val(response['id'])
-                            let template = `<p class="booking_name">Name: ${response['booking'][0]['name']}</p>
-                                            <p>Email:${response['booking'][0]['email']}`
+                            let template = `<p class="booking_name">
+                                            <i class="fa fa-2x fa-user"></i> ${response['booking'][0]['name']}</p>
+                                            <p><i class="fa fa-2x fa-envelope"></i> ${response['booking'][0]['email']}</p>
+                                            <p><i class="fa fa-2x fa-phone"></i> ${response['booking'][0]['phone']}</p>
+                                            <p>Phone: ${response['booking'][0]['phone']}</p>
+                                            <p>Phone: ${response['booking'][0]['phone']}</p>
+                                            <p>Phone: ${response['booking'][0]['phone']}</p>
+
+
+                                            `
                             $('.modal-body>div:nth-child(2)>div').html(template)
                             modal.modal('show')
                         }
@@ -248,8 +256,8 @@
                         }
                     },
                     error: function (errors) {
-                        if (errors.responseJSON) {
-                            let error = errors.responseJSON.errors['worker_id'][0];
+                        if (errors['responseJSON']) {
+                            let error = errors['responseJSON'].errors['worker_id'][0];
                             let e = $(task_model).find('select[name="worker_id"]');
                             e.parent('div').addClass('has-error');
                             $(`<span class="help-block">${error}</span>`).insertAfter(e);

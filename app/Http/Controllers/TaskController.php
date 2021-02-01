@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\TaskRequest;
+use App\Http\Resources\TasksResource;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\Tasks\CreateResponse;
 use App\Http\Responses\Tasks\IndexResponse;
@@ -128,9 +129,16 @@ class TaskController extends Controller
                 DB::beginTransaction();
                 DB::table('task_workers')
                     ->insert($request->except('_token'));
+                $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'status', 'booking');
                 DB::commit();
                 return response()
-                    ->json(['data' => ['message' => 'SUCCESS', 'code' => 201]]);
+                    ->json(
+                        ['data' => [
+                            'tasks' => new TasksResource($task),
+                            'message' => 'SUCCESS',
+                            'code' => 201
+                        ]
+                        ]);
 
             } catch (Exception $exception) {
                 DB::rollBack();
