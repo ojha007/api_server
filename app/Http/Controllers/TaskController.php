@@ -11,12 +11,17 @@ use App\Http\Responses\Tasks\CreateResponse;
 use App\Http\Responses\Tasks\IndexResponse;
 use App\Http\Responses\Tasks\ShowResponse;
 use App\Http\Responses\Tasks\StoreResponse;
+use App\Http\Responses\Tasks\UpdateResponse;
 use App\Models\Task;
+use App\Models\User;
+use App\Notifications\AssignedToTask;
 use App\Repositories\TaskRepository;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
@@ -53,12 +58,19 @@ class TaskController extends Controller
         return new CreateResponse($this->viewPath);
     }
 
-    public function update()
+    public function update(TaskRequest $request, $id)
     {
-    }
-
-    public function edit()
-    {
+        try {
+            DB::beginTransaction();
+            $attributes = $request->validated();
+            $attributes['images']= implode(',',$request->get('images'));
+            $this->repository->update($id, $attributes);
+            DB::commit();
+            return new UpdateResponse($this->routePath);
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
     }
 
     public function destroy(): ErrorResponse
@@ -127,9 +139,11 @@ class TaskController extends Controller
                 return response()->json(['errors' => $validator->errors()], 401);
             try {
                 DB::beginTransaction();
+                $worker = (new UserRepository(new User()))->getById($request->get('worker_id'));
                 DB::table('task_workers')
                     ->insert($request->except('_token'));
                 $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'status', 'booking');
+                Notification::send($worker, new AssignedToTask($worker, $task));
                 DB::commit();
                 return response()
                     ->json(

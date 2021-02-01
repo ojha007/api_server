@@ -18,6 +18,9 @@ class CreateTasksTable extends Migration
             $table->string('code')->unique();
             $table->string('title');
             (new \Database\MigrationHelper())->setForeignKey($table, 'bookings', 'booking_id');
+            $table->longText('description')->nullable();
+            $table->dateTime('task_completed')->nullable();
+            $table->longText('images')->nullable();
             $table->timestamps();
         });
         Schema::create('task_workers', function (Blueprint $table) {

@@ -112,6 +112,7 @@
                         <div class="col-md-2 form-group">
                             <label></label>
                             <button
+                                id="assignBtn"
                                 class="btn btn-flat btn-primary pull-right"
                                 style="margin-top: 1.6em;">
                                 Assign
@@ -229,8 +230,10 @@
             });
             calendar.render();
             let task_model = $('#task_modal');
+            let submitBtn = $('#assignBtn');
             task_model.find('form').on('submit', function (e) {
                 e.preventDefault();
+                submitBtn.attr('disabled', 'disabled')
                 let ele = $(this);
                 $(this).find('select[name="worker_id"]').parent().removeClass('has-error');
                 $(this).find('select[name="worker_id"]').siblings('.help-block').remove();
@@ -254,6 +257,7 @@
                             </div>
                             `)
                         }
+                        submitBtn.removeAttr('disabled')
                     },
                     error: function (errors) {
                         if (errors['responseJSON']) {
@@ -262,7 +266,9 @@
                             e.parent('div').addClass('has-error');
                             $(`<span class="help-block">${error}</span>`).insertAfter(e);
                         }
-                    }
+                        submitBtn.removeAttr('disabled')
+                    },
+
                 });
                 setTimeout(function () {
                     ele.find('.alert').addClass('hide')
@@ -273,6 +279,7 @@
                 $(this).find('select[name="worker_id"]').val('');
                 $(this).find('select[name="worker_id"]').parent().removeClass('has-error');
                 $(this).find('select[name="worker_id"]').siblings('.help-block').remove();
+                submitBtn.removeAttr('disabled')
             })
         });
     </script>

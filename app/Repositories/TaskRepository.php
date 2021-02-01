@@ -39,4 +39,20 @@ class TaskRepository extends Repository
             ->get();
     }
 
+    public function getAssignedTask()
+    {
+        $taskIds = DB::table('task_workers')
+            ->when(auth()->user()->super === 0, function ($q) {
+                $q->where('worker_id', '=', auth()->id());
+            })
+            ->groupBy('task_id')
+            ->pluck('task_id')
+            ->toArray();
+        return $this->getModel()
+            ->with(['status', 'booking', 'workers'])
+            ->whereIn('tasks.id', $taskIds)
+            ->orderByDesc('tasks.id')
+            ->get();
+    }
+
 }

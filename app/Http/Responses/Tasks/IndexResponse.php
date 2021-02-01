@@ -36,10 +36,11 @@ class IndexResponse implements Responsable
     {
 
 
-        $tasks = $this->repository->paginateWith(15, 'workers', 'status', 'booking');
+        $tasks = $this->repository->getAssignedTask();
         if ($request->wantsJson()) {
             return new TasksCollection($tasks);
         }
         return view($this->viewPath . 'index', compact('tasks'));
     }
+
 }

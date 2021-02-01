@@ -5,6 +5,8 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
@@ -14,19 +16,19 @@ class Task extends Model
 
     protected $table = 'tasks';
 
-    protected $fillable = ['code', 'booking_id', 'title'];
+    protected $fillable = ['code', 'booking_id', 'title', 'description', 'images', 'task_completed'];
 
-    public function workers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function workers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'task_workers','task_id','worker_id');
+        return $this->belongsToMany(User::class, 'task_workers', 'task_id', 'worker_id');
     }
 
-    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function status(): BelongsTo
     {
-        return $this->belongsTo(TaskStatus::class,'task_id');
+        return $this->belongsTo(TaskStatus::class, 'task_id');
     }
 
-    public function booking(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
     }

@@ -19,7 +19,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -141,10 +140,11 @@ class BookingController extends Controller
                     ]]);
             } else {
                 return redirect()->back()
-                    ->with('success', 'Booking is verified');
+                    ->with('success', 'Booking has been confirmed');
             }
 
         } catch (Exception $exception) {
+            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }
