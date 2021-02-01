@@ -145,51 +145,11 @@ class BookingController extends Controller
             }
 
         } catch (Exception $exception) {
-            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }
     }
 
-    public function assigned(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'booking_id' => 'required|exists:bookings,id',
-            'worker_id' => 'required|exists:users,id',
-            'assigned_time' => 'required|date',
-        ]);
-        if ($validator->fails()) {
-            if ($request->wantsJson()) {
-                return response()->json(['errors' => $validator->errors()], 401);
-            } else {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        }
-        try {
-            DB::beginTransaction();
-            DB::table('booking_worker')
-                ->insert([
-                    'worker_id' => $request->get('worker_id'),
-                    'booking_id' => $request->get('booking_id'),
-                    'assigned_time' => $request->get('assigned_time'),
-                    'status' => 'Pending'
-                ]);
-            DB::commit();
-            if ($request->wantsJson()) {
-                return response()
-                    ->json(['data' => ['message' => 'SUCCESS', 'code' => 201]]);
-            } else {
-                return redirect()
-                    ->back()
-                    ->with('success', 'Worker is successfully assigned to the booking');
-            }
-        } catch (Exception $exception) {
-            DB::rollBack();
-            return new ErrorResponse($exception);
-        }
-    }
+
 }
 

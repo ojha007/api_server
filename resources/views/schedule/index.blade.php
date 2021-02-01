@@ -95,45 +95,35 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-{{--                    <div class="btn-group pull-right">--}}
-{{--                        <button type="button" class="btn btn-flat btn-default dropdown-toggle" data-toggle="dropdown">--}}
-{{--                            <span class="caret"></span>--}}
-{{--                        </button>--}}
-{{--                        <ul class="dropdown-menu">--}}
-{{--                            <li><a href="#">Assign To Worker</a></li>--}}
-{{--                            <li>--}}
-{{--                                <a href="#" data-dismiss="modal">--}}
-{{--                                    Close--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-                        <button type="button" class="btn btn-flat btn-default pull-right"  data-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-{{--                    </div>--}}
+                    <button type="button" class="btn btn-flat btn-default pull-right" data-dismiss="modal"
+                            aria-label="Close">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
                     <h4 class="modal-title" id="task_modal_title"></h4>
                 </div>
-
                 <div class="modal-body">
                     <div class="row" style="border-bottom: 1px solid bisque">
-                        {{--                        <div class="col-md-6">--}}
+                        {!! Form::open(['route'=>'tasks.assigned']) !!}
                         <div class="form-group col-md-6">
                             <label for="worker_id">Assign To Worker</label>
-                            {!! Form::select('worker_id',[],null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
+                            {!! Form::select('worker_id',$workers ,null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
+                            <input type="hidden" name="task_id" value="">
                         </div>
                         <div class="col-md-2 form-group">
                             <label></label>
-                            <button class="btn btn-flat btn-default pull-right" style="margin-top: 1.6em;">
+                            <button
+                                class="btn btn-flat btn-primary pull-right"
+                                style="margin-top: 1.6em;">
                                 Assign
                             </button>
                         </div>
-                        {{--                        </div>--}}
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="padding: 3rem">
 
                         </div>
                     </div>
+                    {!! Form::close() !!}
                 </div>
 
             </div><!-- modal-content -->
@@ -216,11 +206,13 @@
                         url: '{{url('tasks')}}' + '/' + info.event.id,
                         type: 'GET',
                         success: function (response) {
-                            $('#task_modal_title').html(response.title)
-                            let template = `<p>Name: ${response['booking'][0]['name']}</p>`
+                            let modal = $('#task_modal');
+                            $('#task_modal_title').html(response.title);
+                            modal.find('form input[name="task_id"]').val(response['id'])
+                            let template = `<p class="booking_name">Name: ${response['booking'][0]['name']}</p>
+                                            <p>Email:${response['booking'][0]['email']}`
                             $('.modal-body>div:nth-child(2)>div').html(template)
-                            // $('.modal-body').html(response);
-                            $('#task_modal').modal('show')
+                            modal.modal('show')
                         }
                     });
                 },
@@ -228,6 +220,52 @@
                 events: "{{route('tasks.calendar')}}"
             });
             calendar.render();
+            let task_model = $('#task_modal');
+            task_model.find('form').on('submit', function (e) {
+                e.preventDefault();
+                let ele = $(this);
+                $(this).find('select[name="worker_id"]').parent().removeClass('has-error');
+                $(this).find('select[name="worker_id"]').siblings('.help-block').remove();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    dataType: 'JSON',
+                    data: {
+                        '_token': '{{csrf_token()}}',
+                        'task_id': $(this).find('input[name="task_id"]').val(),
+                        'worker_id': $(this).find('select[name="worker_id"]').val()
+                    },
+                    success: function (response) {
+                        if (response.data.code === 201) {
+                            ele.closest('.modal-body')
+                                .prepend(`
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                <p>User Assigned Successfully</p>
+                            </div>
+                            `)
+                        }
+                    },
+                    error: function (errors) {
+                        if (errors.responseJSON) {
+                            let error = errors.responseJSON.errors['worker_id'][0];
+                            let e = $(task_model).find('select[name="worker_id"]');
+                            e.parent('div').addClass('has-error');
+                            $(`<span class="help-block">${error}</span>`).insertAfter(e);
+                        }
+                    }
+                });
+                setTimeout(function () {
+                    ele.find('.alert').addClass('hide')
+                }, 500)
+            });
+            task_model.on('hide.bs.modal', function () {
+                $(this).find('.alert').remove();
+                $(this).find('select[name="worker_id"]').val('');
+                $(this).find('select[name="worker_id"]').parent().removeClass('has-error');
+                $(this).find('select[name="worker_id"]').siblings('.help-block').remove();
+            })
         });
     </script>
 @endpush

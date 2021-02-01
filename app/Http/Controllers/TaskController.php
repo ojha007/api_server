@@ -12,7 +12,10 @@ use App\Http\Responses\Tasks\ShowResponse;
 use App\Http\Responses\Tasks\StoreResponse;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -108,5 +111,30 @@ class TaskController extends Controller
             $this->repository->getTaskForCalendar()
         );
 
+    }
+
+    public function assigned(Request $request)
+    {
+
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'task_id' => 'required|exists:tasks,id',
+                'worker_id' => 'required|exists:users,id',
+            ]);
+            if ($validator->fails())
+                return response()->json(['errors' => $validator->errors()], 401);
+            try {
+                DB::beginTransaction();
+                DB::table('task_workers')
+                    ->insert($request->except('_token'));
+                DB::commit();
+                return response()
+                    ->json(['data' => ['message' => 'SUCCESS', 'code' => 201]]);
+
+            } catch (Exception $exception) {
+                DB::rollBack();
+                return new ErrorResponse($exception);
+            }
+        }
     }
 }

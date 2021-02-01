@@ -6,6 +6,7 @@ use App\Abstracts\Repository;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserRepository extends Repository
 {
@@ -42,7 +43,7 @@ class UserRepository extends Repository
         return Permission::findByName($permission, $guard)->users;
     }
 
-    public function selectUsers($users)
+    public function selectUsers($users): array
     {
         $selectUsers = [];
         foreach ($users as $user) {
@@ -61,5 +62,10 @@ class UserRepository extends Repository
             }
             $user->revokePermissionTo($routePrefix . '-permission');
         }
+    }
+
+    public function getUsersByRole($roles, $guard = null)
+    {
+        return Role::findByName(User::WORKER)->users;
     }
 }

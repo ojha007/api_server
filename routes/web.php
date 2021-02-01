@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');
     $router->get('tasks/calendar', 'TaskController@calendar')->name('tasks.calendar');
+    $router->post('tasks/assigned', 'TaskController@assigned')->name('tasks.assigned');
     $router->resource('tasks', 'TaskController');
 
     Route::resource('users', 'UserController')->except(['edit', 'create']);

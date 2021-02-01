@@ -5,7 +5,9 @@ namespace App\Http\Responses\UpcomingSchedule;
 
 
 use App\Models\Task;
+use App\Models\User;
 use App\Repositories\TaskRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Contracts\Support\Responsable;
 
 class IndexResponse implements Responsable
@@ -27,7 +29,10 @@ class IndexResponse implements Responsable
 
         }
         $tasks = (new TaskRepository(new Task()))->getTaskForCalendar();
-        return view($this->viewPath . 'index', compact('tasks'));
+        $workers = (new UserRepository(new User()))
+            ->getUsersByRole(User::WORKER)
+            ->pluck('name', 'id');
+        return view($this->viewPath . 'index', compact('tasks', 'workers'));
 
     }
 }
