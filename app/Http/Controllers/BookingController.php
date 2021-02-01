@@ -73,7 +73,7 @@ class BookingController extends Controller
     public function show($id)
     {
         try {
-            $booking = $this->repository->getById($id);
+            $booking = $this->repository->getByIdWith($id, 'task', 'user', 'payment');
             return new ShowResponse($this->viewPath, $booking);
         } catch (Exception $exception) {
             return new ErrorResponse($exception);
@@ -116,7 +116,7 @@ class BookingController extends Controller
             $max = (new TaskRepository(new Task()))->maxId();
             $booking->task()->create([
                 'code' => 'T' . str_pad($max + 1, 4, 0, STR_PAD_LEFT),
-                'title' => 'New Task' . now()->format('Y-m-d'),
+                'title' => $booking->name . ' ' . $booking->moving_date,
                 'booking_id' => $id,
                 'date' => $booking->moving_date
             ]);

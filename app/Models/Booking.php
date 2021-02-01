@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Booking extends Model
 {
@@ -24,6 +25,8 @@ class Booking extends Model
         'dropoff_address',
         'additional_address',
         'access_parking',
+        'additional_address',
+        'description',
         'additional_service',
         'size_of_moving',
         'hear_about_us',
@@ -42,9 +45,9 @@ class Booking extends Model
         return $this->hasMany(BookingPayment::class, 'booking_id');
     }
 
-    public function task(): BelongsTo
+    public function task(): HasOne
     {
-        return $this->belongsTo(Task::class, 'booking_id');
+        return $this->hasOne(Task::class, 'booking_id');
     }
 
     public static function allSizeOfMoving(): array
@@ -68,4 +71,5 @@ class Booking extends Model
     {
         return $this::allSizeOfMoving()[$id];
     }
+
 }

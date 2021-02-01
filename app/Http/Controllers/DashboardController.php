@@ -4,6 +4,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Booking;
+use App\Models\Enquiry;
+use App\Models\Task;
+use App\Models\User;
+use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
+
 class DashboardController extends Controller
 {
 
@@ -26,6 +33,17 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        return view($this->viewPath . 'index');
+        $workers = Role::findByName(User::WORKER)->users()->paginate(10);
+        $bookings = Booking::select('id', 'name', 'email', 'phone', 'is_verified')
+            ->whereDate('created_at', Carbon::today())
+            ->orderByDesc('id')
+            ->paginate(10);
+        $tasks = Task::with('workers')
+            ->orderByDesc('id')
+            ->paginate(10);
+        $enquiries = Enquiry::whereDate('created_at', Carbon::today())
+            ->orderByDesc('id')
+            ->paginate(10);
+        return view($this->viewPath . 'index', compact('workers', 'bookings', 'tasks', 'enquiries'));
     }
 }

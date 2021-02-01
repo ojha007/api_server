@@ -27,9 +27,7 @@ class TasksResource extends JsonResource
             'id' => $this->id ?? '',
             'code' => $this->code ?? '',
             'title' => $this->title ?? '',
-            'booking' => [
-                $this->booking ?? ''
-            ],
+            'booking' => $this->booking ?? '',
             'workers' => $workers
 
         ];

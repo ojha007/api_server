@@ -32,4 +32,11 @@ class Task extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+
+    public function getAllWorkersAttribute()
+    {
+        if ($this->getRelation('workers')) {
+            return $this->getRelation('workers')->pluck('name')->implode(',');
+        }
+    }
 }

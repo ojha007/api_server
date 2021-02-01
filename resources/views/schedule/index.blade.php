@@ -9,78 +9,78 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-3">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h4 class="box-title">Draggable Schedule</h4>
-                </div>
-                <div class="box-body">
-                    <!-- the events -->
-                    <div id="external-events">
-                        <div class="external-event bg-green ui-draggable ui-draggable-handle"
-                             style="position: relative;">Lunch
-                        </div>
-                        <div class="external-event bg-yellow ui-draggable ui-draggable-handle"
-                             style="position: relative;">Go home
-                        </div>
-                        <div class="external-event bg-aqua ui-draggable ui-draggable-handle"
-                             style="position: relative;">Do homework
-                        </div>
-                        <div class="external-event bg-light-blue ui-draggable ui-draggable-handle"
-                             style="position: relative;">Work on UI design
-                        </div>
-                        <div class="external-event bg-red ui-draggable ui-draggable-handle" style="position: relative;">
-                            Sleep tight
-                        </div>
-                        <div class="checkbox">
-                            <label for="drop-remove">
-                                <input type="checkbox" id="drop-remove">
-                                remove after drop
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /. box -->
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Create Schedule</h3>
-                </div>
-                <div class="box-body">
-                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                        <ul class="fc-color-picker" id="color-chooser">
-                            <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                            <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                        </ul>
-                    </div>
-                    <!-- /btn-group -->
-                    <div class="input-group">
-                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+    {{--        <div class="col-md-3">--}}
+    {{--            <div class="box box-solid">--}}
+    {{--                <div class="box-header with-border">--}}
+    {{--                    <h4 class="box-title">Draggable Schedule</h4>--}}
+    {{--                </div>--}}
+    {{--                <div class="box-body">--}}
+    {{--                    <!-- the events -->--}}
+    {{--                    <div id="external-events">--}}
+    {{--                        <div class="external-event bg-green ui-draggable ui-draggable-handle"--}}
+    {{--                             style="position: relative;">Lunch--}}
+    {{--                        </div>--}}
+    {{--                        <div class="external-event bg-yellow ui-draggable ui-draggable-handle"--}}
+    {{--                             style="position: relative;">Go home--}}
+    {{--                        </div>--}}
+    {{--                        <div class="external-event bg-aqua ui-draggable ui-draggable-handle"--}}
+    {{--                             style="position: relative;">Do homework--}}
+    {{--                        </div>--}}
+    {{--                        <div class="external-event bg-light-blue ui-draggable ui-draggable-handle"--}}
+    {{--                             style="position: relative;">Work on UI design--}}
+    {{--                        </div>--}}
+    {{--                        <div class="external-event bg-red ui-draggable ui-draggable-handle" style="position: relative;">--}}
+    {{--                            Sleep tight--}}
+    {{--                        </div>--}}
+    {{--                        <div class="checkbox">--}}
+    {{--                            <label for="drop-remove">--}}
+    {{--                                <input type="checkbox" id="drop-remove">--}}
+    {{--                                remove after drop--}}
+    {{--                            </label>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <!-- /.box-body -->--}}
+    {{--            </div>--}}
+    {{--            <!-- /. box -->--}}
+    {{--            <div class="box box-solid">--}}
+    {{--                <div class="box-header with-border">--}}
+    {{--                    <h3 class="box-title">Create Schedule</h3>--}}
+    {{--                </div>--}}
+    {{--                <div class="box-body">--}}
+    {{--                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">--}}
+    {{--                        <ul class="fc-color-picker" id="color-chooser">--}}
+    {{--                            <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                            <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>--}}
+    {{--                        </ul>--}}
+    {{--                    </div>--}}
+    {{--                    <!-- /btn-group -->--}}
+    {{--                    <div class="input-group">--}}
+    {{--                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">--}}
 
-                        <div class="input-group-btn">
-                            <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                        </div>
-                        <!-- /btn-group -->
-                    </div>
-                    <!-- /input-group -->
-                </div>
-            </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-            <div class="box box-primary">
+    {{--                        <div class="input-group-btn">--}}
+    {{--                            <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>--}}
+    {{--                        </div>--}}
+    {{--                        <!-- /btn-group -->--}}
+    {{--                    </div>--}}
+    {{--                    <!-- /input-group -->--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    <!-- /.col -->
+        <div class="col-md-12">
+            <div class="box box-default">
                 <div class="box-body no-padding">
                     <!-- THE CALENDAR -->
                     <div id="calendar"></div>
@@ -103,24 +103,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="row" style="border-bottom: 1px solid bisque">
-                        {!! Form::open(['route'=>'tasks.assigned']) !!}
-                        <div class="form-group col-md-6">
-                            <label for="worker_id">Assign To Worker</label>
-                            {!! Form::select('worker_id',$workers ,null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
-                            <input type="hidden" name="task_id" value="">
-                        </div>
-                        <div class="col-md-2 form-group">
-                            <label></label>
-                            <button
-                                id="assignBtn"
-                                class="btn btn-flat btn-primary pull-right"
-                                style="margin-top: 1.6em;">
-                                Assign
-                            </button>
-                        </div>
+                       <div class="col-md-12">
+                           {!! Form::open(['route'=>'tasks.assigned']) !!}
+                           <div class="form-group col-md-9">
+                               <label for="worker_id">Assign To Worker</label>
+                               {!! Form::select('worker_id',$workers ,null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
+                               <input type="hidden" name="task_id" value="">
+                           </div>
+                           <div class="col-md-3 form-group pull-left">
+                               <label></label>
+                               <button
+                                   id="assignBtn"
+                                   class="btn btn-flat btn-primary pull-left"
+                                   style="margin-top: 1.8em;">
+                                   Assign
+                               </button>
+                           </div>
+                       </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12" style="padding: 3rem">
+                        <div class="col-md-12" style="padding: 1em">
 
                         </div>
                     </div>
@@ -174,15 +176,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const events = document.getElementById('external-events');
-            new FullCalendar.Draggable(events, {
-                itemSelector: '.external-event',
-                eventData: function (eventEl) {
-                    return {
-                        title: eventEl.innerText.trim(),
-                    }
-                }
-            });
+            // const events = document.getElementById('external-events');
+            // new FullCalendar.Draggable(events, {
+            //     itemSelector: '.external-event',
+            //     eventData: function (eventEl) {
+            //         return {
+            //             title: eventEl.innerText.trim(),
+            //         }
+            //     }
+            // });
             // $('#task_modal').find('.dropdown-menu >li:first-child').on('click', function () {
             //     $('#assign_task').modal('show')
             // })
@@ -209,16 +211,62 @@
                         success: function (response) {
                             let modal = $('#task_modal');
                             $('#task_modal_title').html(response.title);
-                            modal.find('form input[name="task_id"]').val(response['id'])
-                            let template = `<p class="booking_name">
-                                            <i class="fa fa-2x fa-user"></i> ${response['booking'][0]['name']}</p>
-                                            <p><i class="fa fa-2x fa-envelope"></i> ${response['booking'][0]['email']}</p>
-                                            <p><i class="fa fa-2x fa-phone"></i> ${response['booking'][0]['phone']}</p>
-                                            <p>Phone: ${response['booking'][0]['phone']}</p>
-                                            <p>Phone: ${response['booking'][0]['phone']}</p>
-                                            <p>Phone: ${response['booking'][0]['phone']}</p>
+                            modal.find('form input[name="task_id"]').val(response['id']);
+                            let template = `<div class="col-xs-12">
+                                             <h3>${response['booking']['name']}</h3>
+                                             <h4>${response['booking']['email']}</h4>
+                                             <h4>${response['booking']['phone']}</h4></div><br>
+                                             <div class="col-xs-12 table-responsive">
+                                             <table class="table table-striped table-borderless">
+                                             <tbody>
+                                             <tr>
+                                             <th>From Suburb</th>
+                                             <td>${response['booking']['moving_from_suburb']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>To Suburb</th>
+                                             <td>${response['booking']['moving_to_suburb']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>PickUp Address</th>
+                                             <td>${response['booking']['pickup_address']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>Dropoff Address</th>
+                                             <td>${response['booking']['dropoff_address']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>Additional Address</th>
+                                             <td>${response['booking']['additional_address']}</td>
+                                             </tr><tr>
+                                             <th>Additional Service</th>
+                                             <td>${response['booking']['additional_service']}</td>
+                                             </tr>
 
+                                             <tr>
+                                             <th>Access Parking</th>
+                                             <td>${response['booking']['access_parking']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>Size of Moving</th>
+                                             <td>${response['booking']['size_of_moving']}</td>
+                                             </tr>
 
+                                             <tr>
+                                             <th>Description</th>
+                                             <td>${response['booking']['description']}</td>
+                                             </tr>
+                                             <tr>
+                                             <th>Inventory</th>
+                                             <td>${response['booking']['moving_from_suburb']}</td>
+                                             </tr>
+                                            <tr>
+                                             <th>Quotes</th>
+                                             <td>${response['booking']['quotes']}</td>
+                                             </tr>
+                                            </tbody>
+                                            </table>
+                                            </div>
                                             `
                             $('.modal-body>div:nth-child(2)>div').html(template)
                             modal.modal('show')
@@ -261,7 +309,7 @@
                     },
                     error: function (errors) {
                         if (errors['responseJSON']) {
-                            let error = errors['responseJSON'].errors['worker_id'][0];
+                            let error = errors['responseJSON'].errors['worker_id'];
                             let e = $(task_model).find('select[name="worker_id"]');
                             e.parent('div').addClass('has-error');
                             $(`<span class="help-block">${error}</span>`).insertAfter(e);
