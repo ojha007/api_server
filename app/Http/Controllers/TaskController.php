@@ -13,6 +13,7 @@ use App\Http\Responses\Tasks\StoreResponse;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -100,7 +101,7 @@ class TaskController extends Controller
         try {
             $task = $this->repository->getByIdWith($id, 'workers', 'status', 'booking');
             return new ShowResponse($this->viewPath, $task);
-        } catch (\Exception $exception) {
+        } catch (ModelNotFoundException | Exception $exception) {
             return new ErrorResponse($exception);
         }
     }

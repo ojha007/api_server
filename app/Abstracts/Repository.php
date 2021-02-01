@@ -161,6 +161,6 @@ abstract class Repository implements RepositoryInterface
 
     public function getByIdWith($id, ...$with)
     {
-        return $this->model->with($with)->find($id);
+        return $this->model->with($with)->findOrFail($id);
     }
 }
