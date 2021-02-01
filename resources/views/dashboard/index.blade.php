@@ -13,7 +13,7 @@
 @section('content')
     <div class="row">
         @component('dashboard.countWidget',['bg'=>'green','title'=>'Today Bookings','count'=>$bookings->count(),'icon'=>'check-square-o'])@endcomponent
-        @component('dashboard.countWidget',['bg'=>'default','title'=>'Tasks','count'=>100,'icon'=>'list'])@endcomponent
+        @component('dashboard.countWidget',['bg'=>'default','title'=>'Tasks','count'=>$tasks->count(),'icon'=>'list'])@endcomponent
         @component('dashboard.countWidget',['bg'=>'yellow','title'=>'Total Worker','count'=>$workers->count(),'icon'=>'users'])@endcomponent
         @component('dashboard.countWidget',['bg'=>'primary','title'=>'Today Enquiries','count'=>$enquiries->count(),'icon'=>'question-circle'])@endcomponent
     </div>
