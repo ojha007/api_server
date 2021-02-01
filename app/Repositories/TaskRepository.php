@@ -29,7 +29,7 @@ class TaskRepository extends Repository
     public function getTaskForCalendar(): \Illuminate\Support\Collection
     {
         return DB::table('tasks as t')
-            ->select('b.moving_date as start','t.title as title')
+            ->select('b.moving_date as start', 't.title as title', 't.id as id')
             ->join('bookings as b', 'b.id', '=', 't.booking_id')
             ->orderByDesc('t.id')
             ->get();

@@ -132,7 +132,8 @@ abstract class Repository implements RepositoryInterface
      */
     public function getWith(...$relation)
     {
-        return $this->model->with($relation)->orderByDesc('id')->get();
+        return $this->model->with($relation)
+            ->orderByDesc('id')->get();
     }
 
     /**

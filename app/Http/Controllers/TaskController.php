@@ -56,7 +56,7 @@ class TaskController extends Controller
     {
     }
 
-    public function destroy()
+    public function destroy(): ErrorResponse
     {
         try {
             DB::beginTransaction();
@@ -95,7 +95,8 @@ class TaskController extends Controller
     public function show($id)
     {
         try {
-            return new ShowResponse($this->viewPath, $id);
+            $task = $this->repository->getByIdWith($id, 'workers', 'status', 'booking');
+            return new ShowResponse($this->viewPath, $task);
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
         }

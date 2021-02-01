@@ -6,42 +6,30 @@ namespace App\Http\Responses\Tasks;
 
 use App\Http\Resources\TasksResource;
 use App\Models\Task;
-use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Support\Responsable;
 
 class ShowResponse implements Responsable
 {
     protected $viewPath;
-    /**
-     * @var Task
-     */
-    protected $model;
-    /**
-     * @var TaskRepository
-     */
-    protected $repository;
-    /**
-     * @var int
-     */
-    private $id;
+
+    protected $task;
+
 
     /**
      * IndexResponse constructor.
      * @param string $viewPath
-     * @param int $id
+     * @param Task $task
      */
-    public function __construct(string $viewPath, int $id)
+    public function __construct(string $viewPath, Task $task)
     {
         $this->viewPath = $viewPath;
-        $this->model = new Task();
-        $this->repository = new TaskRepository($this->model);
-        $this->id = $id;
+        $this->task = $task;
     }
 
     public function toResponse($request)
     {
-        $task = $this->repository->getById($this->id);
-        if ($request->wantsJson()) {
+        $task = $this->task;
+        if ($request->wantsJson() || $request->ajax()) {
             return new TasksResource($task);
         }
         return view($this->viewPath . 'show', compact('task'));

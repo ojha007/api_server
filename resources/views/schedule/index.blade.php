@@ -91,25 +91,49 @@
         </div>
         <!-- /.col -->
     </div>
-    <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+    <div class="modal right fade" id="task_modal" tabindex="-1" role="dialog" aria-labelledby="task_modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel2">Right Sidebar</h4>
+{{--                    <div class="btn-group pull-right">--}}
+{{--                        <button type="button" class="btn btn-flat btn-default dropdown-toggle" data-toggle="dropdown">--}}
+{{--                            <span class="caret"></span>--}}
+{{--                        </button>--}}
+{{--                        <ul class="dropdown-menu">--}}
+{{--                            <li><a href="#">Assign To Worker</a></li>--}}
+{{--                            <li>--}}
+{{--                                <a href="#" data-dismiss="modal">--}}
+{{--                                    Close--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+                        <button type="button" class="btn btn-flat btn-default pull-right"  data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+{{--                    </div>--}}
+                    <h4 class="modal-title" id="task_modal_title"></h4>
                 </div>
 
                 <div class="modal-body">
-                    <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                        3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                        laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
-                        coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes
-                        anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-                        occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard
-                        of them accusamus labore sustainable VHS.
-                    </p>
+                    <div class="row" style="border-bottom: 1px solid bisque">
+                        {{--                        <div class="col-md-6">--}}
+                        <div class="form-group col-md-6">
+                            <label for="worker_id">Assign To Worker</label>
+                            {!! Form::select('worker_id',[],null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label></label>
+                            <button class="btn btn-flat btn-default pull-right" style="margin-top: 1.6em;">
+                                Assign
+                            </button>
+                        </div>
+                        {{--                        </div>--}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                        </div>
+                    </div>
                 </div>
 
             </div><!-- modal-content -->
@@ -158,25 +182,6 @@
     <script src="{{asset('backend/js/calendar.js')}}" type="text/javascript"></script>
 
     <script>
-        {{--async function getAllTasks() {--}}
-        {{--    return $.ajax({--}}
-        {{--        'url': '{{route('tasks.index')}}',--}}
-        {{--        'method': 'GET',--}}
-        {{--        'success': function (response) {--}}
-        {{--            return response;--}}
-        {{--        },--}}
-        {{--        'error': function (error) {--}}
-        {{--            console.log(error)--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--}--}}
-        {{--var SITEURL = "{{route('tasks.index')}}";--}}
-
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
         document.addEventListener('DOMContentLoaded', function () {
             const events = document.getElementById('external-events');
             new FullCalendar.Draggable(events, {
@@ -187,7 +192,9 @@
                     }
                 }
             });
-
+            // $('#task_modal').find('.dropdown-menu >li:first-child').on('click', function () {
+            //     $('#assign_task').modal('show')
+            // })
             const calendarEl = document.getElementById('calendar');
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -204,11 +211,18 @@
                         arg.draggedEl.parentNode.removeChild(arg.draggedEl);
                     }
                 },
-                eventClick: function (arg) {
-                    $('#myModal2').modal('show')
-                    // if (confirm('Are you sure you want to delete this event?')) {
-                    //     arg.event.remove()
-                    // }
+                eventClick: function (info) {
+                    $.ajax({
+                        url: '{{url('tasks')}}' + '/' + info.event.id,
+                        type: 'GET',
+                        success: function (response) {
+                            $('#task_modal_title').html(response.title)
+                            let template = `<p>Name: ${response['booking'][0]['name']}</p>`
+                            $('.modal-body>div:nth-child(2)>div').html(template)
+                            // $('.modal-body').html(response);
+                            $('#task_modal').modal('show')
+                        }
+                    });
                 },
                 dayMaxEvents: true,
                 events: "{{route('tasks.calendar')}}"

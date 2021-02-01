@@ -23,10 +23,6 @@
                 <tr>
                     <td>Code</td>
                     <td>Title</td>
-                    <td>Description</td>
-                    <td>Date/Time</td>
-                    <td>Workers</td>
-                    <td>Status</td>
                     <td>Actions</td>
                 </tr>
                 </thead>
@@ -35,10 +31,10 @@
                     <tr>
                         <td>{{$task->code}}</td>
                         <td>{{$task->title}}</td>
-                        <td>{{$task->description}}</td>
-                        <td>{{$task->date}}</td>
-                        <td>{{$task->workers->pluck('name')->implode(',')}}</td>
-                        <td>{!! spanByStatus($task->status->status) !!}</td>
+{{--                        <td>{{$task->description}}</td>--}}
+{{--                        <td>{{$task->date}}</td>--}}
+{{--                        <td>{{$task->workers->pluck('name')->implode(',')}}</td>--}}
+{{--                        <td>{!! spanByStatus($task->status->status) !!}</td>--}}
                         <td>
                             {!! Form::open(['route'=>['tasks.destroy',$task->id],'class'=>'form-horizontal']) !!}
                             @can('task-view')
