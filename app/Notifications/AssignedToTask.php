@@ -74,7 +74,8 @@ class AssignedToTask extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [
-            //
+            'name' => $this->task->title ?? '',
+            'email' => $this->user->name ?? '',
         ];
     }
 }

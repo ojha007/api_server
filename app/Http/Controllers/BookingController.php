@@ -130,7 +130,8 @@ class BookingController extends Controller
 
             $email = $this->repository->getById($id)->email;
             Notification::route('mail', $email)
-                ->notify(new BookingConfirmed());
+                ->notify(new BookingConfirmed($booking,'mail'));
+            Notification::send($booking->user, new BookingConfirmed($booking, 'database'));
             DB::commit();
             if ($request->wantsJson()) {
                 return response()
@@ -144,7 +145,6 @@ class BookingController extends Controller
             }
 
         } catch (Exception $exception) {
-            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }

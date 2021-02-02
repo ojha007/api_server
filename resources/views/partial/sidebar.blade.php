@@ -45,9 +45,9 @@
                     <a href="#">
                         <i class="fa fa-circle-o"></i>Worker Schedule</a>
                 </li>
-                <li class="">
-                    <a href="#">
-                        <i class="fa fa-circle-o"></i>Email</a>
+                <li class="{{request()->routeIs('mails.index') ? 'active' : ''}}">
+                    <a href="{{route('mails.index')}}">
+                        <i class="fa fa-circle-o"></i>Mails</a>
                 </li>
             </ul>
         </li>

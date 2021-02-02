@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,10 +12,26 @@ class BookingConfirmed extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    /**
+     * @var Booking
+     */
+    protected $booking;
+    /**
+     * @var string
+     */
+    protected $via;
 
-    public function __construct()
+
+    /**
+     * BookingConfirmed constructor.
+     * @param Booking $booking
+     * @param string $via
+     */
+    public function __construct(Booking $booking, string $via)
     {
 
+        $this->booking = $booking;
+        $this->via = $via;
     }
 
     /**
@@ -25,7 +42,7 @@ class BookingConfirmed extends Notification implements ShouldQueue
      */
     public function via($notifiable): array
     {
-        return ['mail', 'broadcast', 'database'];
+        return [$this->via];
     }
 
     /**
@@ -53,7 +70,17 @@ class BookingConfirmed extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [
-            //
+
+        ];
+    }
+
+    public function toDatabase($notifiable): array
+    {
+
+        return [
+            'booking_id' => $this->booking->id ?? '',
+            'name' => $this->booking->name ?? '',
+            'email' => $this->booking->email ?? '',
         ];
     }
 }

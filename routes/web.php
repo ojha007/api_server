@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->get('tasks/calendar', 'TaskController@calendar')->name('tasks.calendar');
     $router->post('tasks/assigned', 'TaskController@assigned')->name('tasks.assigned');
     $router->resource('tasks', 'TaskController');
+    $router->resource('mails', 'MailController');
 
     Route::resource('users', 'UserController')->except(['edit', 'create']);
     Route::resource('roles', 'RoleController');
