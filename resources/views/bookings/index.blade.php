@@ -11,19 +11,58 @@
 @endsection
 @section('breadcrumb')
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <link type="text/css" rel="stylesheet" href="{{asset('backend/css/dp.css')}}">
+@endpush
 @section('content')
-    <div class="box box-default border-0">
-        <div class="box-header">
-            <h3 class="box-title"></h3>
-            @can('booking-create')
-                <div class="box-tools pull-right p-3">
-                    <a href="{{route('bookings.create')}}">
-                        <i class="fa fa-plus"></i>
-                        Create Booking
-                    </a>
-                </div>
-            @endcan
+    <div class="box box-solid collapsed-box ">
+        <div class="box-header with-border">
+            <h3 class="box-title">Advanced Filter</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool"
+                        data-widget="collapse">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
         </div>
+        <div class="box-body">
+            <div class="col-md-4" style="padding-left: 0">
+                <label for="moving_date">Moving Date:</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <input type="text" class="form-control pull-right" id="moving_date">
+                </div>
+            </div>
+            <div class="col-md-3" style="padding-left: 0">
+                {!! Form::label('status','Status:') !!}
+                {!! Form::select('is_verified',[
+                     '1'=>'Confirmed',
+                     '0'=>"Pending"
+                    ],null,['class'=>'form-control']) !!}
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-flat btn-primary">
+                Filter
+            </button>
+        </div>
+    </div>
+    <div class="box-header">
+        <h3 class="box-title"></h3>
+        @can('booking-create')
+            <div class="box-tools pull-right p-3 ">
+                <a href="{{route('bookings.create')}}">
+                    <i class="fa fa-plus"></i>
+                    Create Booking
+                </a>
+            </div>
+        @endcan
+    </div>
+    <div class="box box-default border-0">
+
         <div class="box-body">
             <table class="table table-bordered table-condensed">
                 <thead>
@@ -97,3 +136,20 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script src="{{asset('/backend/js/moment.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('/backend/js/dp.js')}}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $('#moving_date').daterangepicker({
+                orientation: "top right",
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'YYYY-MM-DD hh:mm A'
+                },
+
+            })
+        });
+    </script>
+@endpush
