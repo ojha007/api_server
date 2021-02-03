@@ -20,7 +20,7 @@ class CreateBookingsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->timestamp('moving_date');
+            $table->date('moving_date');
             $table->string('moving_from_suburb');
             $table->string('moving_to_suburb');
             $table->string('pickup_address');
