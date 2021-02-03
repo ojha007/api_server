@@ -15,7 +15,7 @@ class BookingRequest extends FormRequestForApi
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|numeric',
-            'moving_date' => 'required|date_format:Y-m-d H:i:s',
+            'moving_date' => 'required|date_format:Y-m-d',
             'moving_from_suburb' => 'required|string',
             'moving_to_suburb' => 'required|string',
             'access_parking' => 'required|string',
