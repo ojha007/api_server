@@ -61,6 +61,7 @@ class BookingController extends Controller
             DB::beginTransaction();
             $attributes = $request->validated();
             $attributes['user_id'] = auth()->id();
+            $attributes['additional_services'] = implode(',', $request->get('additional_services'));
             $this->repository->create($attributes);
             DB::commit();
         } catch (Exception $exception) {

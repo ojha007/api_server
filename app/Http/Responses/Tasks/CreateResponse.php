@@ -4,9 +4,7 @@
 namespace App\Http\Responses\Tasks;
 
 
-use App\Models\State;
 use App\Models\User;
-use App\Repositories\BaseRepository;
 use App\Repositories\WorkerRepository;
 use Illuminate\Contracts\Support\Responsable;
 
@@ -26,8 +24,9 @@ class CreateResponse implements Responsable
     public function toResponse($request)
     {
 
-        $selectStates = (new BaseRepository(new State()))->getSelectItems('name');
+        $selectStates = [];
         $selectWorkers = (new WorkerRepository(new User()))->getSelectItems('name');
-        return view($this->viewPath . 'create', compact('selectStates', 'selectWorkers'));
+        return view($this->viewPath . 'create', compact('selectStates',
+            'selectWorkers'));
     }
 }

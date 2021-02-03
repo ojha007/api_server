@@ -74,7 +74,7 @@
                     </tr>
                     <tr>
                         <th>Size of Moving:</th>
-                        <td>{{\App\Models\Booking::allSizeOfMoving()[$booking->size_of_moving] ?? ''}}</td>
+                        <td>{{$booking->size_of_moving ?? ''}}</td>
                     </tr>
                     <tr>
                         <th>Access Parking:</th>

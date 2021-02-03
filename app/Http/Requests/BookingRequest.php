@@ -4,7 +4,6 @@
 namespace App\Http\Requests;
 
 
-use App\Models\Booking;
 use App\Requests\FormRequestForApi;
 
 class BookingRequest extends FormRequestForApi
@@ -24,11 +23,12 @@ class BookingRequest extends FormRequestForApi
             'dropoff_address' => 'required|string',
             'additional_address' => 'nullable',
             'additional_service' => 'nullable',
-            'size_of_moving' => 'required|in:' . implode(',', array_keys(Booking::allSizeOfMoving())),
+            'size_of_moving' => 'required',
             'hear_about_us' => 'nullable',
             'inventory' => 'nullable',
             'comments' => 'nullable',
             'description' => 'nullable',
+            'additional_services' => 'array'
 
         ];
 
