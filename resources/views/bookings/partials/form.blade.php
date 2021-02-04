@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-9 col-sm-12 @error('moving_date') has-error @enderror">
             <input class="form-control"
-                   type="datetime-local"
+                   type="date"
                    required
                    name="moving_date"
                    id="moving_date" value=''
