@@ -29,7 +29,7 @@ class TaskRepository extends Repository
     public function getTaskForCalendar(): \Illuminate\Support\Collection
     {
         return DB::table('tasks as t')
-            ->select('t.title as title', 't.id as id')
+            ->select('t.title as title', 't.id as id', 'b.moving_date', 'b.time')
             ->selectRaw('concat(b.moving_date," ",IFNULL(b.time,"")) as start')
             ->join('bookings as b', 'b.id', '=', 't.booking_id')
             ->when(auth()->user()->super === 0, function ($query) {
@@ -37,7 +37,13 @@ class TaskRepository extends Repository
                     ->where('tw.worker_id', '=', auth()->id());
             })
             ->orderByDesc('t.id')
-            ->get();
+            ->get()->map(function ($task) {
+                return [
+                    'start' => $task->moving_date . ($task->time ? ' ' . $task->time : ''),
+                    'id' => $task->id,
+                    'title' => $task->title
+                ];
+            });
     }
 
     public function getAssignedTask()

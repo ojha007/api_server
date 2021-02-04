@@ -27,6 +27,7 @@ class IndexResponse implements Responsable
     {
 
         $tasks = (new TaskRepository(new Task()))->getTaskForCalendar();
+//        dd($tasks);
         $workers = (new UserRepository(new User()))
             ->getUsersByRole(User::WORKER)
             ->pluck('name', 'id');

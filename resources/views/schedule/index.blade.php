@@ -215,7 +215,11 @@
                             let template = `<div class="col-xs-12">
                                              <h3>${response['booking']['name']}</h3>
                                              <h4>${response['booking']['email']}</h4>
-                                             <h4>${response['booking']['phone']}</h4></div><br>
+                                             <h4>${response['booking']['phone']}
+                                              <small class="pull-right">Moving Date :<strong>${response['booking']['moving_date']}</strong></small>
+                                              <br><small class="pull-right">Time:<strong> ${response['booking']['time']}</strong></small>
+                                             </h4>
+                                            </div><br><br>
                                              <div class="col-xs-12 table-responsive">
                                              <table class="table table-striped table-borderless">
                                              <tbody>
@@ -264,8 +268,13 @@
                                              <th>Quotes</th>
                                              <td>${response['booking']['quotes']}</td>
                                              </tr>
+                                            <tr>
+                                             <th>Payment</th>
+                                             <td>${response['payment']}</td>
+                                             </tr>
                                             </tbody>
                                             </table>
+
                                             </div>
                                             `
                             $('.modal-body>div:nth-child(2)>div').html(template)

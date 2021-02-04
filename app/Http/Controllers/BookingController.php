@@ -119,7 +119,7 @@ class BookingController extends Controller
             $max = (new TaskRepository(new Task()))->maxId();
             $booking->task()->create([
                 'code' => 'T' . str_pad($max + 1, 4, 0, STR_PAD_LEFT),
-                'title' => $booking->name . ' ' . $booking->moving_date,
+                'title' => $booking->name . '(' . $booking->moving_date . " " . $request->get('time') . ') ' . $booking->pickup_address,
                 'booking_id' => $id,
                 'date' => $booking->moving_date
             ]);

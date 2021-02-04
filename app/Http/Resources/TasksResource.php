@@ -23,12 +23,17 @@ class TasksResource extends JsonResource
                     ]
                 ];
             })->toArray();
+
+        $payments = $this->booking->payment ?
+            $this->booking->payment->sum('amount') . ' AUD' : 0;
+
         return [
             'id' => $this->id ?? '',
             'code' => $this->code ?? '',
             'title' => $this->title ?? '',
             'booking' => $this->booking ?? '',
-            'workers' => $workers
+            'workers' => $workers,
+            'payment' => $payments
 
         ];
     }
