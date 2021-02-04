@@ -25,9 +25,7 @@ class IndexResponse implements Responsable
 
     public function toResponse($request)
     {
-        if ($request->wantsJson()) {
 
-        }
         $tasks = (new TaskRepository(new Task()))->getTaskForCalendar();
         $workers = (new UserRepository(new User()))
             ->getUsersByRole(User::WORKER)

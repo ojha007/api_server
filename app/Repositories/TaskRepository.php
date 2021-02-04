@@ -29,7 +29,8 @@ class TaskRepository extends Repository
     public function getTaskForCalendar(): \Illuminate\Support\Collection
     {
         return DB::table('tasks as t')
-            ->select('b.moving_date as start', 't.title as title', 't.id as id')
+            ->select('t.title as title', 't.id as id')
+            ->selectRaw('concat(b.moving_date," ",IFNULL(b.time,"")) as start')
             ->join('bookings as b', 'b.id', '=', 't.booking_id')
             ->when(auth()->user()->super === 0, function ($query) {
                 $query->join('task_workers as tw', 'tw.task_id', '=', 't.id')
