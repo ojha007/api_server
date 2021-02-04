@@ -21,13 +21,12 @@ class BookingRequest extends FormRequestForApi
             'pickup_address' => 'required|string',
             'dropoff_address' => 'required|string',
             'additional_address' => 'nullable',
-            'additional_service' => 'nullable',
+            'additional_service' => 'array',
             'size_of_moving' => 'required',
             'hear_about_us' => 'nullable',
             'inventory' => 'nullable',
             'comments' => 'nullable',
             'description' => 'nullable',
-            'additional_services' => 'array'
 
         ];
 

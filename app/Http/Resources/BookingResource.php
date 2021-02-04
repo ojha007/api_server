@@ -32,7 +32,7 @@ class BookingResource extends JsonResource
             'comments' => $this->comments ?? '',
             'quotes' => $this->quotes ?? '',
             'payment' => $payment ? $payment->sum('amount') : 0,
-            'payment_currency' => $payment ? $payment->first()->payment_currency : ''
+            'payment_currency' => $payment->first() ? $payment->first()->payment_currency : ''
         ];
     }
 
