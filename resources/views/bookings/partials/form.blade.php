@@ -28,7 +28,15 @@
             {!! Form::select('size_of_moving',\App\Models\Booking::allSizeOfMoving(),null,['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}
         </div>
     </div>
-
+    <div class="form-group col-md-6 col-sm-12 p-sm-0">
+        <div class="col-md-3 col-sm-12">
+            <label for="additional_service">Additional Service</label>
+        </div>
+        <div class="col-md-9 col-sm-12 @error('additional_service') has-error @enderror">
+            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,
+                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}
+        </div>
+    </div>
     {!! Form::bsText('dropoff_address',old('dropoff_address'),['p'=>6]) !!}
     {!! Form::bsText('additional_address',old('additional_address'),['p'=>6]) !!}
     {!! Form::bsText('access_parking',old('access_parking'),['p'=>6]) !!}

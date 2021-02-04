@@ -45,12 +45,15 @@
                     <a href="#">
                         <i class="fa fa-circle-o"></i>Worker Schedule</a>
                 </li>
-                <li class="{{request()->routeIs('mails.index') ? 'active' : ''}}">
-                    <a href="{{route('mails.index')}}">
-                        <i class="fa fa-circle-o"></i>Mails</a>
-                </li>
+
             </ul>
         </li>
+        @can('mail-view')
+            <li class="{{request()->routeIs('mails.sent') ? 'active' : ''}}">
+                <a href="{{route('mails.sent')}}">
+                    <i class="fa fa-envelope"></i>Mails</a>
+            </li>
+        @endcan
         @can('worker-view')
             <li class="treeview {{request()->routeIs('workers.index','workers.create') ? 'active': ''}}">
                 <a href="#">

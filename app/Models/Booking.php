@@ -67,5 +67,10 @@ class Booking extends Model
         ];
     }
 
+    public static function allAdditionalServices()
+    {
+
+    }
+
 
 }
