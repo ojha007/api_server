@@ -67,9 +67,16 @@ class Booking extends Model
         ];
     }
 
-    public static function allAdditionalServices()
+    public static function allAdditionalServices(): array
     {
-
+        return [
+            'Packing',
+            'Unpacking',
+            'Packing & Unpacking',
+            'Storage',
+            'Work Installation',
+            'Rubbish Removal',
+        ];
     }
 
 

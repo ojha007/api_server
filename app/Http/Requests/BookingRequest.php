@@ -10,11 +10,10 @@ class BookingRequest extends FormRequestForApi
 {
     public function rules(): array
     {
-
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'moving_date' => 'required|date_format:Y-m-d',
             'moving_from_suburb' => 'required|string',
             'moving_to_suburb' => 'required|string',

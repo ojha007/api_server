@@ -33,8 +33,14 @@
             <label for="additional_service">Additional Service</label>
         </div>
         <div class="col-md-9 col-sm-12 @error('additional_service') has-error @enderror">
-            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,
-                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}
+            @foreach(\App\Models\Booking::allAdditionalServices() as $checkbox)
+                <label style="margin: 1rem">
+                    <input type="checkbox" name="additional_service[]" value="{{$checkbox}}">
+                    {{$checkbox}}
+                </label>
+            @endforeach
+{{--            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,--}}
+{{--                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}--}}
         </div>
     </div>
     {!! Form::bsText('dropoff_address',old('dropoff_address'),['p'=>6]) !!}
