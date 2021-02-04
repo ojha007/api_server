@@ -28,6 +28,7 @@ class CreateBookingsTable extends Migration
             $table->string('additional_address')->nullable();
             $table->string('access_parking');
             $table->string('additional_service')->nullable();
+            $table->time('time')->nullable();
             $table->string('size_of_moving');
             $table->string('hear_about_us')->nullable();
             $table->string('inventory')->nullable();

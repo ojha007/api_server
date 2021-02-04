@@ -32,7 +32,8 @@ class Booking extends Model
         'hear_about_us',
         'inventory',
         'comments',
-        'quotes'
+        'quotes',
+        'time',
     ];
 
     public function user(): BelongsTo

@@ -114,6 +114,7 @@ class BookingController extends Controller
             $id = $request->get('booking_id');
             $attributes['is_verified'] = true;
             $attributes['quotes'] = $request->get('quotes');
+            $attributes['time'] = $request->get('time');
             $booking = $this->repository->update($id, $attributes);
             $max = (new TaskRepository(new Task()))->maxId();
             $booking->task()->create([
@@ -122,18 +123,18 @@ class BookingController extends Controller
                 'booking_id' => $id,
                 'date' => $booking->moving_date
             ]);
-            $booking->payment()->create([
-                'amount' => $request->get('amount'),
-                'payment_currency' => $request->get('payment_currency'),
-                'description' => null,
-                'booking_id' => $id,
-                'created_by' => auth()->id(),
-            ]);
+            if ($request->get('amount'))
+                $booking->payment()->create([
+                    'amount' => $request->get('amount'),
+                    'payment_currency' => $request->get('payment_currency'),
+                    'description' => null,
+                    'booking_id' => $id,
+                    'created_by' => auth()->id(),
+                ]);
 
             $email = $this->repository->getById($id)->email;
             Notification::route('mail', $email)
-                ->notify(new BookingConfirmed($booking,'mail'));
-            Notification::send($booking->user, new BookingConfirmed($booking, 'database'));
+                ->notify(new BookingConfirmed($booking));
             DB::commit();
             if ($request->wantsJson()) {
                 return response()
@@ -147,6 +148,7 @@ class BookingController extends Controller
             }
 
         } catch (Exception $exception) {
+            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }

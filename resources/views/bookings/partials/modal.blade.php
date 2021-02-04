@@ -27,6 +27,14 @@
                     </div>
                     <div class="form-group col-md-12">
                         <div class="col-md-2">
+                            <label for="time">Time:</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="time" class="form-control" id="time" name="time">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-2">
                             <label for="quotes">Quotes:</label>
                         </div>
                         <div class="col-md-10">

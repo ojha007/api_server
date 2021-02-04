@@ -25,13 +25,11 @@ class BookingConfirmed extends Notification implements ShouldQueue
     /**
      * BookingConfirmed constructor.
      * @param Booking $booking
-     * @param string $via
      */
-    public function __construct(Booking $booking, string $via)
+    public function __construct(Booking $booking)
     {
 
         $this->booking = $booking;
-        $this->via = $via;
     }
 
     /**
@@ -42,7 +40,7 @@ class BookingConfirmed extends Notification implements ShouldQueue
      */
     public function via($notifiable): array
     {
-        return [$this->via];
+        return ['mail', 'broadcast', 'database'];
     }
 
     /**
