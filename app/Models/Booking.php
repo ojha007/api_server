@@ -52,19 +52,23 @@ class Booking extends Model
 
     public static function allSizeOfMoving(): array
     {
-        return [
-            'Internal move',
-            '1-3 Items',
-            '4-9 Items',
-            '10-15 Items',
-            '1 Bedroom/Studio apartment',
-            '2 Bedroom apartment / House',
-            '3 Bedroom apartment / House',
-            '4+ Bedroom House',
-            'Interstate (East Coast)',
-            'Country',
-            'Office / Business'
-        ];
+        $array = [];
+        foreach ([
+                     'Internal move',
+                     '1-3 Items',
+                     '4-9 Items',
+                     '10-15 Items',
+                     '1 Bedroom/Studio apartment',
+                     '2 Bedroom apartment / House',
+                     '3 Bedroom apartment / House',
+                     '4+ Bedroom House',
+                     'Interstate (East Coast)',
+                     'Country',
+                     'Office / Business'
+                 ] as $item) {
+            $array[$item] = $item;
+        };
+        return $array;
     }
 
     public static function allAdditionalServices(): array

@@ -12,7 +12,7 @@
                    type="date"
                    required
                    name="moving_date"
-                   id="moving_date" value=''
+                   id="moving_date"
                    style=" margin-top: 5px">
         </div>
     </div>

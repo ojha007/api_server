@@ -57,11 +57,12 @@ class BookingController extends Controller
 
     public function store(BookingRequest $request)
     {
+
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
             $attributes['user_id'] = auth()->id();
-            $attributes['additional_services'] = implode(',', $request->get('additional_services'));
+            $attributes['additional_service'] = implode(',', $request->get('additional_service'));
             $this->repository->create($attributes);
             DB::commit();
         } catch (Exception $exception) {
