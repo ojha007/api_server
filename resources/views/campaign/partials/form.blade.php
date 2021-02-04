@@ -1,11 +1,11 @@
 <div class="box-body">
-    {!! Form::bsEmail('from_email',old('from_email'),['p'=>3]) !!}
-    {!! Form::bsText('subject',old('subject'),['p'=>3]) !!}
+    {!! Form::bsEmail('from_email',old('from_email'),['p'=>12]) !!}
+    {!! Form::bsText('subject',old('subject'),['p'=>12]) !!}
     <div class="form-group col-md-12 col-sm-12">
         <div class="col-md-2 col-sm-12">
             <label for="schedule">Schedule :</label>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="radio">
                 <label>
                     <input type="radio" name="schedule_time" value="now" checked="checked">

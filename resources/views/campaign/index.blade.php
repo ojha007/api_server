@@ -9,16 +9,16 @@
 @section('breadcrumb')
 @endsection
 @section('content')
-    <div class="box box-default border-0">
-        <div class="box-header">
-            <h3 class="box-title"></h3>
-            <div class="box-tools pull-right p-3">
-                <a href="{{route('campaigns.create')}}">
-                    <i class="fa fa-plus"></i>
-                    Create Campaign
-                </a>
-            </div>
+    <div class="box-header">
+        <h3 class="box-title"></h3>
+        <div class="box-tools pull-right p-3">
+            <a href="{{route('campaigns.create')}}">
+                <i class="fa fa-plus"></i>
+                Create Campaign
+            </a>
         </div>
+    </div>
+    <div class="box box-default border-0">
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
@@ -39,13 +39,13 @@
                             {!! Form::open(['route'=>['campaigns.destroy',$campaign->id],'class'=>'form-horizontal']) !!}
                             @can('campaign-view')
                                 <a class="btn btn-default btn-flat"
-                                   href="{{route('tasks.show',$campaign->id)}}">
+                                   href="{{route('campaigns.show',$campaign->id)}}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
                             @can('campaign-edit')
                                 <a class="btn btn-primary btn-flat"
-                                   href="{{route('tasks.edit',$campaign->id)}}">
+                                   href="{{route('campaigns.edit',$campaign->id)}}">
                                     <i class="fa fa-edit"></i>
                                 </a>
                             @endcan

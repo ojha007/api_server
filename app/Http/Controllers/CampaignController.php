@@ -75,5 +75,27 @@ class CampaignController extends Controller
             return new ErrorResponse($exception);
         }
     }
+
+    public function edit($id)
+    {
+        $campaign = $this->repository->getById($id);
+        return view($this->viewPath . 'edit', compact('campaign'));
+    }
+
+    public function update(CampaignRequest $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $attributes = $request->validated();
+            $attributes['schedule'] = $request->get('schedule_time') ? now() : $request->get('schedule');
+            $this->repository->update($id, $attributes);
+            DB::commit();
+            return redirect()->route($this->routerPath . 'index')
+                ->with('success', 'Campaign updated successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
+    }
 }
 

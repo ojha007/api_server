@@ -45,10 +45,10 @@ class ShowResponse implements Responsable
     public function toResponse($request)
     {
 
-        $campaigns = $this->repository->getById($this->id);
+        $campaign = $this->repository->getById($this->id);
         if ($request->wantsJson()) {
-            return new CampaignResource($campaigns);
+            return new CampaignResource($campaign);
         }
-        return view($this->viewPath . 'show', compact('campaigns'));
+        return view($this->viewPath . 'show', compact('campaign'));
     }
 }

@@ -51,7 +51,10 @@
         @can('mail-view')
             <li class="{{request()->routeIs('mails.sent') ? 'active' : ''}}">
                 <a href="{{route('mails.sent')}}">
-                    <i class="fa fa-envelope"></i>Mails</a>
+                    <i class="fa fa-envelope"></i>
+                    <span>
+                    Mails
+                </span></a>
             </li>
         @endcan
         @can('worker-view')
@@ -103,7 +106,7 @@
             </li>
         @endcan
         @can('campaign-view')
-            <li class="treeview {{request()->routeIs('campaigns.index','campaigns.reports') ? 'active': ''}}">
+            <li class="treeview {{request()->routeIs('campaigns.index','campaigns.reports','campaigns.*') ? 'active': ''}}">
                 <a href="#">
                     <i class="fa fa-list-alt" aria-hidden="true"></i>
                     <span>Campaign</span>
@@ -112,7 +115,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{{request()->routeIs('campaigns.index') ? 'active': ''}}">
+                    <li class="{{request()->routeIs('campaigns.index','campaigns.show','campaigns.edit') ? 'active': ''}}">
                         <a href="{{route('campaigns.index')}}">
                             <i class="fa fa-circle-o"></i>Campaign</a>
                     </li>
