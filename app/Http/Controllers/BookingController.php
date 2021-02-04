@@ -148,7 +148,7 @@ class BookingController extends Controller
             }
 
         } catch (Exception $exception) {
-            dd($exception);
+//            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }
