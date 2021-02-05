@@ -9,7 +9,11 @@ Route::any('/', function () {
 });
 Route::group(['middleware' => 'auth'], function ($router) {
     $router->get('/home', 'DashboardController@dashboard')->name('dashboard');
-    $router->get('/gmailOauthCallback', 'DashboardController@dashboard')->name('dashboard');
+    $router->get('/gmailOauthCallback', function () {
+        LaravelGmail::makeToken();
+        return redirect()->to('/home');
+
+    });
     $router->resource('schedules', 'ScheduleController');
     include 'subRoutes/enquiry.php';
     $router->resource('quotations', 'QuotationController');
