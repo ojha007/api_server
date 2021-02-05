@@ -4,10 +4,13 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Mail;
 use App\Repositories\MailRepository;
+use Carbon\Carbon;
+use Dacastro4\LaravelGmail\Facade\LaravelGmail;
+use Dacastro4\LaravelGmail\Services\Message\Mail;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MailController extends Controller
 {
@@ -31,47 +34,46 @@ class MailController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->repository = new MailRepository(new Mail());
     }
 
     public function compose()
     {
-
         return view($this->viewPath . 'compose');
     }
 
     public function sent(Request $request)
     {
+        if ($request->ajax()) {
+            dd('f');
+        }
         if ($request->method() == 'POST') {
             return $this->sentMail($request);
         } else {
-            $mails = DB::table('mails')
-                ->whereNull('deleted_at')
-                ->where('draft', '=', false)
-                ->orderByDesc('created_at')
-                ->get();
             $title = 'Sent Mails';
-            return view($this->viewPath . 'mailbox', compact('mails', 'title'));
+            $url = route('mails.sent');
+            return view($this->viewPath . 'mailbox', compact('url', 'title'));
         }
 
     }
 
     public function sentMail(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $request->validate($this->mailValidation());
+        $request->validate([
+            'to' => 'required|email'
+        ]);
         try {
-            DB::beginTransaction();
-            $attributes = $request->except('_token');
-            $this->repository->create($attributes);
-            $is_draft = $request->get('draft') == 1;
-            $route = $this->routePath . ($is_draft ? 'draft' : 'sent');
-            $message = $is_draft ? 'Message saved at draft' : 'Mail sent to ' . $request->get('to') . ' successfully';
-            DB::commit();
+            $mail = new Mail();
+            $mail->to($request->get('to'));
+            $mail->subject($request->get('subject'));
+            $mail->from('ojhaamir007@gmail.com', 'Amir Ojha');
+            $mail->message($request->get('message'));
+            $mail->send();
+            $message = 'Mail sent to ' . $request->get('to') . ' successfully';
+
             return redirect()
-                ->route($route)
+                ->route($this->routePath . 'index')
                 ->with('success', $message);
         } catch (\Exception $exception) {
-            DB::rollBack();
             return redirect()->back()
                 ->withInput()
                 ->with('failed', 'Failed to sent mails');
@@ -80,75 +82,50 @@ class MailController extends Controller
 
     public function trash()
     {
-        $mails = DB::table('mails')
-            ->whereNotNull('deleted_at')
-            ->get();
+        $mails = [];
         $title = 'Trash';
         return view($this->viewPath . 'mailbox', compact('mails', 'title'));
     }
 
-    public function draft()
+    public function draft(Request $request)
     {
+        if ($request->ajax()) {
+
+        }
         $title = 'Draft';
-        $mails = DB::table('mails')
-            ->whereNull('deleted_at')
-            ->where('draft', '=', true)
-            ->get();
-        return view($this->viewPath . 'mailbox', compact('mails', 'title'));
+        $url = route('mails.draft');
+        return view($this->viewPath . 'mailbox', compact('url', 'title'));
     }
 
-    public function edit($id)
+    public function inbox(): JsonResponse
     {
-        try {
-            $route = route('mails.update', $id);
-            $edit = true;
-            $mail = DB::table('mails')->where('id', '=', $id)->first();
-            return view($this->viewPath . 'compose', compact('mail', 'route', 'edit'));
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->withInput()
-                ->with('failed', 'Failed to Update the mail');
+        $mails = $this->getAllInbox(10);
+        return response()->json([
+            'data' => $mails,
+            'status' => "SUCCESS",
+        ]);
+    }
+
+    public function getAllInbox($limit): array
+    {
+        $mails = [];
+        $messages = LaravelGmail::message()->take($limit)->unread()->preload()->all();
+        foreach ($messages as $key => $message) {
+            $mails[$key]['date'] = Carbon::parse($message->getDate())->longRelativeToNowDiffForHumans();
+            $mails[$key]['subject'] = $message->getSubject();
+            $mails[$key]['from_name'] = $message->getFromName();
+            $mails[$key]['from_email'] = $message->getFromEmail();
+            $mails[$key]['message'] = Str::limit($message->getPlainTextBody(), 50);
+            $mails[$key]['attachments'] = $message->hasAttachments();
         }
+        return $mails;
     }
 
-    public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
+    public function index()
     {
-        $request->validate($this->mailValidation());
-        try {
-            DB::beginTransaction();
-            $attributes = $request->except('_token');
-            $this->repository->update($id, $attributes);
-            $is_draft = $request->get('draft') == 1;
-            $message = $is_draft ? 'Message saved at draft' : 'Mail sent to ' . $request->get('to') . ' successfully';
-            $route = $this->routePath . ($is_draft ? 'draft' : 'sent');
-            DB::commit();
-            return redirect()
-                ->route($route)
-                ->with('success', $message);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return redirect()->back()
-                ->withInput()
-                ->with('failed', 'Failed to sent mails');
-        }
-    }
-
-    public function mailValidation(): array
-    {
-        return [
-            'to' => 'required|email',
-            'subject' => 'required|string|min:5|max:255',
-            'message' => 'required|string|min:5',
-            'draft' => 'required|boolean'
-        ];
-    }
-
-    public function copy($id)
-    {
-        $mail = $this->repository->getById($id);
-        return view($this->viewPath . 'compose', compact('mail'));
+        $title = 'Inbox';
+        $url = route('mails.inbox');
+        return view($this->viewPath . 'mailbox', compact('url', 'title'));
     }
 
 }

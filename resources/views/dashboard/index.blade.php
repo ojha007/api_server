@@ -262,10 +262,10 @@
         <div class="col-md-12">
             <div class="box box-solid">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Inbox</h3>
+                    <h3 class="box-title">All Inbox</h3>
                     <div class="box-tools pull-right">
                     <span>
-                        {{ \LaravelGmail::user() }}
+                            {{ \LaravelGmail::user() }}
                         @if(\LaravelGmail::check())
                             <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
                         @else
@@ -281,11 +281,14 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body" id="inbox">
+                <div class="box-body" id="email">
+                </div>
+                <div class="overlay">
+                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <a href=""
+                    <a href="{{route('mails.index')}}"
                        class="btn btn-sm btn-default btn-flat pull-right">View All</a>
                 </div>
                 <!-- /.box-footer -->
@@ -298,19 +301,5 @@
 
 @endsection
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: '{{route('inbox')}}',
-                method: 'GET',
-                success: function (response) {
-                    $('#inbox').html($(response.data.body))
-                    // $('#inbox').html($(response.data.body))
-                    console.log(response.data.body)
-                }, error: function (error) {
-                    console.log(error)
-                }
-            })
-        })
-    </script>
+    @include('mails.scripts',['url'=>route('mails.inbox')])
 @endpush

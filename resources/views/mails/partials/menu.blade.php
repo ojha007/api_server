@@ -24,8 +24,8 @@
                 </div>
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="{{request()->routeIs('mails.inbox') ?'active' : ''}}">
-                            <a href=""><i
+                        <li class="{{request()->routeIs('mails.inbox','mails.index') ?'active' : ''}}">
+                            <a href="{{route('mails.index')}}"><i
                                     class="fa fa-inbox"></i> Inbox
                             </a></li>
                         <li class="{{request()->routeIs('mails.sent') ?'active' : ''}}">

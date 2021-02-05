@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Dacastro4\LaravelGmail\Facade\LaravelGmail;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
@@ -48,19 +49,5 @@ class DashboardController extends Controller
         return view($this->viewPath . 'index', compact('workers', 'bookings', 'tasks', 'enquiries'));
     }
 
-    public function inbox(): \Illuminate\Http\JsonResponse
-    {
-        $mails = [];
-//        $messages = LaravelGmail::message()->subject('test')->unread()->preload()->all();
-        $messages = LaravelGmail::message()->raw('in:inbox is:unread')->preload()->all();;
-        foreach ($messages as $message) {
-            $mails['body'] = $message->getHtmlBody();
-            $mails['subject'] = $message->getSubject();
-            $mails['g']=$message;
-        }
-        return response()->json([
-            'data' => $mails,
-            'status' => "SUCCESS",
-        ]);
-    }
+
 }

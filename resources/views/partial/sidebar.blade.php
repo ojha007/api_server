@@ -50,7 +50,7 @@
         </li>
         @can('mail-view')
             <li class="{{request()->routeIs('mails.sent') ? 'active' : ''}}">
-                <a href="{{route('mails.sent')}}">
+                <a href="{{route('mails.index')}}">
                     <i class="fa fa-envelope"></i>
                     <span>
                     Mails

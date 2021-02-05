@@ -34,9 +34,9 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="pull-right">
-                    <button type="button" class="btn btn-default  btn-flat" id="draftBtn">
-                        <i class="fa fa-pencil"></i> Draft
-                    </button>
+{{--                    <button type="button" class="btn btn-default  btn-flat" id="draftBtn">--}}
+{{--                        <i class="fa fa-pencil"></i> Draft--}}
+{{--                    </button>--}}
                     <button type="submit" class="btn btn-primary btn-flat">
                         <i class="fa fa-envelope-o"></i> Send
                     </button>
@@ -50,14 +50,14 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            $('#draftBtn').on('click', function (e) {
-                e.preventDefault();
-                $('input[name="draft"]').val(1);
-                $('form').submit();
-            })
-        })
-    </script>
-@endpush
+{{--@push('scripts')--}}
+{{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            $('#draftBtn').on('click', function (e) {--}}
+{{--                e.preventDefault();--}}
+{{--                $('input[name="draft"]').val(1);--}}
+{{--                $('form').submit();--}}
+{{--            })--}}
+{{--        })--}}
+{{--    </script>--}}
+{{--@endpush--}}

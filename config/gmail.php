@@ -57,7 +57,7 @@ return [
     */
 
 	'additional_scopes' => [
-
+                    'https://www.googleapis.com/auth/gmail.compose'
 	],
 
 	'access_type' => 'offline',
