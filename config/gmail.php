@@ -28,30 +28,33 @@ return [
 	|
 	*/
 
-	'project_id' => env('GOOGLE_PROJECT_ID'),
-	'client_id' => env('GOOGLE_CLIENT_ID'),
-	'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-	'redirect_url' => env('GOOGLE_REDIRECT_URI', '/'),
+    'project_id' => env('GOOGLE_PROJECT_ID'),
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect_url' => env('GOOGLE_REDIRECT_URI', '/'),
 
-	'state' => null,
+    'state' => null,
 
-	'scopes' => [
-		'readonly',
-		'modify',
-	],
+    'scopes' => [
+        'readonly',
+        'modify',
+        'send',
+        'compose',
+        'insert'
+    ],
 
-	/*
-	|--------------------------------------------------------------------------
-	| Additional Scopes [URL Style]
-	|--------------------------------------------------------------------------
-	|
-	|   'additional_scopes' => [
-	|        'https://www.googleapis.com/auth/drive',
-	|        'https://www.googleapis.com/auth/documents'
-	|   ],
-	|
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Additional Scopes [URL Style]
+    |--------------------------------------------------------------------------
+    |
+    |   'additional_scopes' => [
+    |        'https://www.googleapis.com/auth/drive',
+    |        'https://www.googleapis.com/auth/documents'
+    |   ],
+    |
+    |
+    */
 
 	'additional_scopes' => [
 
