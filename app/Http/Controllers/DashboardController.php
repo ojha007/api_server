@@ -51,7 +51,8 @@ class DashboardController extends Controller
     public function inbox(): \Illuminate\Http\JsonResponse
     {
         $mails = [];
-        $messages = LaravelGmail::message()->subject('test')->unread()->preload()->all();
+//        $messages = LaravelGmail::message()->subject('test')->unread()->preload()->all();
+        $messages = LaravelGmail::message()->raw('in:inbox is:unread')->preload()->all();;
         foreach ($messages as $message) {
             $mails['body'] = $message->getHtmlBody();
             $mails['subject'] = $message->getSubject();
