@@ -73,17 +73,19 @@ class WorkerController extends Controller
     {
         try {
             DB::beginTransaction();
-            $attributes = $request->validated();
+            $attributes = $request->all();
             $attributes['password'] = bcrypt($attributes['password']);
             $attributes['super'] = false;
             $worker = $this->repository->create($attributes);
             $worker->assignRole(User::WORKER);
             DB::commit();
+            return new StoreResponse($this->routePath);
         } catch (\Exception $exception) {
             DB::rollBack();
+//            dd($exception);
             return new ErrorResponse($exception);
         }
-        return new StoreResponse($this->routePath);
+
     }
 
     public function update(WorkerRequest $request, $id)

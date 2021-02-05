@@ -16,7 +16,7 @@ class WorkerRequest extends FormRequestForApi
             'email' => 'required|unique:users,email',
             'phone' => 'required|numeric|',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'min:6',
+            'password_confirmation' => 'required|min:6',
             'status' => 'required|boolean'
 
         ];
