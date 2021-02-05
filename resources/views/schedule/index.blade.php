@@ -134,43 +134,43 @@
     </div><!-- modal -->
 @endsection
 
-{{--@push('styles')--}}
-{{--    <link rel="stylesheet" href="{{asset('backend/css/calendar.css')}}"/>--}}
-{{--    <style>--}}
-{{--        .modal.right.fade .modal-dialog {--}}
-{{--            right: -320px;--}}
-{{--            -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;--}}
-{{--            -moz-transition: opacity 0.3s linear, right 0.3s ease-out;--}}
-{{--            -o-transition: opacity 0.3s linear, right 0.3s ease-out;--}}
-{{--            transition: opacity 0.3s linear, right 0.3s ease-out;--}}
-{{--        }--}}
+@push('styles')
+    <link rel="stylesheet" href="{{asset('backend/css/calendar.css')}}"/>
+    <style>
+        .modal.right.fade .modal-dialog {
+            right: -320px;
+            -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+            -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+            -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+            transition: opacity 0.3s linear, right 0.3s ease-out;
+        }
 
-{{--        .modal.right.fade.in .modal-dialog {--}}
-{{--            right: 0;--}}
-{{--        }--}}
+        .modal.right.fade.in .modal-dialog {
+            right: 0;
+        }
 
-{{--        .modal.right .modal-dialog {--}}
-{{--            position: fixed;--}}
-{{--            margin: auto;--}}
-{{--            width: 40%;--}}
-{{--            height: 100%;--}}
-{{--            -webkit-transform: translate3d(0%, 0, 0);--}}
-{{--            -ms-transform: translate3d(0%, 0, 0);--}}
-{{--            -o-transform: translate3d(0%, 0, 0);--}}
-{{--            transform: translate3d(0%, 0, 0);--}}
-{{--        }--}}
+        .modal.right .modal-dialog {
+            position: fixed;
+            margin: auto;
+            width: 40%;
+            height: 100%;
+            -webkit-transform: translate3d(0%, 0, 0);
+            -ms-transform: translate3d(0%, 0, 0);
+            -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+        }
 
-{{--        .modal.right .modal-content {--}}
-{{--            height: 100%;--}}
-{{--            overflow-y: auto;--}}
-{{--        }--}}
+        .modal.right .modal-content {
+            height: 100%;
+            overflow-y: auto;
+        }
 
-{{--        .modal.right .modal-body {--}}
-{{--            padding: 15px 15px 80px;--}}
-{{--        }--}}
+        .modal.right .modal-body {
+            padding: 15px 15px 80px;
+        }
 
-{{--    </style>--}}
-{{--@endpush--}}
+    </style>
+@endpush
 @push('scripts')
     <script src="{{asset('backend/js/calendar.js')}}" type="text/javascript"></script>
 
