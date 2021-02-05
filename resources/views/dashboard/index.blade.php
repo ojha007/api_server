@@ -317,7 +317,9 @@
                 url: '{{route('inbox')}}',
                 method: 'GET',
                 success: function (response) {
-                    console.log(response)
+                    $('#inbox').html($(response.data.body))
+                    // $('#inbox').html($(response.data.body))
+                    console.log(response.data.body)
                 }, error: function (error) {
                     console.log(error)
                 }
