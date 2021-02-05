@@ -156,6 +156,11 @@
                 @endcan
             </ul>
         </li>
+        <li class="{{request()->is('developers.index') ? 'active' : '' }}">
+            <a href="{{route('developer.index')}}"><i
+                    class="fa fa-code"></i>
+                <span>Developers</span>
+            </a>
 
     </ul>
 </section>

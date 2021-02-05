@@ -88,7 +88,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
+<body class="hold-transition sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
 <div class="wrapper">
     <!-- Main Header -->
 
@@ -111,7 +111,7 @@ desired effect
             @yield('breadcrumb')
         </section>
         <!-- Main content -->
-        <section class="content" id="app">
+        <section class="content container-fluid" id="app">
             @include('messages')
             @yield('content')
         </section>
@@ -122,6 +122,7 @@ desired effect
     @include('partial.footer')
     <div class="control-sidebar-bg"></div>
 </div>
+<script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('backend/js/jquery.min.js')}}"></script>
 <script src="{{asset('/backend/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('backend/js/adminlte.min.js')}}"></script>

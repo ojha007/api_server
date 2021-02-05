@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth'], function ($router) {
     Route::resource('roles', 'RoleController');
 //    $router->get('countries', 'CountryController@getAllCountries');
 //    $router->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');
+    $router->get('developers', function () {
+        return view('developers.index');
+    })->name('developer.index');
 
 });
 
