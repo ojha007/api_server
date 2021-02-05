@@ -56,6 +56,7 @@ class DashboardController extends Controller
         foreach ($messages as $message) {
             $mails['body'] = $message->getHtmlBody();
             $mails['subject'] = $message->getSubject();
+            $mails['g']=$message;
         }
         return response()->json([
             'data' => $mails,
