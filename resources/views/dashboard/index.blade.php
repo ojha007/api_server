@@ -183,58 +183,7 @@
             <!-- /.box-footer -->
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="box box-solid">
-            <div class="box-header with-border">
-                <h3 class="box-title">Inbox</h3>
-                <div class="box-tools pull-right">
-                    <span>
-                        {{ \LaravelGmail::user() }}
-                        @if(\LaravelGmail::check())
-                            <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
-                        @else
-                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>
-                        @endif
-                    </span>
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                            class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool"
-                            data-widget="remove"><i class="fa fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table no-margin table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Subject</th>
-                            <th>Message</th>
-                        </tr>
-                        </thead>
-                        <tbody id="inbox">
-                        <tr>
-                            <td colspan="2" class="text-center">
-                                <strong>
-                                    No Mails
-                                </strong>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.table-responsive -->
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <a href=""
-                   class="btn btn-sm btn-default btn-flat pull-right">View All</a>
-            </div>
-        <!-- /.box-footer -->
-        </div>
-    </div>
+
     <div class="col-md-6">
         <div class="box box-solid">
             <div class="box-header with-border">
@@ -301,6 +250,58 @@
                         View All
                     </a>
                 @endcan
+            </div>
+            <!-- /.box-footer -->
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Inbox</h3>
+                <div class="box-tools pull-right">
+                    <span>
+                        {{ \LaravelGmail::user() }}
+                        @if(\LaravelGmail::check())
+                            <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
+                        @else
+                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>
+                        @endif
+                    </span>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                            class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool"
+                            data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Message</th>
+                        </tr>
+                        </thead>
+                        <tbody id="inbox">
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <strong>
+                                    No Mails
+                                </strong>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <a href=""
+                   class="btn btn-sm btn-default btn-flat pull-right">View All</a>
             </div>
             <!-- /.box-footer -->
         </div>
