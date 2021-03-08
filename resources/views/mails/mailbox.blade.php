@@ -7,14 +7,15 @@
                 <div class="box-tools pull-right">
                     {{ \LaravelGmail::user() }}
                     @if(\LaravelGmail::check())
-                        <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
+                        <a href="{{ url('oauth/gmail/logout') }}" class="btn btn-danger btn-flat">
+                           Logout
+                        </a>
                     @else
-                        <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>
+                        <a href="{{ url('oauth/gmail') }}" class="btn  btn-flat btn-primary">
+                            Login
+                        </a>
                     @endif
-                    <div class="has-feedback">
-                        <input type="text" class="form-control input-sm" placeholder="Search Mail">
-                        <span class="fa fa-search form-control-feedback"></span>
-                    </div>
+
                 </div>
                 <!-- /.box-tools -->
             </div>
