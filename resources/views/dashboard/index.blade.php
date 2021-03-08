@@ -265,7 +265,7 @@
                     <h3 class="box-title">All Inbox</h3>
                     <div class="box-tools pull-right">
                     <span>
-                            {{ \LaravelGmail::user() }}
+                        {{ \LaravelGmail::user() }}
                         @if(\LaravelGmail::check())
                             <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
                         @else
@@ -282,9 +282,6 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" id="email">
-                </div>
-                <div class="overlay">
-                    <i class="fa fa-refresh fa-spin"></i>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
