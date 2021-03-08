@@ -4,8 +4,13 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">{{$title ?? ''}}</h3>
-
                 <div class="box-tools pull-right">
+                    {{ \LaravelGmail::user() }}
+                    @if(\LaravelGmail::check())
+                        <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
+                    @else
+                        <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>
+                    @endif
                     <div class="has-feedback">
                         <input type="text" class="form-control input-sm" placeholder="Search Mail">
                         <span class="fa fa-search form-control-feedback"></span>
@@ -18,9 +23,9 @@
 
                 <!-- /.mail-box-messages -->
             </div>
-            <div class="overlay">
-                <i class="fa fa-refresh fa-spin"></i>
-            </div>
+{{--            <div class="overlay">--}}
+{{--                <i class="fa fa-refresh fa-spin"></i>--}}
+{{--            </div>--}}
             <!-- /.box-body -->
         </div>
         <!-- /. box -->

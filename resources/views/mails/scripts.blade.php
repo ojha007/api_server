@@ -20,7 +20,7 @@
                 }
                 template += '</tbody><table></div>';
                 $('#email').html(template);
-                $('.overlay').addClass('hide');
+                // $('.overlay').addClass('hide');
             }, error: function (error) {
                 console.log(error)
             }
