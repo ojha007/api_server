@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Storage;
+
 if (!function_exists('spanByStatus')) {
     function spanByStatus($status, $withPull = null): string
     {
@@ -21,4 +24,15 @@ if (!function_exists('spanByStatus')) {
         class="label btn btn-flat  ' . $class . ' ' . ($withPull) . '">'
             . ucfirst($status) . '</span>';
     }
+}
+
+function getDefaultAccount()
+{
+    try {
+        $a = Storage::disk('local')->get(config('myob.defaultAccount'));
+        return json_decode($a);
+    } catch (\Illuminate\Contracts\Filesystem\FileNotFoundException $e) {
+        return null;
+    }
+
 }

@@ -75,6 +75,14 @@
 
             </li>
         @endcan
+        <li class="{{request()->routeIs('invoices.index') ? 'active' : ''}}">
+            <a href="{{route('invoices.index')}}">
+                <i class="fa fa-envelope"></i>
+                <span>
+                    Invoices
+                </span>
+            </a>
+        </li>
         @can('task-view')
             <li class="treeview {{request()->routeIs('tasks.index','tasks.create') ? 'active' :''}}">
                 <a href="#">
