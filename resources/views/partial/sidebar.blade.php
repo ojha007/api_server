@@ -79,7 +79,7 @@
             <a href="{{route('invoices.index')}}">
                 <i class="fa fa-envelope"></i>
                 <span>
-                    Invoices
+                    Myob
                 </span>
             </a>
         </li>

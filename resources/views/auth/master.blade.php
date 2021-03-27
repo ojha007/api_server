@@ -77,6 +77,7 @@ desired effect
 <body class="hold-transition login-page" style="height: auto;">
 @yield('content')
 
+<script src="{{asset('app.js')}}"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
         crossorigin="anonymous"></script>
@@ -88,6 +89,5 @@ desired effect
         integrity="sha512-A5qdsR9RXBqwBbUK/UCOc88vYGDcRIT39Y96wvIJk398ZScKAVN3PTv/Br4VBg0hv4kE8HQFmhC4iMFq7mQ8uA=="
         crossorigin="anonymous"></script>
 @stack('scripts')
-
 </body>
 </html>
