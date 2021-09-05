@@ -97,9 +97,10 @@ class MailController extends Controller
         return view($this->viewPath . 'mailbox', compact('url', 'title'));
     }
 
-    public function inbox(): JsonResponse
+    public function inbox($request): JsonResponse
     {
-        $mails = $this->getAllInbox(10);
+        $limit = $request->get('limit') ?? 10;
+        $mails = $this->getAllInbox($limit);
         return response()->json([
             'data' => $mails,
             'status' => "SUCCESS",
@@ -113,9 +114,8 @@ class MailController extends Controller
         foreach ($messages as $key => $message) {
             $mails[$key]['date'] = Carbon::parse($message->getDate())->longRelativeToNowDiffForHumans();
             $mails[$key]['subject'] = $message->getSubject();
-            $mails[$key]['from_name'] = $message->getFromName();
-            $mails[$key]['from_email'] = $message->getFromEmail();
-            $mails[$key]['message'] = Str::limit($message->getPlainTextBody(), 50);
+            $mails[$key]['from'] = $message->getFromName() . '-' . $message->getFromEmail();
+            $mails[$key]['message'] = $message->getPlainTextBody();
             $mails[$key]['attachments'] = $message->hasAttachments();
         }
         return $mails;

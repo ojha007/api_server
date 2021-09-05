@@ -2,6 +2,7 @@
 
 namespace App\Http\Responses\User;
 
+use App\Jobs\SendUserInvitedEmail;
 use App\Models\User;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Facades\Log;
@@ -21,13 +22,8 @@ class StoreResponse implements Responsable
     public function toResponse($request)
     {
         Log::info($this->user);
-        $attribute = [
-            'is_reloadable' => true
-        ];
-        $this->user->notify(new UserInvited($this->user, $this->password_generated));
+        dispatch(new SendUserInvitedEmail($this->user, $this->password_generated));
         $request->session()->flash('success', 'New user added successfully.');
-        return redirect()->route('users.index')->with('success', 'New user added successfully.');
-//        return response()->json(['status' => '201', 'data' => $attribute]);
-
+        return redirect()->route('users.index');
     }
 }

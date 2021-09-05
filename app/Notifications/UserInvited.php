@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Carbon\Traits\Serialization;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -9,7 +10,7 @@ use Illuminate\Notifications\Notification;
 
 class UserInvited extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable,Serialization;
 
     protected $email;
     protected $password;
@@ -32,7 +33,7 @@ class UserInvited extends Notification implements ShouldQueue
      * @param mixed $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'broadcast', 'database'];
     }
@@ -41,9 +42,9 @@ class UserInvited extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject('User Invitation Notification')
@@ -61,7 +62,7 @@ class UserInvited extends Notification implements ShouldQueue
      * @param mixed $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

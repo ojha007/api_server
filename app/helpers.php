@@ -34,5 +34,26 @@ function getDefaultAccount()
     } catch (\Illuminate\Contracts\Filesystem\FileNotFoundException $e) {
         return null;
     }
+}
 
+
+if (!function_exists('logException')) {
+    function logException(Exception $exception)
+    {
+        \Illuminate\Support\Facades\Log::error(
+            $exception->getTraceAsString()
+            . '<==================================>'
+            . $exception->getMessage());
+    }
+}
+if (!function_exists('successResponse')) {
+    function successResponse(): array
+    {
+        return [
+            'data' => [
+                'message' => 'SUCCESS',
+                'code' => 201
+            ]
+        ];
+    }
 }

@@ -164,7 +164,10 @@
                             <tbody>
                             @forelse($enquiries ?? [] as $enquiry)
                                 <tr>
-
+                                   <td>{{$enquiry->id}}</td>
+                                   <td>{{$enquiry->name}}</td>
+                                   <td>{{$enquiry->email}}</td>
+                                   <td>{{$enquiry->mobile_number}}</td>
                                 </tr>
                             @empty
                                 <tr>

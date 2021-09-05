@@ -43,8 +43,7 @@ class DashboardController extends Controller
         $tasks = Task::with('workers')
             ->orderByDesc('id')
             ->paginate(10);
-        $enquiries = Enquiry::whereDate('created_at', Carbon::today())
-            ->orderByDesc('id')
+        $enquiries = Enquiry::orderByDesc('id')
             ->paginate(10);
         return view($this->viewPath . 'index', compact('workers', 'bookings', 'tasks', 'enquiries'));
     }

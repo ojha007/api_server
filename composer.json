@@ -21,7 +21,8 @@
         "laravelcollective/html": "^6.2",
         "spatie/laravel-permission": "^4.0",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+      "ext-pdo": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

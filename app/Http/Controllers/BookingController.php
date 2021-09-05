@@ -10,6 +10,8 @@ use App\Http\Responses\Booking\IndexResponse;
 use App\Http\Responses\Booking\ShowResponse;
 use App\Http\Responses\Booking\StoreResponse;
 use App\Http\Responses\ErrorResponse;
+use App\Http\Responses\SuccessResponse;
+use App\Jobs\BookingConfirmedJob;
 use App\Models\Booking;
 use App\Models\Task;
 use App\Notifications\BookingConfirmed;
@@ -62,14 +64,15 @@ class BookingController extends Controller
             DB::beginTransaction();
             $attributes = $request->validated();
             $attributes['user_id'] = auth()->id();
-            $attributes['additional_service'] = implode(',', $request->get('additional_service'));
+            if ($request->get('additional_service'))
+                $attributes['additional_service'] = implode(',', $request->get('additional_service'));
             $this->repository->create($attributes);
             DB::commit();
+            return new StoreResponse($this->routerPath);
         } catch (Exception $exception) {
             DB::rollBack();
             return new ErrorResponse($exception);
         }
-        return new StoreResponse($this->routerPath);
     }
 
     public function show($id)
@@ -133,22 +136,10 @@ class BookingController extends Controller
                 ]);
 
             $email = $this->repository->getById($id)->email;
-            Notification::route('mail', $email)
-                ->notify(new BookingConfirmed($booking));
+            $this->dispatch(new BookingConfirmedJob($email, $booking));
             DB::commit();
-            if ($request->wantsJson()) {
-                return response()
-                    ->json(['data' => [
-                        'message' => 'SUCCESS',
-                        'code' => 201
-                    ]]);
-            } else {
-                return redirect()->back()
-                    ->with('success', 'Booking has been confirmed');
-            }
-
+            return new SuccessResponse();
         } catch (Exception $exception) {
-//            dd($exception);
             DB::rollBack();
             return new ErrorResponse($exception);
         }

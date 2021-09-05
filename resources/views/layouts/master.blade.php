@@ -40,6 +40,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
           integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
           crossorigin="anonymous"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/ionicons.min.css')}}">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -89,7 +93,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
-<div class="wrapper">
+<div class="wrapper" >
     <!-- Main Header -->
 
 @include('partial.header')
@@ -126,8 +130,19 @@ desired effect
 <script src="{{asset('backend/js/jquery.min.js')}}"></script>
 <script src="{{asset('/backend/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('backend/js/adminlte.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
+        integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @stack('scripts')
+<script>
+    $('.datepicker').datepicker({
+        autoclose:true,
+        todayHighlight:true,
+        toggleActive:true,
+        format:"yyyy-mm-dd"
+    });
+</script>
 </body>
 </html>
 

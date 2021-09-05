@@ -8,12 +8,7 @@
             <label for="moving_date">Moving Date :</label>
         </div>
         <div class="col-md-9 col-sm-12 @error('moving_date') has-error @enderror">
-            <input class="form-control"
-                   type="date"
-                   required
-                   name="moving_date"
-                   id="moving_date"
-                   style=" margin-top: 5px">
+            {!! Form::text('moving_date',null,['class'=>'form-control datepicker','placeholder'=>'Select Moving Date']) !!}
         </div>
     </div>
     {!! Form::bsText('moving_from_suburb',old('moving_from_suburb'),['p'=>6]) !!}
@@ -39,8 +34,8 @@
                     {{$checkbox}}
                 </label>
             @endforeach
-{{--            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,--}}
-{{--                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}--}}
+            {{--            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,--}}
+            {{--                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}--}}
         </div>
     </div>
     {!! Form::bsText('dropoff_address',old('dropoff_address'),['p'=>6]) !!}
