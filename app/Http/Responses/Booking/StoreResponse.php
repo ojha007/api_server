@@ -25,12 +25,7 @@ class StoreResponse implements Responsable
     public function toResponse($request)
     {
         if ($request->wantsJson()) {
-            return response()->json([
-                'data' => [
-                    'message' => 'SUCCESS',
-                    'code' => 201
-                ]
-            ]);
+            return response()->json(successResponse());
         }
         return redirect()->route($this->routePath . 'index')
             ->with('success', 'Booking added successfully');

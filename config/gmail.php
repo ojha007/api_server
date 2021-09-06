@@ -86,7 +86,7 @@ return [
 	|
 	*/
 
-	'allow_multiple_credentials' => env('GOOGLE_ALLOW_MULTIPLE_CREDENTIALS', false),
+	'allow_multiple_credentials' => env('GOOGLE_ALLOW_MULTIPLE_CREDENTIALS', true),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -98,5 +98,5 @@ return [
 	|
 	*/
 
-	'allow_json_encrypt' => env('GOOGLE_ALLOW_JSON_ENCRYPT', false),
+	'allow_json_encrypt' => env('GOOGLE_ALLOW_JSON_ENCRYPT', true),
 ];

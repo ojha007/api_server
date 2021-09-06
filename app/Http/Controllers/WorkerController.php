@@ -43,13 +43,13 @@ class WorkerController extends Controller
         $this->repository = new WorkerRepository(new User());
     }
 
-    public function index(): IndexResponse
+    public function index()
     {
         try {
             $workers = $this->repository->getAllWorkers();
             return new IndexResponse($this->viewPath, $workers);
         } catch (\Exception $exception) {
-
+           return ;
         }
 
     }
@@ -79,10 +79,9 @@ class WorkerController extends Controller
             $worker = $this->repository->create($attributes);
             $worker->assignRole(User::WORKER);
             DB::commit();
-            return new StoreResponse($this->routePath);
+            return new StoreResponse($worker, $request->get('password'), $this->routePath);
         } catch (\Exception $exception) {
             DB::rollBack();
-//            dd($exception);
             return new ErrorResponse($exception);
         }
 
@@ -108,10 +107,11 @@ class WorkerController extends Controller
     public function destroy()
     {
     }
+
     public function show($id): ShowResponse
     {
 
-        return new  ShowResponse($this->viewPath,$id);
+        return new  ShowResponse($this->viewPath, $id);
     }
 
 }

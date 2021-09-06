@@ -21,8 +21,15 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravelcollective/html": "^6.2",
+<<<<<<< HEAD
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-permission": "^4.0"
+=======
+        "spatie/laravel-permission": "^4.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+      "ext-pdo": "*"
+>>>>>>> 2ef9eb7f7b0e5b7754fa37e5999a3dacefe220db
     },
     "require-dev": {
         "facade/ignition": "^2.5",

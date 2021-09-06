@@ -11,6 +11,7 @@ use App\Http\Responses\User\UpdateResponse;
 use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class UserController extends Controller
      * Display a listing of the resource.
      * @return IndexResponse
      */
-    public function index()
+    public function index(): IndexResponse
     {
         $users = $this->repository->getAll()->sortByDesc('created_at');
         $roles = $this->role->allRolesByGuard($this->routePrefix);
@@ -53,20 +54,19 @@ class UserController extends Controller
      * @param CreateUserRequest $request
      * @return StoreResponse
      */
-    public function store(CreateUserRequest $request)
+    public function store(CreateUserRequest $request): StoreResponse
     {
-//        $systemPermission = $this->repository->getSystemPermissionByRoutePrefix($this->routePrefix);
         $password_generated = Str::random(10);
         $request->request->add(['password_generated' => $password_generated]);
         $input = $request->all();
         $user = $this->repository->create($input);
-//        $user->givePermissionTo($systemPermission);
-        $user->assignRole($this->role->getById($input['roles'])->name, $this->routePrefix);
+//        $user->assignRole($this->role->getById($input['roles'])->name, $this->routePrefix);
         return new StoreResponse($user, $password_generated);
     }
 
     /**
      * Show the specified resource.
+     * @param $id
      * @return ShowResponse
      */
     public function show($id): ShowResponse
@@ -100,9 +100,9 @@ class UserController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -113,26 +113,22 @@ class UserController extends Controller
             if (!empty($applicationPermission)) {
                 if ($user->hasAnyPermission($applicationPermission)) {
                     $this->repository->deleteFomApplication($id, $roles, $this->routePrefix);
-                    DB::commit();
-                    return redirect()->route('users.index')
-                        ->with('success', 'User deleted successfully');
                 } else {
                     $this->repository->delete($id);
-                    DB::commit();
-                    return redirect()->route('users.index')
-                        ->with('success', 'User deleted successfully');
                 }
             } else {
                 $this->repository->delete($id);
-                DB::commit();
-                return redirect()->route('users.index')
-                    ->with('success', 'User deleted successfully');
             }
+            DB::commit();
+            return redirect()->route('users.index')
+                ->with('success', 'User deleted successfully');
         } catch (\PDOException $ex) {
             DB::rollBack();
             try {
-                $user->status = false;
-                $user->save();
+                if (!empty($user)) {
+                    $user->status = false;
+                    $user->save();
+                }
                 //$this->repository->deleteFomApplication($id, $roles, $this->routePrefix);
                 DB::commit();
                 return redirect()->route('users.index')

@@ -1,6 +1,6 @@
 @extends('mails.partials.menu')
 @section('mailbox')
-    <div id='mailbox' class="col-md-9">
+    <div id='mailbox' class="col-md-11">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">{{$title ?? ''}}</h3>

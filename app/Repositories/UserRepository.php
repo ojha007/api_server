@@ -28,17 +28,8 @@ class UserRepository extends Repository
         return Hash::make($password_generated);
     }
 
-    public function getSystemPermissionByRoutePrefix($routePrefix)
-    {
-        $permissionName = '';
-        if ($routePrefix) {
-            $permissionName = $routePrefix . '-permission';
-        }
 
-        return $permissionName;
-    }
-
-    public function getUsersByPermissionGaurd($permission, $guard)
+    public function getUsersByPermissionGuard($permission, $guard)
     {
         return Permission::findByName($permission, $guard)->users;
     }
