@@ -135,7 +135,7 @@ class BookingController extends Controller
                     'created_by' => auth()->id(),
                 ]);
 
-            $email = $this->repository->getById($id)->email
+            $email = $this->repository->getById($id)->email;
             $this->dispatch(new BookingConfirmedJob($email, $booking));
             DB::commit();
             return new SuccessResponse();
