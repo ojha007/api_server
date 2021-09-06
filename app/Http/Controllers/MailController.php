@@ -51,7 +51,7 @@ class MailController extends Controller
         } else {
             $title = 'Sent Mails';
             $url = route('mails.sent');
-            return view($this->viewPath . 'mailbox', compact('url', 'title'));
+            return view($this->viewPath . 'compose', compact('url', 'title'));
         }
 
     }

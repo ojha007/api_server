@@ -37,3 +37,10 @@ Route::group(['middleware' => 'auth'], function ($router) {
 
 Auth::routes();
 
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+Route::get('privacy-policy',function(){
+
+ return view('privacy');
+});
