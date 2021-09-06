@@ -97,9 +97,9 @@ class MailController extends Controller
         return view($this->viewPath . 'mailbox', compact('url', 'title'));
     }
 
-    public function inbox($request): JsonResponse
+    public function inbox(): JsonResponse
     {
-        $limit = $request->get('limit') ?? 10;
+        $limit =  10;
         $mails = $this->getAllInbox($limit);
         return response()->json([
             'data' => $mails,
