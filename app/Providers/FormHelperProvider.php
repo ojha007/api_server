@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Form;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+//use Illuminate\View\View;
 
 class FormHelperProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class FormHelperProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::addExtension('html', 'php');
         Form::component('bsText', 'components.form.text', ['name', 'value', 'attributes']);
         Form::component('formButton', 'components.form.button', ['text']);
         Form::component('bsTextArea', 'components.form.textarea', ['name', 'value', 'attributes']);

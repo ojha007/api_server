@@ -13,6 +13,7 @@ class Enquiry extends Model
     protected $fillable = ['first_name', 'last_name',
         'mobile_number', 'email', 'address1', 'address2',
         'city', 'state', 'postal_code', 'pickup_date',
+        'quotation_id',
         'delivery_date', 'optional_number', 'age', 'comment', 'user_id'
     ];
 
@@ -26,6 +27,12 @@ class Enquiry extends Model
     public function getNameAttribute(): string
     {
         return $this->getAttribute('first_name') . ' ' . $this->getAttribute('last_name');
+    }
+
+    public function quotation(): BelongsTo
+    {
+        return $this->belongsTo(Quotation::class);
+
     }
 }
 

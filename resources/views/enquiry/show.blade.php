@@ -15,21 +15,23 @@
                 <div class="form-group">
                     {!! Form::hidden('enquiry_id',$enquiry->id) !!}
                     <div class="col-md-2">
-                        <label for="select" class="control-label">Select Quotation :</label>
+                        <label for="select" class="control-label">Select Quotation:</label>
                     </div>
                     <div class="col-md-6 @error('quotation_id') has-error @enderror">
-                        {!! Form::select('quotation_id',$selectQuotations,null,
+                        {!! Form::select('quotation_id',$selectQuotations,$enquiry->quotation->id ?? null,
                                 ['class'=>'form-control','placeholder'=>'Select Quotation']) !!}
                     </div>
-                    <button type="submit" class="btn btn-primary btn-flat">
-                        <i class="fa fa-mail-reply"></i>
-                        Mail
-                    </button>
-                    <button type="button"
-                            class="btn btn-primary btn-flat bootstrap-modal-form-open"
-                            data-toggle="modal"
-                            data-target="#quotation-create"> Create Quotations
-                    </button>
+                    @if(empty($enquiry->quotation))
+                        <button type="submit" class="btn btn-primary btn-flat">
+                            <i class="fa fa-mail-reply"></i>
+                            Mail
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary btn-flat bootstrap-modal-form-open"
+                                data-toggle="modal"
+                                data-target="#quotation-create"> Create Quotations
+                        </button>
+                    @endif
                 </div>
                 {!! Form::close() !!}
             </div>

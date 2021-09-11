@@ -24,7 +24,7 @@ class IndexResponse implements Responsable
 
     /**
      * IndexResponse constructor.
-     * @param $viewPath
+     * @param string $viewPath
      */
     public function __construct(string $viewPath)
     {

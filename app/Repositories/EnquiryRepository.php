@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Abstracts\Repository;
 use App\Models\Employee;
 use App\Models\Enquiry;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class EnquiryRepository extends Repository
@@ -26,10 +27,10 @@ class EnquiryRepository extends Repository
         $this->model = $model;
     }
 
-    public function getAllByUser(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getAllByUser(): LengthAwarePaginator
     {
         $auth = Auth::user();
-        return Enquiry::with('user')
+        return Enquiry::with('user', 'quotation')
             ->when($auth->super == 0, function ($query) {
                 $query->where('user_id', \auth()->id());
             })->paginate(15);

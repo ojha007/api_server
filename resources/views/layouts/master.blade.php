@@ -93,7 +93,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition sidebar-mini @yield('skin') skin-blue @yield('sidebar_type')">
-<div class="wrapper" >
+<div class="wrapper">
     <!-- Main Header -->
 
 @include('partial.header')
@@ -125,6 +125,26 @@ desired effect
 
     @include('partial.footer')
     <div class="control-sidebar-bg"></div>
+    <div class="modal fade" id="viewMailModal" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">View Mail</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left">Reply</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 <script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('backend/js/jquery.min.js')}}"></script>
@@ -137,10 +157,10 @@ desired effect
 @stack('scripts')
 <script>
     $('.datepicker').datepicker({
-        autoclose:true,
-        todayHighlight:true,
-        toggleActive:true,
-        format:"yyyy-mm-dd"
+        autoclose: true,
+        todayHighlight: true,
+        toggleActive: true,
+        format: "yyyy-mm-dd"
     });
 </script>
 </body>

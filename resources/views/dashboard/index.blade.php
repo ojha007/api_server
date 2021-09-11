@@ -164,10 +164,10 @@
                             <tbody>
                             @forelse($enquiries ?? [] as $enquiry)
                                 <tr>
-                                   <td>{{$enquiry->id}}</td>
-                                   <td>{{$enquiry->name}}</td>
-                                   <td>{{$enquiry->email}}</td>
-                                   <td>{{$enquiry->mobile_number}}</td>
+                                    <td>{{$enquiry->id}}</td>
+                                    <td>{{$enquiry->name}}</td>
+                                    <td>{{$enquiry->email}}</td>
+                                    <td>{{$enquiry->mobile_number}}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -285,6 +285,13 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" id="email">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <button type="button" class="btn btn-default btn-lg">
+                                <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Email
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">

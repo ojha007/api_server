@@ -9,7 +9,9 @@ use Carbon\Carbon;
 use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 use Dacastro4\LaravelGmail\Services\Message\Mail;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MailController extends Controller
@@ -56,20 +58,46 @@ class MailController extends Controller
 
     }
 
-    public function sentMail(Request $request): \Illuminate\Http\RedirectResponse
+    public function sentMail(Request $request): RedirectResponse
     {
         $request->validate([
-            'to' => 'required|email'
+            'to' => 'required|email',
+            'fromEmail' => 'required|email',
+            'fromName' => 'required',
+            'subject' => 'required',
         ]);
         try {
-            $mail = new Mail();
+            $id = $request->get('replyId');
+            if ($id) {
+                $mail = LaravelGmail::message()->get($id);
+                $mail->setReplyThread($id);
+            } else {
+                $mail = new Mail();
+            }
             $mail->to($request->get('to'));
+            $fromEmail = $request->get('fromEmail');
+            $fromName = $request->get('fromName');
             $mail->subject($request->get('subject'));
-            $mail->from('ojhaamir007@gmail.com', 'Amir Ojha');
-            $mail->message($request->get('message'));
-            $mail->send();
-            $message = 'Mail sent to ' . $request->get('to') . ' successfully';
+            $mail->from($fromEmail, $fromName);
+            if ($request->get('ccMail')) {
+                $mail->cc($request->get('ccMail'), $request->get('ccName'));
+            }
+            if ($request->get('bccMail')) {
+                $mail->cc($request->get('bccMail'), $request->get('bccName'));
+            }
+            if ($request->hasFile('attachments')) {
+                $files = [];
+                foreach ($request->file('attachments') as $file) {
+                    $path = Storage::disk('public')->put('mail', $file);
+                    $files[] = 'storage/' . $path;
 
+                }
+                $mail->attach(implode(',', $files));
+            }
+            $mail->message($request->get('message'));
+            if ($id) $mail->reply();
+            else  $mail->send();
+            $message = 'Mail sent to ' . $request->get('to') . ' successfully';
             return redirect()
                 ->route($this->routePath . 'index')
                 ->with('success', $message);
@@ -99,7 +127,7 @@ class MailController extends Controller
 
     public function inbox(): JsonResponse
     {
-        $limit =  10;
+        $limit = 10;
         $mails = $this->getAllInbox($limit);
         return response()->json([
             'data' => $mails,
@@ -115,8 +143,9 @@ class MailController extends Controller
             $mails[$key]['date'] = Carbon::parse($message->getDate())->longRelativeToNowDiffForHumans();
             $mails[$key]['subject'] = $message->getSubject();
             $mails[$key]['from'] = $message->getFromName() . '-' . $message->getFromEmail();
-            $mails[$key]['message'] = $message->getPlainTextBody();
-            $mails[$key]['attachments'] = $message->hasAttachments();
+            $mails[$key]['message'] = Str::limit($message->getPlainTextBody());
+            $mails[$key]['id'] = $message->getId();
+
         }
         return $mails;
     }
@@ -126,6 +155,24 @@ class MailController extends Controller
         $title = 'Inbox';
         $url = route('mails.inbox');
         return view($this->viewPath . 'mailbox', compact('url', 'title'));
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function view($id): array
+    {
+        $message = LaravelGmail::message()->get($id);
+        return [
+            'date' => Carbon::parse($message->getDate())->longRelativeToNowDiffForHumans(),
+            'subject' => $message->getSubject(),
+            'fromName' => $message->getFromName(),
+            'fromEmail' => $message->getFromEmail(),
+            'message' => $message->getPlainTextBody(),
+            'id' => $message->getId(),
+            'attachment' => $message->getAttachments()
+        ];
     }
 
 }

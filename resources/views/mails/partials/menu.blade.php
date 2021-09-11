@@ -5,7 +5,7 @@
 @section('breadcrumb') @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div id="mailbox_option" class="box  box-solid">
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">

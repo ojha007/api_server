@@ -13,6 +13,7 @@ use App\Http\Responses\Enquiry\ShowResponse;
 use App\Http\Responses\Enquiry\StoreResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
+use App\Jobs\SendQuotationMail;
 use App\Models\Enquiry;
 use App\Models\Quotation;
 use App\Notifications\EnquiryReceived;
@@ -20,6 +21,7 @@ use App\Notifications\SendQuotation;
 use App\Repositories\EnquiryRepository;
 use App\Repositories\QuotationRepository;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -77,7 +79,7 @@ class EnquiryController extends Controller
 
     public function show($id): ShowResponse
     {
-        $enquiry = $this->repository->getById($id);
+        $enquiry = $this->repository->getByIdWith($id,'quotation');
         return new ShowResponse($enquiry, $this->viewPath);
     }
 
@@ -108,19 +110,21 @@ class EnquiryController extends Controller
     }
 
 
-    public function sendQuotations(SendQuotationsRequest $request)
+    public function sendQuotation(SendQuotationsRequest $request)
     {
         try {
-            $enquiry = $this->repository->getByIdWith($request->get('enquiry_id'), 'user');
+            $enquiryId= $request->get('enquiry_id');
+            $this->repository->update($enquiryId,$request->only('quotation_id'));
+            $enquiry = $this->repository->getByIdWith($enquiryId, 'user');
             $quotations = (new QuotationRepository(new Quotation()))->getById($request->get('quotation_id'));
-            Notification::send($enquiry->user, new SendQuotation($quotations, $enquiry));
-            return new SuccessResponse(null);
+            $this->dispatch(new SendQuotationMail($enquiry,$quotations));
+            return new SuccessResponse();
         } catch (Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
 
-    public function showQuotations($id)
+    public function showQuotations($id): RedirectResponse
     {
          return redirect()
              ->route('quotations.index');

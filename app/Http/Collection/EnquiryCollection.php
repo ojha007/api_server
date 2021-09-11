@@ -14,9 +14,9 @@ class EnquiryCollection extends ResourceCollection
 
     /**
      * @param Request $request
-     * @return array|AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
-    public function toArray($request)
+    public function toArray($request): AnonymousResourceCollection
     {
         return EnquiryResource::collection($this->collection);
     }

@@ -35,7 +35,7 @@ class QuotationController extends Controller
     public function index($enquiry_id = null): IndexResponse
     {
         $quotations = $this->repository->getAll();
-        return new IndexResponse($this->viewPath, $quotations,$enquiry_id);
+        return new IndexResponse($this->viewPath, $quotations, $enquiry_id);
     }
 
     public function create(): CreateResponse
@@ -52,8 +52,7 @@ class QuotationController extends Controller
             DB::commit();
             return new StoreResponse($this->baseRoute);
         } catch (\Exception $exception) {
-            dd($exception);
-            DB::rollBack();
+             DB::rollBack();
             return new ErrorResponse($exception);
         }
     }

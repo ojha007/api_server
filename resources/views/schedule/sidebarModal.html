@@ -1,0 +1,65 @@
+<div class="col-xs-12">
+    <h3>${response['booking']['name']}</h3>
+    <h4>${response['booking']['email']}</h4>
+    <h4>${response['booking']['phone']}
+        <small class="pull-right">Moving Date :<strong>${response['booking']['moving_date']}</strong></small>
+        <br><small class="pull-right">Time:<strong> ${response['booking']['time']}</strong></small>
+    </h4>
+</div><br><br>
+<div class="col-xs-12 table-responsive">
+    <table class="table table-striped table-borderless">
+        <tbody>
+        <tr>
+            <th>From Suburb</th>
+            <td>${response['booking']['moving_from_suburb']}</td>
+        </tr>
+        <tr>
+            <th>To Suburb</th>
+            <td>${response['booking']['moving_to_suburb']}</td>
+        </tr>
+        <tr>
+            <th>PickUp Address</th>
+            <td>${response['booking']['pickup_address']}</td>
+        </tr>
+        <tr>
+            <th>Drop-off Address</th>
+            <td>${response['booking']['dropoff_address']}</td>
+        </tr>
+        <tr>
+            <th>Additional Address</th>
+            <td>${response['booking']['additional_address']}</td>
+        </tr>
+        <tr>
+            <th>Additional Service</th>
+            <td>${response['booking']['additional_service']}</td>
+        </tr>
+
+        <tr>
+            <th>Access Parking</th>
+            <td>${response['booking']['access_parking']}</td>
+        </tr>
+        <tr>
+            <th>Size of Moving</th>
+            <td>${response['booking']['size_of_moving']}</td>
+        </tr>
+
+        <tr>
+            <th>Description</th>
+            <td>${response['booking']['description']}</td>
+        </tr>
+        <tr>
+            <th>Inventory</th>
+            <td>${response['booking']['moving_from_suburb']}</td>
+        </tr>
+        <tr>
+            <th>Quotes</th>
+            <td>${response['booking']['quotes']}</td>
+        </tr>
+        <tr>
+            <th>Payment</th>
+            <td>${response['payment']}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

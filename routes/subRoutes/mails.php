@@ -10,6 +10,7 @@ Route::group(['prefix' => 'mails', 'as' => 'mails.'], function ($mail) {
     $mail->get('/inbox', ['uses' => 'MailController@inbox', 'as' => 'inbox']);
     $mail->get('/index', ['uses' => 'MailController@index', 'as' => 'index']);
     $mail->get('/draft', ['uses' => 'MailController@draft', 'as' => 'draft']);
+    $mail->get('/view/{id}', ['uses' => 'MailController@view', 'as' => 'view']);
 
 });
 

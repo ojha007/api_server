@@ -1,6 +1,6 @@
 @extends('mails.partials.menu')
 @section('mailbox')
-    <div id='mailbox' class="col-md-11">
+    <div id='mailbox' class="col-md-10">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">{{$title ?? ''}}</h3>
@@ -8,7 +8,7 @@
                     {{ \LaravelGmail::user() }}
                     @if(\LaravelGmail::check())
                         <a href="{{ url('oauth/gmail/logout') }}" class="btn btn-danger btn-flat">
-                           Logout
+                            Logout
                         </a>
                     @else
                         <a href="{{ url('oauth/gmail') }}" class="btn  btn-flat btn-primary">
@@ -20,14 +20,20 @@
                 <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
-            <div class="box-body no-padding" id="email">
-
+            <div class="box-body " id="email">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button type="button" class="btn btn-default btn-lg" >
+                            <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Mails
+                        </button>
+                    </div>
+                </div>
                 <!-- /.mail-box-messages -->
             </div>
-{{--            <div class="overlay">--}}
-{{--                <i class="fa fa-refresh fa-spin"></i>--}}
-{{--            </div>--}}
-            <!-- /.box-body -->
+        {{--            <div class="overlay">--}}
+        {{--                <i class="fa fa-refresh fa-spin"></i>--}}
+        {{--            </div>--}}
+        <!-- /.box-body -->
         </div>
         <!-- /. box -->
     </div>

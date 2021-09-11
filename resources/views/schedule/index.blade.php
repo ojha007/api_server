@@ -9,76 +9,6 @@
 @endsection
 @section('content')
     <div class="row">
-    {{--        <div class="col-md-3">--}}
-    {{--            <div class="box box-solid">--}}
-    {{--                <div class="box-header with-border">--}}
-    {{--                    <h4 class="box-title">Draggable Schedule</h4>--}}
-    {{--                </div>--}}
-    {{--                <div class="box-body">--}}
-    {{--                    <!-- the events -->--}}
-    {{--                    <div id="external-events">--}}
-    {{--                        <div class="external-event bg-green ui-draggable ui-draggable-handle"--}}
-    {{--                             style="position: relative;">Lunch--}}
-    {{--                        </div>--}}
-    {{--                        <div class="external-event bg-yellow ui-draggable ui-draggable-handle"--}}
-    {{--                             style="position: relative;">Go home--}}
-    {{--                        </div>--}}
-    {{--                        <div class="external-event bg-aqua ui-draggable ui-draggable-handle"--}}
-    {{--                             style="position: relative;">Do homework--}}
-    {{--                        </div>--}}
-    {{--                        <div class="external-event bg-light-blue ui-draggable ui-draggable-handle"--}}
-    {{--                             style="position: relative;">Work on UI design--}}
-    {{--                        </div>--}}
-    {{--                        <div class="external-event bg-red ui-draggable ui-draggable-handle" style="position: relative;">--}}
-    {{--                            Sleep tight--}}
-    {{--                        </div>--}}
-    {{--                        <div class="checkbox">--}}
-    {{--                            <label for="drop-remove">--}}
-    {{--                                <input type="checkbox" id="drop-remove">--}}
-    {{--                                remove after drop--}}
-    {{--                            </label>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <!-- /.box-body -->--}}
-    {{--            </div>--}}
-    {{--            <!-- /. box -->--}}
-    {{--            <div class="box box-solid">--}}
-    {{--                <div class="box-header with-border">--}}
-    {{--                    <h3 class="box-title">Create Schedule</h3>--}}
-    {{--                </div>--}}
-    {{--                <div class="box-body">--}}
-    {{--                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">--}}
-    {{--                        <ul class="fc-color-picker" id="color-chooser">--}}
-    {{--                            <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                            <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>--}}
-    {{--                        </ul>--}}
-    {{--                    </div>--}}
-    {{--                    <!-- /btn-group -->--}}
-    {{--                    <div class="input-group">--}}
-    {{--                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">--}}
-
-    {{--                        <div class="input-group-btn">--}}
-    {{--                            <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>--}}
-    {{--                        </div>--}}
-    {{--                        <!-- /btn-group -->--}}
-    {{--                    </div>--}}
-    {{--                    <!-- /input-group -->--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    <!-- /.col -->
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-body no-padding">
@@ -103,23 +33,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="row" style="border-bottom: 1px solid bisque">
-                       <div class="col-md-12">
-                           {!! Form::open(['route'=>'tasks.assigned']) !!}
-                           <div class="form-group col-md-9">
-                               <label for="worker_id">Assign To Worker</label>
-                               {!! Form::select('worker_id',$workers ,null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
-                               <input type="hidden" name="task_id" value="">
-                           </div>
-                           <div class="col-md-3 form-group pull-left">
-                               <label></label>
-                               <button
-                                   id="assignBtn"
-                                   class="btn btn-flat btn-primary pull-left"
-                                   style="margin-top: 1.8em;">
-                                   Assign
-                               </button>
-                           </div>
-                       </div>
+                        <div class="col-md-12">
+                            <div id="assignedWorker" class="col-md-9 form-group"></div>
+                            {!! Form::open(['route'=>'tasks.assigned']) !!}
+                            <div class="form-group col-md-9">
+                                <label for="worker_id">Assign To Worker</label>
+                                {!! Form::select('worker_id',$workers ,null,['class'=>'form-control','placeholder'=>'Select Worker']) !!}
+                                <input type="hidden" name="task_id" value="">
+                            </div>
+                            <div class="col-md-3 form-group pull-left">
+                                <label></label>
+                                <button
+                                    id="assignBtn"
+                                    class="btn btn-flat btn-primary pull-left"
+                                    style="margin-top: 1.8em;">
+                                    Assign
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="padding: 1em">
@@ -176,18 +107,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // const events = document.getElementById('external-events');
-            // new FullCalendar.Draggable(events, {
-            //     itemSelector: '.external-event',
-            //     eventData: function (eventEl) {
-            //         return {
-            //             title: eventEl.innerText.trim(),
-            //         }
-            //     }
-            // });
-            // $('#task_modal').find('.dropdown-menu >li:first-child').on('click', function () {
-            //     $('#assign_task').modal('show')
-            // })
             const calendarEl = document.getElementById('calendar');
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -209,74 +128,18 @@
                         url: '{{url('tasks')}}' + '/' + info.event.id,
                         type: 'GET',
                         success: function (response) {
+
                             let modal = $('#task_modal');
                             $('#task_modal_title').html(response.title);
                             modal.find('form input[name="task_id"]').val(response['id']);
-                            let template = `<div class="col-xs-12">
-                                             <h3>${response['booking']['name']}</h3>
-                                             <h4>${response['booking']['email']}</h4>
-                                             <h4>${response['booking']['phone']}
-                                              <small class="pull-right">Moving Date :<strong>${response['booking']['moving_date']}</strong></small>
-                                              <br><small class="pull-right">Time:<strong> ${response['booking']['time']}</strong></small>
-                                             </h4>
-                                            </div><br><br>
-                                             <div class="col-xs-12 table-responsive">
-                                             <table class="table table-striped table-borderless">
-                                             <tbody>
-                                             <tr>
-                                             <th>From Suburb</th>
-                                             <td>${response['booking']['moving_from_suburb']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>To Suburb</th>
-                                             <td>${response['booking']['moving_to_suburb']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>PickUp Address</th>
-                                             <td>${response['booking']['pickup_address']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>Dropoff Address</th>
-                                             <td>${response['booking']['dropoff_address']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>Additional Address</th>
-                                             <td>${response['booking']['additional_address']}</td>
-                                             </tr><tr>
-                                             <th>Additional Service</th>
-                                             <td>${response['booking']['additional_service']}</td>
-                                             </tr>
-
-                                             <tr>
-                                             <th>Access Parking</th>
-                                             <td>${response['booking']['access_parking']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>Size of Moving</th>
-                                             <td>${response['booking']['size_of_moving']}</td>
-                                             </tr>
-
-                                             <tr>
-                                             <th>Description</th>
-                                             <td>${response['booking']['description']}</td>
-                                             </tr>
-                                             <tr>
-                                             <th>Inventory</th>
-                                             <td>${response['booking']['moving_from_suburb']}</td>
-                                             </tr>
-                                            <tr>
-                                             <th>Quotes</th>
-                                             <td>${response['booking']['quotes']}</td>
-                                             </tr>
-                                            <tr>
-                                             <th>Payment</th>
-                                             <td>${response['payment']}</td>
-                                             </tr>
-                                            </tbody>
-                                            </table>
-
-                                            </div>
-                                            `
+                            if (response['workers'].length) {
+                                let o = ' <label>Assigned Worker</label>';
+                                response['workers'].forEach(worker => {
+                                    o += `<input type="text" readonly value="${worker.name}" class="form-control disabled">`
+                                });
+                                $('#assignedWorker').html(o);
+                            }
+                            let template = `{{view('schedule.sidebarModal')}}`
                             $('.modal-body>div:nth-child(2)>div').html(template)
                             modal.modal('show')
                         }
@@ -336,6 +199,7 @@
                 $(this).find('select[name="worker_id"]').val('');
                 $(this).find('select[name="worker_id"]').parent().removeClass('has-error');
                 $(this).find('select[name="worker_id"]').siblings('.help-block').remove();
+                $('#assignedWorker').html('');
                 submitBtn.removeAttr('disabled')
             })
         });
