@@ -28,7 +28,7 @@ class SuccessResponse implements Responsable
             $response['data'] = $this->data;
         }
         if ($request->wantsJson()) {
-            return response()->json([$response, ResponseAlias::HTTP_OK]);
+            return response()->json([$response]);
         }
         return redirect()
             ->back()

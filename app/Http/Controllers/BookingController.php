@@ -14,6 +14,7 @@ use App\Http\Responses\SuccessResponse;
 use App\Jobs\BookingConfirmedJob;
 use App\Models\Booking;
 use App\Models\Task;
+use App\Models\TaskStatus;
 use App\Notifications\BookingConfirmed;
 use App\Repositories\BookingRepository;
 use App\Repositories\TaskRepository;
@@ -105,6 +106,7 @@ class BookingController extends Controller
             DB::commit();
             return view($this->viewPath . 'edit', compact('booking'));
         } catch (Exception $exception) {
+
             DB::rollBack();
             return new ErrorResponse($exception);
         }
@@ -120,9 +122,10 @@ class BookingController extends Controller
             $attributes['time'] = $request->get('time');
             $booking = $this->repository->update($id, $attributes);
             $max = (new TaskRepository(new Task()))->maxId();
+            $bookingTitle = $booking->name . '(' . $booking->moving_date . " " . $request->get('time') . ') ';
             $booking->task()->create([
                 'code' => 'T' . str_pad($max + 1, 4, 0, STR_PAD_LEFT),
-                'title' => $booking->name . '(' . $booking->moving_date . " " . $request->get('time') . ') ' . $booking->pickup_address,
+                'title' => $bookingTitle,
                 'booking_id' => $id,
                 'date' => $booking->moving_date
             ]);

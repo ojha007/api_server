@@ -59,7 +59,9 @@ class RolesAndPermissionsSeederAms extends Seeder
 
         // create roles and assign created permissions
         $role = Role::firstOrCreate(['name' => 'Administrator', 'guard_name' => 'web']);
+        $role1 = Role::firstOrCreate(['name' => 'Worker', 'guard_name' => 'web']);
         $permissions = Permission::where('guard_name', 'web')->get();
         $role->syncPermissions($permissions);
+        $role1->syncPermissions($permissions);
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Responses\Tasks\ShowResponse;
 use App\Http\Responses\Tasks\StoreResponse;
 use App\Http\Responses\Tasks\UpdateResponse;
 use App\Models\Task;
+use App\Models\TaskStatus;
 use App\Models\User;
 use App\Notifications\AssignedToTask;
 use App\Repositories\TaskRepository;
@@ -48,7 +49,7 @@ class TaskController extends Controller
         $this->repository = new TaskRepository(new Task());
     }
 
-    public function index(): IndexResponse
+    public function index()
     {
         return new IndexResponse($this->viewPath);
     }
@@ -73,15 +74,15 @@ class TaskController extends Controller
         }
     }
 
-    public function destroy(): ErrorResponse
+    public function destroy()
     {
-        try {
-            DB::beginTransaction();
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return new ErrorResponse($exception);
-        }
+//        try {
+//            DB::beginTransaction();
+//            DB::commit();
+//        } catch (\Exception $exception) {
+//            DB::rollBack();
+//            return new ErrorResponse($exception);
+//        }
     }
 
     public function store(TaskRequest $request)
@@ -97,10 +98,6 @@ class TaskController extends Controller
                     'user_id' => $request->get('user_id'),
                 ]);
             }
-            $task->status()->create([
-                'status' => Task::PENDING,
-                'user_id' => auth()->id()
-            ]);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -142,6 +139,11 @@ class TaskController extends Controller
                 $worker = (new UserRepository(new User()))->getById($request->get('worker_id'));
                 DB::table('task_workers')
                     ->insert($request->except('_token'));
+                TaskStatus::create([
+                    'task_id'=>$request->get('task_id'),
+                    'status'=>TaskStatus::PENDING,
+                    'user_id'=>$request->get('worker_id')
+                ]);
                 $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'status', 'booking');
                 Notification::send($worker, new AssignedToTask($worker, $task));
                 DB::commit();

@@ -11,6 +11,10 @@ class TaskStatus extends Model
 
     const CODE = 'TS';
     protected $table = 'task_status';
+    const PENDING='Pending';
+    const STARTED='Started';
+    const REJECTED='Rejected';
+    const COMPLETED='Completed';
 
     protected $fillable = ['task_id', 'status', 'reason', 'user_id'];
 
