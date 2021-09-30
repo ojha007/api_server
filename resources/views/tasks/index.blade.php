@@ -33,7 +33,7 @@
                     <tr>
                         <td>{{$task->code}}</td>
                         <td>{{$task->title}}</td>
-                        <td>{{$task->status()->reason}}</td>
+                        <td>{{$task->status()->reason ?? ''}}</td>
                         <td>{!! spanByStatus($task->latestStatus) !!}</td>
                         <td>
                             {!! Form::open(['route'=>['tasks.destroy',$task->id],'class'=>'form-horizontal']) !!}
