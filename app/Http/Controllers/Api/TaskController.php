@@ -7,10 +7,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 
+use App\Http\Responses\ValidationResponse;
 use App\Models\Task;
 use App\Models\TaskFile;
 use App\Models\TaskStatus;
 use App\Repositories\TaskRepository;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -33,25 +35,30 @@ class TaskController extends \App\Http\Controllers\TaskController
         $this->repository = new TaskRepository(new Task());
     }
 
+    public function latestStatusQuery(): Builder
+    {
+        return DB::table('task_status')
+            ->select('task_id', 'status', 'id')
+            ->where('user_id', auth()->id())
+            ->whereIn('id',
+                DB::table('task_status')
+                    ->selectRaw('max(id) as id')
+                    ->groupBy('task_id')
+                    ->pluck('id')
+            );
+    }
+
     public function index()
     {
         try {
-            $latestStatus = DB::table('task_status')
-                ->select('task_id', 'status', 'id')
-                ->where('user_id', auth()->id())
-                ->whereIn('id',
-                    DB::table('task_status')
-                        ->selectRaw('max(id) as id')
-                        ->groupBy('task_id')
-                        ->pluck('id')
-                );
+            $latestStatus = $this->latestStatusQuery();
             $tasks = DB::table('tasks')
                 ->select('tasks.code', 'tasks.id', 'tasks.title', 'taskStatus.status', 'tasks.description')
                 ->join('task_workers', 'tasks.id', '=', 'task_workers.task_id')
                 ->join('bookings', 'bookings.id', '=', 'tasks.booking_id')
                 ->joinSub($latestStatus, 'taskStatus', 'taskStatus.task_id', '=', 'tasks.id')
                 ->where('bookings.is_verified', true)
-                ->where('task_workers.worker_id','=',auth()->id())
+                ->where('task_workers.worker_id', '=', auth()->id())
                 ->orderByDesc('moving_date')
                 ->get();
             return new SuccessResponse($tasks);
@@ -68,8 +75,12 @@ class TaskController extends \App\Http\Controllers\TaskController
             'reason' => 'nullable'
         ]);
         if ($validator->fails())
-            return response()->json(['errors' => $validator->errors()], 401);
+            return new ValidationResponse($validator);
         try {
+            $latestStatus = $this->latestStatusQuery()->first();
+            if ($latestStatus->status == 'Started' && $request->get('status') == 'Started') {
+                return new ValidationResponse(null, 'Another Task is already started.');
+            }
             TaskStatus::create([
                 'status' => $request->get('status'),
                 'task_id' => $id,
@@ -140,7 +151,8 @@ class TaskController extends \App\Http\Controllers\TaskController
                         'type' => $image->type
                     ];
                 });
-            $task->images = $images;
+            if ($task)
+                $task->images = $images;
             return new SuccessResponse($task);
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
