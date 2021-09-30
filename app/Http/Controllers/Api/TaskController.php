@@ -8,8 +8,13 @@ use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 
 use App\Models\Task;
+use App\Models\TaskStatus;
 use App\Repositories\TaskRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class TaskController extends \App\Http\Controllers\TaskController
 {
@@ -54,6 +59,56 @@ class TaskController extends \App\Http\Controllers\TaskController
     }
 
 
+    public function changeStatus(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:Pending,Started,Rejected,Completed',
+            'reason'=>'nullable'
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 401);
+        try {
+            TaskStatus::create([
+                'status' => $request->get('status'),
+                'task_id' => $id,
+                'user_id' => auth()->id(),
+                'reason' => $request->get('reason'),
+            ]);
+            return  new SuccessResponse();
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
+    }
+
+
+    public  function storeImage(Request  $request,$id){
+        $validator = Validator::make($request->all(), [
+            'file' => 'required',
+            'status'=>'required|in:START,END,MIDDLE'
+        ]);
+        if ($validator->fails())
+            return response()->json(['errors' => $validator->errors()], 401);
+        $file_data       = $request->input('file');
+        //generating unique file name;
+        $file_name = 'images/'.Str::uuid().time().'.png';
+        @list($type, $file_data) = explode(';', $file_data);
+        @list(, $file_data)      = explode(',', $file_data);
+        if($file_data!=""){
+            Storage::disk('public')
+                ->put($file_name,base64_decode($file_data));
+            DB::table('task_files')
+                ->insert([
+                    'url'=>Storage::url($file_name),
+                    'task_id'=>$id,
+                    'type'=>$request->get('status'),
+                    "created_at" =>  date('Y-m-d H:i:s'),
+                    "updated_at" => date('Y-m-d H:i:s'),
+                ]);
+
+        }
+        return  new SuccessResponse();
+    }
+
     public function show($id)
     {
         try {
@@ -66,15 +121,15 @@ class TaskController extends \App\Http\Controllers\TaskController
                 ->select(['t.title', 't.code', 'ts.status', 'ts.id as taskId',
                     'b.name', 'email', 'phone', 'moving_date',
                     'moving_from_suburb', 'moving_to_suburb',
-                    'pickup_address','comments','b.description',
-                    'quotes','size_of_moving','additional_service',
-                    'access_parking','dropoff_address','pickup_address',
-                    'inventory','b.id as bookingId','t.created_at as taskTime'])
+                    'pickup_address', 'comments', 'b.description',
+                    'quotes', 'size_of_moving', 'additional_service',
+                    'access_parking', 'dropoff_address', 'pickup_address',
+                    'inventory', 'b.id as bookingId', 't.created_at as taskTime'])
                 ->join('bookings as  b', 'b.id', '=', 't.booking_id')
-                ->join('task_workers as tw','tw.task_id','=','t.id')
+                ->join('task_workers as tw', 'tw.task_id', '=', 't.id')
                 ->joinSub($latestStatus, 'ts', 'ts.task_id', '=', 't.id')
-                ->where('b.is_verified',true)
-                ->where('tw.worker_id',auth()->id())
+                ->where('b.is_verified', true)
+                ->where('tw.worker_id', auth()->id())
                 ->get();
             return new SuccessResponse($task);
         } catch (\Exception $exception) {

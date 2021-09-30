@@ -27,6 +27,9 @@ class SuccessResponse implements Responsable
         if ($this->data) {
             $response['data'] = $this->data;
         }
+        else{
+            $response['data']=[];
+        }
         if ($request->wantsJson()) {
             return response()->json([$response]);
         }
