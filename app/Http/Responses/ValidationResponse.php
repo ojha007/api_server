@@ -34,9 +34,6 @@ class ValidationResponse implements Responsable
             'message' => $message,
             'data' => []
         ];
-//        if ($request->wantsJson()) {
-//            return response()->json($response);
-//        }
         return response()->json($response);
 
     }

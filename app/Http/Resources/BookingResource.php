@@ -11,6 +11,7 @@ class BookingResource extends JsonResource
 
     public function toArray($request): array
     {
+
         $payment = $this->payment ?? null;
         return [
             'id' => $this->id ?? '',

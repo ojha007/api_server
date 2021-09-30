@@ -29,7 +29,7 @@ class ErrorResponse implements Responsable
         if ($request->wantsJson()) {
             $response = [
                 'status' => 500,
-                'message' => 'Whoops Something Went wrong',
+                'message' => 'Whoops! Something Went wrong',
                 'data'=>[]
             ];
             return response($response);

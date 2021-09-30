@@ -53,13 +53,13 @@ if (!function_exists('logException')) {
     }
 }
 if (!function_exists('successResponse')) {
-    function successResponse(): array
+    function successResponse(): object
     {
-        return [
-            'data' => [
-                'message' => 'SUCCESS',
-                'code' => 201
-            ]
+
+        return (object)[
+            'message' => 'SUCCESS',
+            'status' => 201,
+            'data' => []
         ];
     }
 }
