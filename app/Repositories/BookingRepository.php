@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Abstracts\Repository;
 use App\Models\Booking;
 use App\Models\Campaign;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class BookingRepository extends Repository
@@ -21,7 +22,7 @@ class BookingRepository extends Repository
         $this->model = $model;
     }
 
-    public function getAllByUser(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function getAllByUser(): LengthAwarePaginator
     {
         $user = Auth::user();
 

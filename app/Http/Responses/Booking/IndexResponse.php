@@ -37,7 +37,6 @@ class IndexResponse implements Responsable
 
 
         if ($request->wantsJson()) {
-
             return new BookingCollection($this->collection);
         }
         return view($this->viewPath . 'index')

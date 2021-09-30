@@ -36,7 +36,8 @@ class ShowResponse implements Responsable
     public function toResponse($request)
     {
         if ($request->wantsJson()) {
-            return new BookingResource($this->booking);
+            $a = new BookingResource($this->booking);
+            return  ['status'=>201,'message'=>'SUCCESS','data'=>$a];
         }
         return view($this->viewPath . 'show')
             ->with('booking', $this->booking);

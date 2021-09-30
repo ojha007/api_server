@@ -10,8 +10,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class BookingCollection extends ResourceCollection
 {
 
-    public function toArray($request)
+    public function toArray($request): array
     {
-        return BookingResource::collection($this->collection);
+        return [
+            'status' => 201,
+            'message' => 'SUCCESS',
+            'data' => BookingResource::collection($this->collection),
+        ];
     }
 }
