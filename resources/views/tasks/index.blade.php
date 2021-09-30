@@ -36,28 +36,28 @@
                         <td>{{$task->status()->reason ?? ''}}</td>
                         <td>{!! spanByStatus($task->latestStatus) !!}</td>
                         <td>
-                            {!! Form::open(['route'=>['tasks.destroy',$task->id],'class'=>'form-horizontal']) !!}
+                            {{--                            {!! Form::open(['route'=>['tasks.destroy',$task->id],'class'=>'form-horizontal']) !!}--}}
                             @can('task-view')
                                 <a class="btn btn-default btn-flat btn-sm"
                                    href="{{route('tasks.show',$task->id)}}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
-                            @can('task-edit')
-                                <a class="btn btn-primary btn-flat btn-sm"
-                                   href="{{route('tasks.edit',$task->id)}}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            @endcan
-                            @can('task-delete')
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="btn btn-flat btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure to delete')">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            @endcan
-                            {!! Form::open() !!}
+                            {{--                            @can('task-edit')--}}
+                            {{--                                <a class="btn btn-primary btn-flat btn-sm"--}}
+                            {{--                                   href="{{route('tasks.edit',$task->id)}}">--}}
+                            {{--                                    <i class="fa fa-edit"></i>--}}
+                            {{--                                </a>--}}
+                            {{--                            @endcan--}}
+                            {{--                            @can('task-delete')--}}
+                            {{--                                @method('DELETE')--}}
+                            {{--                                <button type="submit"--}}
+                            {{--                                        class="btn btn-flat btn-danger btn-sm"--}}
+                            {{--                                        onclick="return confirm('Are you sure to delete')">--}}
+                            {{--                                    <i class="fa fa-times"></i>--}}
+                            {{--                                </button>--}}
+                            {{--                            @endcan--}}
+                            {{--                            {!! Form::open() !!}--}}
                         </td>
                     </tr>
                 @empty

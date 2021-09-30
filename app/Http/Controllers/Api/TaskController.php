@@ -64,7 +64,7 @@ class TaskController extends \App\Http\Controllers\TaskController
     {
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:Pending,Started,Rejected,Completed',
-            'reason'=>'nullable'
+            'reason' => 'nullable'
         ]);
         if ($validator->fails())
             return response()->json(['errors' => $validator->errors()], 401);
@@ -75,35 +75,36 @@ class TaskController extends \App\Http\Controllers\TaskController
                 'user_id' => auth()->id(),
                 'reason' => $request->get('reason'),
             ]);
-            return  new SuccessResponse();
+            return new SuccessResponse();
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
 
 
-    public  function storeImage(Request  $request,$id){
+    public function storeImage(Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
             'file' => 'required',
-            'status'=>'required|in:START,END,MIDDLE'
+            'status' => 'required|in:START,END,MIDDLE'
         ]);
         if ($validator->fails())
             return response()->json(['errors' => $validator->errors()], 401);
-        $file_data       = $request->input('file');
+        $file_data = $request->input('file');
         //generating unique file name;
-        $file_name = 'images/'.Str::uuid().time().'.png';
+        $file_name = 'images/' . Str::uuid() . time() . '.png';
         @list($type, $file_data) = explode(';', $file_data);
-        @list(, $file_data)      = explode(',', $file_data);
-        if($file_data!=""){
+        @list(, $file_data) = explode(',', $file_data);
+        if ($file_data != "") {
             Storage::disk('public')
-                ->put($file_name,base64_decode($file_data));
+                ->put($file_name, base64_decode($file_data));
             TaskFile::create([
-                'url'=>Storage::url($file_name),
-                'task_id'=>$id,
-                'type'=>$request->get('status'),
+                'url' => Storage::url($file_name),
+                'task_id' => $id,
+                'type' => $request->get('status'),
             ]);
         }
-        return  new SuccessResponse();
+        return new SuccessResponse();
     }
 
     public function show($id)
@@ -127,7 +128,18 @@ class TaskController extends \App\Http\Controllers\TaskController
                 ->joinSub($latestStatus, 'ts', 'ts.task_id', '=', 't.id')
                 ->where('b.is_verified', true)
                 ->where('tw.worker_id', auth()->id())
-                ->get();
+                ->first();
+            $images = DB::table('task_files')
+                ->select('url', 'type')
+                ->where('task_id', '=', $id)
+                ->get()
+                ->map(function ($image) {
+                    return [
+                        'url' => asset($image->url),
+                        'type' => $image->type
+                    ];
+                });
+            $task->images = $images;
             return new SuccessResponse($task);
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
