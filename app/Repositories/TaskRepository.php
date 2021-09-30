@@ -7,6 +7,8 @@ namespace App\Repositories;
 use App\Abstracts\Repository;
 use App\Models\Employee;
 use App\Models\Task;
+use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class TaskRepository extends Repository
@@ -26,7 +28,7 @@ class TaskRepository extends Repository
         $this->model = $model;
     }
 
-    public function getTaskForCalendar(): \Illuminate\Support\Collection
+    public function getTaskForCalendar(): Collection
     {
         return DB::table('tasks as t')
             ->select('t.title as title', 't.id as id', 'b.moving_date', 'b.time')
@@ -56,10 +58,25 @@ class TaskRepository extends Repository
             ->pluck('task_id')
             ->toArray();
         return $this->getModel()
-            ->select('id','code','title','description')
+            ->select('id', 'code', 'title', 'description')
             ->with(['statuses'])
             ->whereIn('tasks.id', $taskIds)
             ->orderByDesc('tasks.id')
+            ->get();
+    }
+
+    public function getUnassignedWorker($taskId): Collection
+    {
+        return DB::table('users as u')
+            ->select('u.id', 'u.name')
+            ->join('model_has_roles as mr', function ($join) {
+                $join->on('mr.model_id', '=', 'u.id')
+                    ->where("mr.model_type", '=', 'App\\Models\\User');
+            })->join('roles as r', function ($join) {
+                $join->on('r.id', '=', 'mr.role_id')
+                    ->where("r.name", '=', User::WORKER);
+            })->whereRaw('u.id not in (select worker_id from task_workers where task_id =?)')
+            ->addBinding($taskId)
             ->get();
     }
 

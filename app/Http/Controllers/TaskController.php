@@ -12,6 +12,7 @@ use App\Http\Responses\Tasks\IndexResponse;
 use App\Http\Responses\Tasks\ShowResponse;
 use App\Http\Responses\Tasks\StoreResponse;
 use App\Http\Responses\Tasks\UpdateResponse;
+use App\Http\Responses\ValidationResponse;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -134,8 +135,16 @@ class TaskController extends Controller
                 'task_id' => 'required|exists:tasks,id',
                 'worker_id' => 'required|exists:users,id',
             ]);
+            $old = DB::table('task_workers')
+                ->where('task_id',$request->get('task_id'))
+                ->where('worker_id',$request->get('worker_id'))
+                ->count();
+            if($old){
+              return  new ValidationResponse(null,"User Already assigned.");
+            }
             if ($validator->fails())
-                return response()->json(['errors' => $validator->errors()], 401);
+                return  new ValidationResponse($validator);
+
             try {
                 DB::beginTransaction();
                 $worker = (new UserRepository(new User()))->getById($request->get('worker_id'));

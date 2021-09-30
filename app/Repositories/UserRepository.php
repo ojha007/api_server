@@ -23,7 +23,7 @@ class UserRepository extends Repository
         return $this->model->create($attributes);
     }
 
-    public function encryptPassword($password_generated)
+    public function encryptPassword($password_generated): string
     {
         return Hash::make($password_generated);
     }
@@ -59,4 +59,5 @@ class UserRepository extends Repository
     {
         return Role::findByName(User::WORKER)->users;
     }
+
 }
