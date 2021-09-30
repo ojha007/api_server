@@ -51,6 +51,7 @@ class TaskController extends \App\Http\Controllers\TaskController
                 ->join('bookings', 'bookings.id', '=', 'tasks.booking_id')
                 ->joinSub($latestStatus, 'taskStatus', 'taskStatus.task_id', '=', 'tasks.id')
                 ->where('bookings.is_verified', true)
+                ->where('task_workers.worker_id','=',auth()->id())
                 ->orderByDesc('moving_date')
                 ->get();
             return new SuccessResponse($tasks);
