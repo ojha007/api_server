@@ -146,7 +146,7 @@ class TaskController extends Controller
                     'status'=>TaskStatus::PENDING,
                     'user_id'=>$request->get('worker_id')
                 ]);
-                $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'status', 'booking');
+                $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'statuses', 'booking');
                 Notification::send($worker, new AssignedToTask($worker, $task));
                 DB::commit();
                 return response()
