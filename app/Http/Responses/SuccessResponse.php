@@ -31,7 +31,7 @@ class SuccessResponse implements Responsable
             $response['data']=[];
         }
         if ($request->wantsJson()) {
-            return response()->json([$response]);
+            return response()->json($response);
         }
         return redirect()
             ->back()

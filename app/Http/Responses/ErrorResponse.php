@@ -28,10 +28,11 @@ class ErrorResponse implements Responsable
         logException($this->exception);
         if ($request->wantsJson()) {
             $response = [
-                'status' => $this->exception->getCode(),
-                'message' => 'ERROR'
+                'status' => 500,
+                'message' => 'Whoops Something Went wrong',
+                'data'=>[]
             ];
-            return response($response, ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+            return response($response);
         } else {
             return redirect()->back()
                 ->withInput()

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Responses\SuccessResponse;
+use App\Http\Responses\ValidationResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +25,15 @@ class AuthController extends Controller
             'remember_me' => 'boolean'
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 401);
+            return new ValidationResponse($validator);
         }
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $data = $this->transformUser($user);
             return new SuccessResponse($data);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 401);
+
+            return new ValidationResponse(null,'Email and password does not matches.');
         }
     }
 
@@ -48,7 +50,7 @@ class AuthController extends Controller
             "role.in" => "Role can be either Worker or Customer"
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 401);
+            return new ValidationResponse($validator);
         }
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
