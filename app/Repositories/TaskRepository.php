@@ -52,12 +52,12 @@ class TaskRepository extends Repository
             ->when(auth()->user()->super === 0, function ($q) {
                 $q->where('worker_id', '=', auth()->id());
             })
-//            ->groupBy('task_id')
+            ->groupBy('task_id')
             ->pluck('task_id')
             ->toArray();
         return $this->getModel()
             ->select('id','code','title','description')
-            ->with(['status'])
+            ->with(['statuses'])
             ->whereIn('tasks.id', $taskIds)
             ->orderByDesc('tasks.id')
             ->get();

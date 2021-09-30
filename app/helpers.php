@@ -17,6 +17,12 @@ if (!function_exists('spanByStatus')) {
             case 'Pending':
                 $class = 'bg-yellow';
                 break;
+            case 'Started':
+                $class = 'bg-green';
+                break;
+            case 'Rejected':
+                $class = 'bg-red';
+                break;
             default:
                 $class = 'bg-blue';
         }

@@ -24,6 +24,7 @@ class BookingRepository extends Repository
     public function getAllByUser(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $user = Auth::user();
+
         return Booking::with('user', 'payment')
             ->when($user->super == 0, function ($query) use ($user) {
                 $query->where('user_id', \auth()->id());

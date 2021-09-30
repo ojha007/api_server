@@ -8,6 +8,7 @@ use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 
 use App\Models\Task;
+use App\Models\TaskFile;
 use App\Models\TaskStatus;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
@@ -96,15 +97,11 @@ class TaskController extends \App\Http\Controllers\TaskController
         if($file_data!=""){
             Storage::disk('public')
                 ->put($file_name,base64_decode($file_data));
-            DB::table('task_files')
-                ->insert([
-                    'url'=>Storage::url($file_name),
-                    'task_id'=>$id,
-                    'type'=>$request->get('status'),
-                    "created_at" =>  date('Y-m-d H:i:s'),
-                    "updated_at" => date('Y-m-d H:i:s'),
-                ]);
-
+            TaskFile::create([
+                'url'=>Storage::url($file_name),
+                'task_id'=>$id,
+                'type'=>$request->get('status'),
+            ]);
         }
         return  new SuccessResponse();
     }

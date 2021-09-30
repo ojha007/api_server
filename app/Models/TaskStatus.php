@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TaskStatus extends Model
 {
@@ -18,7 +19,10 @@ class TaskStatus extends Model
 
     protected $fillable = ['task_id', 'status', 'reason', 'user_id'];
 
-    public function task(): \Illuminate\Database\Eloquent\Relations\HasOne
+    /**
+     * @return HasOne
+     */
+    public function task(): HasOne
     {
         return $this->hasOne(Task::class);
     }

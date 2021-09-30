@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Task extends Model
 {
@@ -15,17 +16,34 @@ class Task extends Model
     const PENDING = 'Pending';
 
     protected $table = 'tasks';
+    protected $appends = ['latestStatus'];
 
-    protected $fillable = ['code', 'booking_id', 'title', 'description', 'images', 'task_completed'];
+    protected $fillable = ['code', 'booking_id', 'title', 'description',];
 
     public function workers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'task_workers', 'task_id', 'worker_id');
     }
 
-    public function status(): BelongsTo
+    public function statuses(): HasMany
     {
-        return $this->belongsTo(TaskStatus::class, 'task_id');
+        return $this->hasMany(TaskStatus::class, 'task_id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(TaskFile::class, 'task_id');
+    }
+
+    public function getLatestStatusAttribute()
+    {
+        $sts = $this->status();
+        return $sts->status ?? 'Pending';
+    }
+
+    public function status()
+    {
+        return $this->statuses()->orderByDesc('created_at')->first();
     }
 
     public function booking(): BelongsTo

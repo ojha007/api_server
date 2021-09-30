@@ -20,6 +20,7 @@ use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -110,14 +111,14 @@ class TaskController extends Controller
     public function show($id)
     {
         try {
-            $task = $this->repository->getByIdWith($id, 'workers', 'status', 'booking');
+            $task = $this->repository->getByIdWith($id, 'workers', 'statuses', 'booking','images');
             return new ShowResponse($this->viewPath, $task);
         } catch (ModelNotFoundException | Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
 
-    public function calendar(): \Illuminate\Http\JsonResponse
+    public function calendar(): JsonResponse
     {
         return response()->json(
             $this->repository->getTaskForCalendar()
