@@ -33,7 +33,7 @@ class AuthController extends Controller
             return new SuccessResponse($data);
         } else {
 
-            return new ValidationResponse(null,'Email and password does not matches.');
+            return new ValidationResponse(null, 'Email and password does not matches.');
         }
     }
 
@@ -77,5 +77,13 @@ class AuthController extends Controller
             'permissions' => $user->getAllPermissions() ? $user->getAllPermissions()->pluck('name') : [],
             'token' => $user->createToken('MyApp')->accessToken
         ];
+    }
+
+
+    public function getLoggedInUser(): SuccessResponse
+    {
+        $user = Auth::user();
+        $data = $this->transformUser($user);
+        return new SuccessResponse($data);
     }
 }

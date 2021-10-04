@@ -138,12 +138,15 @@ class MailController extends Controller
     public function getAllInbox($limit): array
     {
         $mails = [];
-        $messages = LaravelGmail::message()->take($limit)->unread()->preload()->all();
+        $messages = LaravelGmail::message()
+            ->take($limit)
+            ->preload()
+            ->all($pageToken = null);
         foreach ($messages as $key => $message) {
             $mails[$key]['date'] = Carbon::parse($message->getDate())->longRelativeToNowDiffForHumans();
             $mails[$key]['subject'] = $message->getSubject();
             $mails[$key]['from'] = $message->getFromName() . '-' . $message->getFromEmail();
-            $mails[$key]['message'] = Str::limit($message->getPlainTextBody());
+            $mails[$key]['message'] = Str::limit($message->getPlainTextBody(),500);
             $mails[$key]['id'] = $message->getId();
 
         }

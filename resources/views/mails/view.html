@@ -8,7 +8,7 @@
             Subject: ${response.subject}
         </div>
         <div>
-            <p style=" word-wrap: break-word">${response.message}</p>
+            <p style=" word-wrap: break-word">${parseHTML(response.message)}</p>
         </div>
     </div>
 </div>

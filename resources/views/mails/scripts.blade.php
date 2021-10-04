@@ -1,35 +1,24 @@
 <script>
+
     $(document).ready(function () {
         $.ajax({
             url: '{{$url}}',
             method: 'GET',
             success: function (response) {
                 let data = response.data;
-                let template = '<div class="table-responsive mailbox-messages">' +
-                    '<table class="table table-hover table-striped"><thead>' +
-                    '<td>S.NO</td>' +
-                    '<td>Subject</td>' +
-                    '<td>From</td>' +
-                    '<td>Message</td>' +
-                    '</thead>' +
-                    '<tbody>';
+                let template = `<ul class="messages text-decoration-none" style="margin: 2px">`
                 for (let i = 0; i < data.length; i++) {
-                    console.log(data[i]);
-                    let id = data[i]['id']
-                    template += `<tr>
-                                    <td>${i + 1}</td>
-                                    <td>${data[i]['subject']}</td>
-                                    <td>${data[i]['from']}</td>
-                                    <td>${data[i]['message']}</td>
-                                    <td class="small">${data[i]['date']}</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-success" data-id='${data[i]["id"]}' onclick="viewMail($(this))">
-                                            <i class="fa fa-eye"/>
-                                        </button>
-                                        </td>
-                                    </tr>`
+                    template += `<li class="message border">
+                    <a href="javascript:void(0)" class="text-black" data-id='${data[i]["id"]}' onclick="viewMail($(this))"
+                    <div class="header m-3 p-2">
+                    <span class="from text-bold">${data[i]['from']}</span>
+                     <span class="date pull-right">${data[i]['date']}</span></div>
+                    <div class="title">${data[i]['subject']}</div>
+                    <div class="description">${(data[i]['message']).replace('\n\g','<br/>')}</div>
+                    </a>
+                    </li>`
                 }
-                template += '</tbody><table></div>';
+                template += '</ul>';
                 $('#email').html(template);
             }, error: function (error) {
                 console.log(error)
