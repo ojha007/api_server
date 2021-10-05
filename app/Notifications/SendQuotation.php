@@ -6,10 +6,10 @@ use App\Models\Enquiry;
 use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class SendQuotation extends Notification implements ShouldQueue
+class SendQuotation extends Mailable implements ShouldQueue
 {
     use Queueable;
 
@@ -47,16 +47,21 @@ class SendQuotation extends Notification implements ShouldQueue
     }
 
 
-    public function toMail($notifiable): MailMessage
+    public function toMail(): MailMessage
     {
-
         return (new MailMessage)
             ->subject('Review of your enquiry')
             ->line('Hello ' . $this->enquiry->getAttribute('name') ?? 'Sir/Madam')
             ->line('Our team have gone through your enquiries and we find the best suggest for you')
-            ->view('mails.quotation')
+            ->line($this->quotation->description ?? '')
             ->action('For more information visit us ', config('app.url'))
             ->line('Thank you for using our application!');
+    }
+
+
+    public function build()
+    {
+        return $this->view('mails.quotation');
     }
 
     /**
