@@ -37,7 +37,6 @@ class IndexResponse implements Responsable
 
 
         $tasks = $this->repository->getAssignedTask();
-//        dd($tasks);
         if ($request->wantsJson()) {
             return new TasksCollection($tasks);
         }

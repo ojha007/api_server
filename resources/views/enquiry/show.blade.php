@@ -23,38 +23,47 @@
                     </div>
                     @if(empty($enquiry->quotation))
                         <button type="submit" class="btn btn-primary btn-flat">
-                            <i class="fa fa-mail-reply"></i>
-                            Mail
-                        </button>
-                        <button type="button"
-                                class="btn btn-primary btn-flat bootstrap-modal-form-open"
-                                data-toggle="modal"
-                                data-target="#quotation-create"> Create Quotations
+                            Send
                         </button>
                     @endif
                 </div>
                 {!! Form::close() !!}
             </div>
         </div>
+        <div class="box-footer"></div>
     </div>
     <div class="box box-default border-0">
         <div class="box-header"></div>
         <div class="box-body">
-            <div class="timeline-item" style="margin: 10px">
-                <i class="fa fa-clock-o"></i> {{$enquiry->pickup_date}}
-                <br>
-                <i class="fa fa-user"></i> {{$enquiry->name}}
-                <br>
-                <i class="fa fa-inbox"></i> {{$enquiry->email}}
-                <h3 class="timeline-header">
-                    <a href="#">
-                        {{$enquiry->title}}
-                    </a>
-                </h3>
-                <div class="timeline-body" style="margin: 4px;">
-                    {{$enquiry->description}}
-                </div>
-            </div>
+            <table class="table table-borderless  table-striped">
+                <tbody>
+                <tr>
+                    <th>Code</th>
+                    <td><strong>#IN{{$enquiry->id}}</strong></td>
+                </tr>
+                <tr>
+                    <th>Pick Up Date</th>
+                    <td>{{$enquiry->pickup_date}}</td>
+                </tr>
+                <tr>
+                    <th>Customer Name</th>
+                    <td>{{$enquiry->name}}</td>
+                </tr>
+                <tr>
+                    <th>Customer Email</th>
+                    <td>{{$enquiry->email}}</td>
+                </tr>
+                <tr>
+                    <th>Enquiry Title</th>
+                    <td>{{$enquiry->title}}</td>
+                </tr>
+
+                <tr>
+                    <th>Description</th>
+                    <td>{{$enquiry->description}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection
