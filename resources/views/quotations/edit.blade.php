@@ -1,7 +1,7 @@
 @extends('layouts.master')
-@section('title_postfix') | Quotations @endsection
-@section('header')Quotations @endsection
-@section('subHeader') Create Quotations @endsection
+@section('title_postfix') | Quotation @endsection
+@section('header')Quotation @endsection
+@section('subHeader') Edit Quotation @endsection
 @section('breadcrumb') @endsection
 @section('content')
 
@@ -9,17 +9,18 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Create New Quotation</h3>
+                    <h3 class="box-title">Edit Quotation</h3>
                 </div>
-
-                {!! Form::open(['route'=>'quotations.store']) !!}
+                {!! Form::model($quotation,['route'=>['quotations.update',$quotation->id],'role'=>'from']) !!}
+                @method('PATCH')
                 <div class="box-body">
                     @include('quotations.partials.form')
                 </div>
                 {!! Form::formButton() !!}
+
                 {!! Form::close() !!}
+
             </div>
         </div>
     </div>
-
 @endsection

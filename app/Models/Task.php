@@ -16,13 +16,15 @@ class Task extends Model
     const PENDING = 'Pending';
 
     protected $table = 'tasks';
-    protected $appends = ['latestStatus'];
+    protected $appends = ['CurrentStatus'];
+    protected $with = ['workers', 'statuses', 'images'];
 
     protected $fillable = ['code', 'booking_id', 'title', 'description',];
 
     public function workers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'task_workers', 'task_id', 'worker_id');
+        return $this->belongsToMany(User::class,
+            'task_workers', 'task_id', 'worker_id');
     }
 
     public function statuses(): HasMany
@@ -35,7 +37,7 @@ class Task extends Model
         return $this->hasMany(TaskFile::class, 'task_id');
     }
 
-    public function getLatestStatusAttribute()
+    public function getCurrentStatusAttribute()
     {
         $sts = $this->status();
         return $sts->status ?? 'Pending';

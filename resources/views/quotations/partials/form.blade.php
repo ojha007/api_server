@@ -1,4 +1,4 @@
-{!! Form::bsText('title',old('test'),['autofocus']) !!}
+{!! Form::bsText('title',old('title'),['autofocus']) !!}
 {!! Form::bsTextArea('description',old('description')) !!}
 @push('scripts')
     <script src="https://cdn.ckeditor.com/4.5.11/full-all/ckeditor.js"></script>

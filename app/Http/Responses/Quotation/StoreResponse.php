@@ -13,22 +13,27 @@ class StoreResponse implements Responsable
      * @var string
      */
     private $routePath;
+    /**
+     * @var string
+     */
+    protected $event;
 
     /**
      * StoreResponse constructor.
      * @param string $routePath
+     * @param string $event
      */
-    public function __construct(string $routePath)
+    public function __construct(string $routePath, string $event = 'created')
     {
         $this->routePath = $routePath;
+        $this->event = $event;
     }
 
     public function toResponse($request)
     {
-        if ($request->wantsJson()) {
-        }
+
         return redirect()
             ->route($this->routePath . 'index')
-            ->with('success', 'Quotation created successfully');
+            ->with('success', 'Quotation ' . $this->event . ' successfully');
     }
 }

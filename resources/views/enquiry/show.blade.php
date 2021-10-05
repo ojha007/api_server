@@ -58,6 +58,3 @@
         </div>
     </div>
 @endsection
-@can('quotation-create')
-    @include('quotations.partials.modal')
-@endcan

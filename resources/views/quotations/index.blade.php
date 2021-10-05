@@ -6,8 +6,6 @@
 @section('content')
     <div class="box box-default border-0">
         <div class="box-header">
-            <h3 class="box-title">
-            </h3>
             <div class="box-tools pull-right">
                 <a href="{{route('quotations.create')}}">
                     <i class="fa fa-plus"></i>
@@ -20,7 +18,6 @@
                 <thead>
                 <tr>
                     <td>Title</td>
-                    <td>Description</td>
                     <td> Action</td>
                 </tr>
                 </thead>
@@ -28,23 +25,22 @@
                 @forelse($quotations as $quotation)
                     <tr>
                         <td>{{$quotation->title}}</td>
-                        <td>{!! $quotation->description !!}</td>
                         <td>
                             {!! Form::open(['route'=>['quotations.destroy',$quotation->id]]) !!}
                             @isset($enquiry_id)
-                                <a class="btn btn-flat btn-primary" title="Send Quotation">
+                                <a class="btn btn-flat btn-primary btn-sm" title="Send Quotation">
                                     <i class="fa fa-send-o"></i>
                                 </a>
                             @endisset
                             @can('quotation-view')
-                                <a class="btn btn-flat btn-default"
+                                <a class="btn btn-flat btn-default btn-sm"
                                    href="{{route('quotations.show',$quotation->id)}}"
                                    title="View">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
                             @can('quotation-edit')
-                                <a class="btn btn-flat btn-primary"
+                                <a class="btn btn-flat btn-primary btn-sm"
                                    href="{{route('quotations.edit',$quotation->id)}}"
                                    title="View">
                                     <i class="fa fa-edit"></i>
@@ -54,7 +50,7 @@
                                 @method('DELETE')
                                 <button type="submit"
                                         onclick="return confirm('Are You sure to delete')"
-                                        class="btn btn-flat btn-danger"
+                                        class="btn btn-flat btn-danger btn-sm"
                                         title="Edit">
                                     <i class="fa fa-trash"></i>
                                 </button>

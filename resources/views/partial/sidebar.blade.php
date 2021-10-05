@@ -84,54 +84,23 @@
             </a>
         </li>
         @can('task-view')
-            <li class="treeview {{request()->routeIs('tasks.index','tasks.create') ? 'active' :''}}">
-                <a href="#">
-                    <i class="fa fa-tasks" aria-hidden="true"></i>
-                    <span>Tasks</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+            <li class="{{request()->routeIs('tasks.*') ? 'active' : ''}}">
+                <a href="{{route('tasks.index')}}">
+                    <i class="fa fa-tasks"></i>
+                    <span>
+                    Tasks
+                </span>
                 </a>
-                <ul class="treeview-menu">
-                    <li class="{{request()->routeIs('tasks.index') ? 'active': ''}}">
-                        <a href="{{route('tasks.index')}}">
-                            <i class="fa fa-circle-o"></i>All Tasks</a>
-                    </li>
-                </ul>
-
             </li>
         @endcan
         @can('quotation-view')
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-file" aria-hidden="true"></i>
-                    <span>Quotes Template</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+            <li class="{{request()->routeIs('quotations.*') ? 'active' : ''}}">
+                <a href="{{route('quotations.index')}}">
+                    <i class="fa fa-envelope"></i>
+                    <span>
+                    Quotes Template
+                </span>
                 </a>
-
-            </li>
-        @endcan
-        @can('campaign-view')
-            <li class="treeview {{request()->routeIs('campaigns.index','campaigns.reports','campaigns.*') ? 'active': ''}}">
-                <a href="#">
-                    <i class="fa fa-list-alt" aria-hidden="true"></i>
-                    <span>Campaign</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{request()->routeIs('campaigns.index','campaigns.show','campaigns.edit') ? 'active': ''}}">
-                        <a href="{{route('campaigns.index')}}">
-                            <i class="fa fa-circle-o"></i>Campaign</a>
-                    </li>
-                    <li class="{{request()->routeIs('campaigns.reports') ? 'active': ''}}">
-                        <a href="#">
-                            <i class="fa fa-circle-o"></i>Campaign Report</a>
-                    </li>
-                </ul>
             </li>
         @endcan
 

@@ -43,6 +43,16 @@ class QuotationController extends Controller
         return new CreateResponse($this->viewPath);
     }
 
+    public function show(Quotation $quotation)
+    {
+        return view($this->viewPath . 'show', compact('quotation'));
+    }
+
+    public function edit(Quotation $quotation)
+    {
+        return view($this->viewPath . 'edit', compact('quotation'));
+    }
+
     public function store(QuotationRequest $request)
     {
         try {
@@ -52,7 +62,32 @@ class QuotationController extends Controller
             DB::commit();
             return new StoreResponse($this->baseRoute);
         } catch (\Exception $exception) {
-             DB::rollBack();
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
+    }
+
+    public function update(QuotationRequest $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $attributes = $request->validated();
+            $this->repository->update($id, $attributes);
+            DB::commit();
+            return new StoreResponse($this->baseRoute, 'updated');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $this->repository->delete($id);
+            return new StoreResponse($this->baseRoute, 'deleted');
+        } catch (\Exception $exception) {
+            DB::rollBack();
             return new ErrorResponse($exception);
         }
     }
