@@ -13,6 +13,7 @@ use App\Http\Responses\Enquiry\ShowResponse;
 use App\Http\Responses\Enquiry\StoreResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
+use App\Jobs\SendEnquiryReceived;
 use App\Jobs\SendQuotationMail;
 use App\Models\Enquiry;
 use App\Models\Quotation;
@@ -66,8 +67,7 @@ class EnquiryController extends Controller
             $attributes['user_id'] = auth()->id();
             $this->repository->create($attributes);
             DB::commit();
-            Notification::route('mail', $request->get('email'))
-                ->notify(new EnquiryReceived());
+            $this->dispatch(new SendEnquiryReceived($request->get('email')));
             return new StoreResponse($this->baseRoute);
         } catch (Exception $exception) {
             DB::rollBack();

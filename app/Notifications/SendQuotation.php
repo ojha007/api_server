@@ -49,12 +49,12 @@ class SendQuotation extends Notification implements ShouldQueue
 
     public function toMail($notifiable): MailMessage
     {
-        $description = $this->quotation->description ?? '';
+
         return (new MailMessage)
             ->subject('Review of your enquiry')
             ->line('Hello ' . $this->enquiry->getAttribute('name') ?? 'Sir/Madam')
             ->line('Our team have gone through your enquiries and we find the best suggest for you')
-            ->template($description)
+            ->view('mails.quotation')
             ->action('For more information visit us ', config('app.url'))
             ->line('Thank you for using our application!');
     }
