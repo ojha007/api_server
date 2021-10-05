@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Notifications\SendQuotation;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -36,6 +35,7 @@ class SendQuotationMail implements ShouldQueue
      */
     public function handle()
     {
-        $this->enquiry->user->nofity(new SendQuotation($this->quotations, $this->enquiry));
+        Notification::route('mail', $this->enquiry->email)
+            ->notify(new SendQuotation($this->quotations, $this->enquiry));
     }
 }

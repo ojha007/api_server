@@ -52,7 +52,7 @@ class SendQuotation extends Notification implements ShouldQueue
         $description = $this->quotation->description ?? '';
         return (new MailMessage)
             ->subject('Review of your enquiry')
-            ->line('Hello ' . $this->enquiry->user->name ?? 'Sir/Madam')
+            ->line('Hello ' . $this->enquiry->getAttribute('name') ?? 'Sir/Madam')
             ->line('Our team have gone through your enquiries and we find the best suggest for you')
             ->line($description)
             ->action('For more information visit us ', config('app.url'))
