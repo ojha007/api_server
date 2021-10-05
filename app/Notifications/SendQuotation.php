@@ -6,10 +6,10 @@ use App\Models\Enquiry;
 use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class SendQuotation extends Mailable implements ShouldQueue
+class SendQuotation extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -50,19 +50,20 @@ class SendQuotation extends Mailable implements ShouldQueue
     public function toMail(): MailMessage
     {
         return (new MailMessage)
-            ->subject('Review of your enquiry')
-            ->line('Hello ' . $this->enquiry->getAttribute('name') ?? 'Sir/Madam')
-            ->line('Our team have gone through your enquiries and we find the best suggest for you')
-            ->line($this->quotation->description ?? '')
-            ->action('For more information visit us ', config('app.url'))
-            ->line('Thank you for using our application!');
+            ->view('mails.quotation',['quotation'=>$this->quotation]);
+//            ->subject('Review of your enquiry')
+//            ->line('Hello ' . $this->enquiry->getAttribute('name') ?? 'Sir/Madam')
+//            ->line('Our team have gone through your enquiries and we find the best suggest for you')
+//            ->line($this->quotation->description ?? '')
+//            ->action('For more information visit us ', config('app.url'))
+//            ->line('Thank you for using our application!');
     }
 
 
-    public function build()
-    {
-        return $this->view('mails.quotation');
-    }
+//    public function build()
+//    {
+//        return $this->view('mails.quotation');
+//    }
 
     /**
      * Get the array representation of the notification.
