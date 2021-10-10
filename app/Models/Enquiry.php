@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Enquiry extends Model
 {
 
-    protected $fillable = ['first_name', 'last_name',
-        'mobile_number', 'email', 'address1', 'address2',
-        'city', 'state', 'postal_code', 'pickup_date',
-        'quotation_id',
-        'delivery_date', 'optional_number', 'age', 'comment', 'user_id'
+    protected $fillable = ['name',
+        'phone',
+         'email',
+         'title',
+         'description',
+         'quotation_id',
+         'user_id'
     ];
 
     protected $hidden = ['created_at', 'deleted_at', 'updated_at'];
@@ -22,11 +24,6 @@ class Enquiry extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getNameAttribute(): string
-    {
-        return $this->getAttribute('first_name') . ' ' . $this->getAttribute('last_name');
     }
 
     public function quotation(): BelongsTo
