@@ -30,6 +30,8 @@ class Booking extends Model
         'additional_service',
         'size_of_moving',
         'hear_about_us',
+        'latitude',
+        'longitude',
         'inventory',
         'comments',
         'quotes',
