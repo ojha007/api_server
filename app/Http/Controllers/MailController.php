@@ -45,9 +45,9 @@ class MailController extends Controller
 
     public function sent(Request $request)
     {
-        if ($request->ajax()) {
-            dd('f');
-        }
+//        if ($request->ajax()) {
+//            dd('f');
+//        }
         if ($request->method() == 'POST') {
             return $this->sentMail($request);
         } else {
@@ -172,7 +172,7 @@ class MailController extends Controller
             'subject' => $message->getSubject(),
             'fromName' => $message->getFromName(),
             'fromEmail' => $message->getFromEmail(),
-            'message' => $message->getPlainTextBody(),
+            'message' =>  $message->getPlainTextBody(),
             'id' => $message->getId(),
             'attachment' => $message->getAttachments()
         ];

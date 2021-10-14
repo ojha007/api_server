@@ -6,15 +6,18 @@
             method: 'GET',
             success: function (response) {
                 let data = response.data;
+                // console.log(data);
                 let template = `<ul class="messages text-decoration-none" style="margin: 2px">`
                 for (let i = 0; i < data.length; i++) {
                     template += `<li class="message border">
-                    <a href="javascript:void(0)" class="text-black" data-id='${data[i]["id"]}' onclick="viewMail($(this))"
+                    <a href="javascript:void(0)" class="text-black"
+                     title="${(data[i]['message'])}"
+                     data-id='${data[i]["id"]}' onclick="viewMail($(this))"
                     <div class="header m-3 p-2">
                     <span class="from text-bold">${data[i]['from']}</span>
                      <span class="date pull-right">${data[i]['date']}</span></div>
                     <div class="title">${data[i]['subject']}</div>
-                    <div class="description">${(data[i]['message']).replace('\n\g','<br/>')}</div>
+                    <div class="description">${(data[i]['message'])}</div>
                     </a>
                     </li>`
                 }
@@ -48,6 +51,10 @@
             }
         })
 
+    }
+
+    function  changeHtmlToString(string){
+        return string.replace(/[\r]/g,'<br/>');
     }
 </script>
 
