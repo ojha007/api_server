@@ -27,6 +27,10 @@ class BookingRequest extends FormRequestForApi
             'inventory' => 'nullable',
             'comments' => 'nullable',
             'description' => 'nullable',
+            "pickup_latitude"=>'required',
+            "pickup_longitude"=>'required',
+            "dropoff_latitude"=>'required',
+            "dropoff_longitude"=>'required',
 
         ];
 

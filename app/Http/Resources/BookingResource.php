@@ -32,8 +32,10 @@ class BookingResource extends JsonResource
             'inventory' => $this->inventory ?? '',
             'comments' => $this->comments ?? '',
             'quotes' => $this->quotes ?? '',
-            'latitude' => $this->latitude ?? '',
-            "longitude" => $this->longitude ?? '',
+            "pickup_latitude" => $this->pickup_latitude ?? '',
+            "pickup_longitude" => $this->pickup_longitude ?? '',
+            "dropoff_latitude" => $this->dropoff_latitude ?? '',
+            "dropoff_longitude" => $this->dropoff_longitude ?? '',
             'payment' => $payment ? $payment->sum('amount') : 0,
             'payment_currency' => $payment->first() ? $payment->first()->payment_currency : ''
         ];
