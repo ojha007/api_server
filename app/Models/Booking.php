@@ -36,6 +36,10 @@ class Booking extends Model
         'comments',
         'quotes',
         'time',
+        "pickup_latitude",
+        "pickup_longitude",
+        "dropoff_latitude",
+        "dropoff_longitude",
     ];
 
     public function user(): BelongsTo
