@@ -8,6 +8,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
     $router->post('register', 'AuthController@register')->name('register');
     $router->group(['middleware' => 'auth:api', 'as' => 'api.'], function ($route) {
         $route->get('user/detail', 'AuthController@getLoggedInUser');
+        $route->get('faqs','FaqController@index');
         $route->apiResource('enquiries', 'EnquiryController');
         $route->apiResource('workers', 'WorkerController');
         $route->apiResource('campaigns', 'CampaignController');
