@@ -133,11 +133,18 @@
                 @endcan
             </ul>
         </li>
+        <li class="{{request()->is('faqs.*') ? 'active' : '' }}">
+            <a href="{{route('faqs.index')}}"><i
+                    class="fa fa-question"></i>
+                <span>FAQS</span>
+            </a>
+        </li>
         <li class="{{request()->is('developers.index') ? 'active' : '' }}">
             <a href="{{route('developer.index')}}"><i
                     class="fa fa-code"></i>
                 <span>Developers</span>
             </a>
+        </li>
 
     </ul>
 </section>

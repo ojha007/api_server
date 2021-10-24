@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->resource('schedules', 'ScheduleController');
     include 'subRoutes/enquiry.php';
     $router->resource('quotations', 'QuotationController');
+    $router->resource('faqs', 'FaqController');
     include 'subRoutes/booking.php';
     $router->resource('workers', 'WorkerController');
     $router->resource('campaigns', 'CampaignController');
@@ -40,7 +41,7 @@ Auth::routes();
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
-Route::get('privacy-policy',function(){
+Route::get('privacy-policy', function () {
 
- return view('privacy');
+    return view('privacy');
 });

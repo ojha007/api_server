@@ -26,6 +26,6 @@ class FaqRepository extends Repository
     public function getAllActive()
     {
         return $this->model->where('is_active', true)
-            ->get('title', 'description');
+            ->get(['title', 'description']);
     }
 }
