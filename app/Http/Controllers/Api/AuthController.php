@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Responses\SuccessResponse;
 use App\Http\Responses\ValidationResponse;
 use App\Models\User;
+use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -86,4 +88,20 @@ class AuthController extends Controller
         $data = $this->transformUser($user);
         return new SuccessResponse($data);
     }
+
+
+    public function changePassword(Request $request): SuccessResponse
+    {
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+        User::find(auth()->user()->id)
+            ->update(['password' => Hash::make($request->get('new_password'))]);
+        return new SuccessResponse();
+
+    }
+
+
 }

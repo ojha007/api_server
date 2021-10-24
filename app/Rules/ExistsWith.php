@@ -14,8 +14,8 @@ class ExistsWith implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param $table
-     * @param $column
+     * @param string $table
+     * @param string $column
      */
     public function __construct(string $table, string $column)
     {

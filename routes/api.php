@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Api'], function ($router) {
     $router->post('login', 'AuthController@login')->name('login');
+    $router->post('change-password','AuthController@changePassword');
     $router->post('register', 'AuthController@register')->name('register');
     $router->group(['middleware' => 'auth:api', 'as' => 'api.'], function ($route) {
         $route->get('user/detail', 'AuthController@getLoggedInUser');
