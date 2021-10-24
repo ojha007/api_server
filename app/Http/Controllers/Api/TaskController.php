@@ -134,6 +134,7 @@ class TaskController extends \App\Http\Controllers\TaskController
                     'pickup_address', 'comments', 'b.description',
                     'quotes', 'size_of_moving', 'additional_service',
                     'access_parking', 'dropoff_address', 'pickup_address',
+                    'pickup_latitude','pickup_longitude','dropoff_latitude','dropoff_longitude',
                     'inventory', 'b.id as bookingId', 't.created_at as taskTime'])
                 ->join('bookings as  b', 'b.id', '=', 't.booking_id')
                 ->join('task_workers as tw', 'tw.task_id', '=', 't.id')
