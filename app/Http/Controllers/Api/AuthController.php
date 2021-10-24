@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ChangeProfileRequest;
+use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Http\Responses\ValidationResponse;
 use App\Models\User;
-use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -71,7 +75,7 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'super' => $user->super ?? 0,
                 'status' => $user->status ?? 0,
-                'avatar' => $user->avatar ?? 'default.jpg',
+                'avatar' => asset($user->avatar) ?? 'default.jpg',
                 'phone' => $user->phone,
                 'email_verified_at' => $user->email_verified_at,
             ],
@@ -90,18 +94,38 @@ class AuthController extends Controller
     }
 
 
-    public function changePassword(Request $request): SuccessResponse
+    public function changePassword(ChangePasswordRequest $request): SuccessResponse
     {
-        $request->validate([
-            'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ]);
+
         User::find(auth()->user()->id)
             ->update(['password' => Hash::make($request->get('new_password'))]);
         return new SuccessResponse();
 
     }
 
+
+    public function changeProfile(ChangeProfileRequest $request)
+    {
+        try {
+            $user = Auth::user();
+            $attributes = $request->validated();
+            if ($request->has('avatar')) {
+                $file_data = $request->input('avatar');
+                $file_name = 'users/images/' . Str::uuid() . time() . '.png';
+                @list($type, $file_data) = explode(';', $file_data);
+                @list(, $file_data) = explode(',', $file_data);
+                if ($file_data != "") {
+                    Storage::disk('public')
+                        ->put($file_name, base64_decode($file_data));
+                    $attributes['avatar'] = Storage::url($file_name);
+                }
+            }
+            User::find($user->id)
+                ->update($attributes);
+            return new SuccessResponse();
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
+    }
 
 }

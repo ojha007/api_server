@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Requests\FormRequestForApi;
-//use Auth;
+use App\Rules\MatchOldPassword;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+
+//use Auth;
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -14,16 +14,14 @@ class ChangePasswordRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'current-password' => ['required', function ($attribute, $value, $fail) {
-                if (!\Hash::check($value, Auth::user()->password)) {
-                    return $fail(__('The current password is incorrect.'));
-                }
-            }],
-            'new-password' => 'required|string|min:6|confirmed',
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required|string|min:6|confirmed'],
+            'new_confirm_password' => ['same:new_password']
         ];
+
     }
 
     /**
@@ -31,12 +29,12 @@ class ChangePasswordRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    protected function getRedirectUrl()
+    protected function getRedirectUrl(): string
     {
         $url = $this->redirector->getUrlGenerator();
         return $url->previous() . '#change-password';
