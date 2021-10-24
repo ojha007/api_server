@@ -13,9 +13,11 @@ class AlterBookingTable extends Migration
      */
     public function up()
     {
-        Schema::table('bookings',function (Blueprint  $table){
-           $table->string('latitude')->nullable();
-           $table->string('longitude')->nullable();
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->string('pickup_latitude')->nullable();
+            $table->string('pickup_longitude')->nullable();
+            $table->string('dropoff_latitude')->nullable();
+            $table->string('dropoff_longitude')->nullable();
         });
     }
 
@@ -26,6 +28,7 @@ class AlterBookingTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropColumns('bookings', ['longitude', 'latitude']);
+        Schema::dropColumns('bookings', ['pickup_latitude', 'pickup_longitude', 'dropoff_latitude', 'dropoff_longitude',]);
     }
 }

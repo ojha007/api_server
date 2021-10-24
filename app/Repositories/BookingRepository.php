@@ -30,7 +30,7 @@ class BookingRepository extends Repository
             ->when($user->super == 0, function ($query) use ($user) {
                 $query->where('user_id', \auth()->id());
             })->orderByDesc('id')
-            ->paginate(15);
+            ->paginate(10);
     }
 
 }

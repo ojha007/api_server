@@ -15,6 +15,11 @@
                     data-toggle="modal" data-target="#modal-booking-confirm">
                 Confirmed
             </button>
+            <a type="button" href="{{route('bookings.edit',$booking->id)}}"
+               class="btn btn-default btn-flat">
+                <i class="fa fa-edit"></i>
+                Edit
+            </a>
         </div>
     @endif
     <section class="invoice" style="margin: 1px">

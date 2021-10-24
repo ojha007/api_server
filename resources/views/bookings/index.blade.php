@@ -16,40 +16,40 @@
     <link type="text/css" rel="stylesheet" href="{{asset('backend/css/dp.css')}}">
 @endpush
 @section('content')
-    <div class="box box-solid collapsed-box ">
-        <div class="box-header with-border">
-            <h3 class="box-title">Advanced Filter</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool"
-                        data-widget="collapse">
-                    <i class="fa fa-plus"></i>
-                </button>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="col-md-4" style="padding-left: 0">
-                <label for="moving_date">Moving Date:</label>
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <i class="fa fa-clock-o"></i>
-                    </div>
-                    <input type="text" class="form-control pull-right" id="moving_date">
-                </div>
-            </div>
-            <div class="col-md-3" style="padding-left: 0">
-                {!! Form::label('status','Status:') !!}
-                {!! Form::select('is_verified',[
-                     '1'=>'Confirmed',
-                     '0'=>"Pending"
-                    ],null,['class'=>'form-control']) !!}
-            </div>
-        </div>
-        <div class="box-footer">
-            <button type="submit" class="btn btn-flat btn-primary">
-                Filter
-            </button>
-        </div>
-    </div>
+{{--    <div class="box box-solid collapsed-box ">--}}
+{{--        <div class="box-header with-border">--}}
+{{--            <h3 class="box-title">Advanced Filter</h3>--}}
+{{--            <div class="box-tools pull-right">--}}
+{{--                <button type="button" class="btn btn-box-tool"--}}
+{{--                        data-widget="collapse">--}}
+{{--                    <i class="fa fa-plus"></i>--}}
+{{--                </button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="box-body">--}}
+{{--            <div class="col-md-4" style="padding-left: 0">--}}
+{{--                <label for="moving_date">Moving Date:</label>--}}
+{{--                <div class="input-group">--}}
+{{--                    <div class="input-group-addon">--}}
+{{--                        <i class="fa fa-clock-o"></i>--}}
+{{--                    </div>--}}
+{{--                    <input type="text" class="form-control pull-right" id="moving_date">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-md-3" style="padding-left: 0">--}}
+{{--                {!! Form::label('status','Status:') !!}--}}
+{{--                {!! Form::select('is_verified',[--}}
+{{--                     '1'=>'Confirmed',--}}
+{{--                     '0'=>"Pending"--}}
+{{--                    ],null,['class'=>'form-control']) !!}--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="box-footer">--}}
+{{--            <button type="submit" class="btn btn-flat btn-primary">--}}
+{{--                Filter--}}
+{{--            </button>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="box-header">
         <h3 class="box-title"></h3>
         @can('booking-create')
@@ -75,7 +75,6 @@
                     <td>Moving date</td>
                     <td>Size of moving</td>
                     <td>Status</td>
-{{--                    <td>Inventory</td>--}}
                     <td>Action</td>
                 </tr>
                 </thead>
@@ -102,24 +101,24 @@
                         <td>{{$booking->moving_date}}</td>
                         <td>{{$booking->size_of_moving}}</td>
                         <td>{!! spanByStatus($booking->is_verified) !!}</td>
-{{--                        <td>{{$booking->inventory}}</td>--}}
-                        <td>
+                        <td style='white-space: nowrap'>
+
                             @can('booking-view')
-                                <a class="btn btn-default btn-flat"
+                                <a class="btn btn-default btn-flat btn-sm"
                                    title="View"
                                    href="{{route('bookings.show',$booking->id)}}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             @endcan
-{{--                            @if($booking->is_verified == 0)--}}
-{{--                                @can('booking-confirmed')--}}
-{{--                                <a href="{{route('bookings.confirmed',$booking->id)}}"--}}
-{{--                                   title="Confirmed"--}}
-{{--                                   class="btn btn-flat btn-success">--}}
-{{--                                    <i class="fa fa-check"></i>--}}
-{{--                                </a>--}}
-{{--                                @endcan--}}
-{{--                            @endif--}}
+                            @if(!$booking->is_verified)
+                                @can('booking-edit')
+                                    <a class="btn btn-primary btn-flat btn-sm"
+                                       title="View"
+                                       href="{{route('bookings.edit',$booking->id)}}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                @endcan
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -132,7 +131,9 @@
                 </tbody>
 
             </table>
-            {{$bookings->links()}}
+            <div class="pull-right">
+                {{$bookings->links("pagination::bootstrap-4")}}
+            </div>
         </div>
     </div>
 @endsection

@@ -64,12 +64,12 @@
         <div class="col-md-1 col-sm-12">
             <label for="description">Description:</label>
         </div>
+
         <div class="col-md-11 col-sm-12 p-md-6rem">
             <textarea class="form-control"
-                      type="datetime-local"
                       name="description"
                       id="description"
-            ></textarea>
+            >{{$booking->description ?? null}}</textarea>
         </div>
     </div>
 </div>

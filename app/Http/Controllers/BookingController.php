@@ -14,14 +14,11 @@ use App\Http\Responses\SuccessResponse;
 use App\Jobs\BookingConfirmedJob;
 use App\Models\Booking;
 use App\Models\Task;
-use App\Models\TaskStatus;
-use App\Notifications\BookingConfirmed;
 use App\Repositories\BookingRepository;
 use App\Repositories\TaskRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -98,15 +95,16 @@ class BookingController extends Controller
 
     public function update($id, BookingRequest $request)
     {
+
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
             $attributes['user_id'] = auth()->id();
-            $booking = $this->repository->update($id, $attributes);
+            $this->repository->update($id, $attributes);
             DB::commit();
-            return view($this->viewPath . 'edit', compact('booking'));
+            return redirect()->route($this->routerPath . 'show', $id)
+                ->with('success', 'Booking Edited successfully.');
         } catch (Exception $exception) {
-
             DB::rollBack();
             return new ErrorResponse($exception);
         }
