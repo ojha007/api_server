@@ -8,7 +8,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
     $router->post('register', 'AuthController@register')->name('register');
     $router->group(['middleware' => 'auth:api', 'as' => 'api.'], function ($route) {
         $route->post('change-password', 'AuthController@changePassword');
-        $route->post('change-profile', 'AuthController@changeProfile');
+        $route->post('edit-profile', 'AuthController@changeProfile');
         $route->get('user/detail', 'AuthController@getLoggedInUser');
         $route->get('faqs', 'FaqController@index');
         $route->apiResource('enquiries', 'EnquiryController');
