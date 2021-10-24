@@ -9,6 +9,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
     $router->group(['middleware' => 'auth:api', 'as' => 'api.'], function ($route) {
         $route->post('change-password', 'AuthController@changePassword');
         $route->post('edit-profile', 'AuthController@changeProfile');
+        $route->get('dashboard', 'DashboardController@index');
         $route->get('user/detail', 'AuthController@getLoggedInUser');
         $route->get('faqs', 'FaqController@index');
         $route->apiResource('enquiries', 'EnquiryController');
