@@ -97,8 +97,9 @@ class AuthController extends Controller
     public function changePassword(ChangePasswordRequest $request): SuccessResponse
     {
 
-        User::find(auth()->user()->id)
-            ->update(['password' => Hash::make($request->get('new_password'))]);
+        $user = Auth::user();
+        $password = Hash::make($request->get('new_password'));
+        $user->update(['password' => $password]);
         return new SuccessResponse();
 
     }

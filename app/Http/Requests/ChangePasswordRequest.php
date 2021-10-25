@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\MatchOldPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-//use Auth;
+
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -18,8 +18,8 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required|string|min:6|confirmed'],
-            'new_confirm_password' => ['same:new_password']
+            'new_password' => 'required|string|min:6|different:current_password',
+            'new_confirm_password' => 'same:new_password'
         ];
 
     }
