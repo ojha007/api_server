@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->get('developers', function () {
         return view('developers.index');
     })->name('developer.index');
-
+    Route::post('/chat', 'ChatController@replyToMessage');
 
 });
 

@@ -9,6 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-pdo": "*",
         "almasaeed2010/adminlte": "~2.4",
         "dacastro4/laravel-gmail": "^5.1",
         "fideloper/proxy": "^4.4",
@@ -19,11 +22,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "laravelcollective/html": "^6.2",
+        "pusher/pusher-php-server": "^7.0",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
-        "spatie/laravel-permission": "^4.0",
-        "ext-curl": "*",
-        "ext-json": "*",
-       "ext-pdo": "*"
+        "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

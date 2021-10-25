@@ -50,6 +50,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'confirm_password' => 'required|same:password',
+            'phone' => 'required',
             'role' => 'required|in:Worker,Customer'
         ], [
             'confirm_password' => "Password Confirmation doesn't match",

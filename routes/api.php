@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Api'], function ($router) {
     $router->post('login', 'AuthController@login')->name('login');
-
+    $router->post('chat', 'ChatController@chat');
+    $router->post('getAllChats', 'ChatController@getAllChats');
     $router->post('register', 'AuthController@register')->name('register');
     $router->group(['middleware' => 'auth:api', 'as' => 'api.'], function ($route) {
         $route->post('change-password', 'AuthController@changePassword');

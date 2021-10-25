@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -126,12 +128,15 @@ class User extends Authenticatable
         return false;
     }
 
-    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class, 'task_user');
     }
 
-
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 
 
 }
