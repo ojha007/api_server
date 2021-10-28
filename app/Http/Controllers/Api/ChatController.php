@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\MessageSent;
+use App\Events\MessageReceived;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChatRequest;
 use App\Http\Responses\ErrorResponse;
@@ -34,7 +34,7 @@ class ChatController extends Controller
             $chat->messages()->create([
                 'message' => $message
             ]);
-            broadcast(new MessageSent($message, $userId, $identifier));
+            broadcast(new MessageReceived($message, $identifier));
             return new SuccessResponse();
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);

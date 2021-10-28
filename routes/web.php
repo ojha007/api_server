@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
         return view('developers.index');
     })->name('developer.index');
     Route::post('/chat', 'ChatController@replyToMessage');
+    $router->get('/getAllChats', 'ChatController@getAllChats');
 
 });
 
