@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/js/app.js
 /storage/*.key
 /vendor
 .env
@@ -13,3 +14,5 @@ npm-debug.log
 yarn-error.log
 .idea
 node_modules
+laravel-echo-server.json
+laravel-echo-server.lock
