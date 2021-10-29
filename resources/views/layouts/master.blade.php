@@ -154,7 +154,7 @@ desired effect
         integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-{{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>--}}
+<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 
 @stack('scripts')
 <script>
