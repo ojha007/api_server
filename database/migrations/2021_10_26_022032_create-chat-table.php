@@ -15,6 +15,8 @@ class CreateChatTable extends Migration
     {
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
+            $table->string('identifier');
+            (new \Database\MigrationHelper())->setForeignKey($table, 'users', 'user_id', true);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateChatTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('chats');
     }
 }
