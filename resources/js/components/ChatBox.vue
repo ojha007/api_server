@@ -26,7 +26,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <form action="#" method="post">
+                <form @submit.prevent="submitForm">
                     <div class="input-group">
                         <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                         <span class="input-group-btn">
@@ -48,9 +48,10 @@ export default {
     data() {
         return {
             image: `${process.env.MIX_APP_URL}/backend/images/default-user.png`,
+            message: '',
         }
     },
-    computed: mapState(['chats','currentIdentifier']),
+    computed: mapState(['chats', 'currentIdentifier']),
     mounted() {
         this.getOldChatByIdentifier();
     },
@@ -65,6 +66,22 @@ export default {
         },
         toggleChatBox() {
             this.$store.commit('TOGGLE_CHAT_BOX');
+        },
+        submitForm() {
+            let payload = {
+                message: this.message,
+                identifier: this.currentIdentifier,
+                type: 'You',
+                class: 'right',
+                pull: 'right',
+            }
+            this.$store.commit('SET_CHATS', payload);
+            axios.post('/chat', payload)
+                .then(() => {
+                    this.message = '';
+                }).catch(error => {
+                console.log(error);
+            })
         }
     }
 

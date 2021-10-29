@@ -2,24 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
+use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
-use App\Models\Message;
+use App\Models\ChatMessage;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
 
-    public function replyToMessage(Request $request): SuccessResponse
+    public function replyToMessage(Request $request)
     {
 
-        $message = new Message();
-        $message->user_id = Auth::user()->id;
-        $message->identifier = $request->get('identifier');
-        $message->customer_id = $request->get('customer_id');
-        $message->message = $request->message;
-        $message->save();
-        return new SuccessResponse();
+        $message = $request->get('message');
+        $identifier = $request->get('identifier');
+        try {
+            $chat = DB::table('chats')
+                ->where('identifier', $identifier)
+                ->first();
+            if ($chat) {
+                ChatMessage::create([
+                    'message' => $message,
+                    'admin_id' => auth()->id(),
+                    'chat_id' => $chat->id,
+                ]);
+                broadcast(new MessageSent($message, null, $identifier));
+            }
+            return new SuccessResponse();
+        } catch (Exception $exception) {
+            return new ErrorResponse($exception);
+        }
     }
 
     public function getAllChats(Request $request): SuccessResponse
