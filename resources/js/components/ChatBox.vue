@@ -31,7 +31,7 @@
                         <input type="text" name="message" placeholder="Type Message ..." class="form-control"
                                v-model="message">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-warning btn-flat">Send</button>
+                            <button type="submit" class="btn btn-warning btn-flat">Send</button>
                           </span>
                     </div>
                 </form>

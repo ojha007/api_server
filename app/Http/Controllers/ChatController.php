@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class ChatController extends Controller
 {
 
-    public function replyToMessage(Request $request)
+    public function replyToChat(Request $request)
     {
 
         $message = $request->get('message');
