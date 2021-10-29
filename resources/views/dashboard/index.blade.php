@@ -261,57 +261,57 @@
             </div>
         </div>
     </div>
-{{--    <div class="row">--}}
-{{--        <div class="col-md-12">--}}
-{{--            <div class="box box-solid">--}}
-{{--                <div class="box-header with-border">--}}
-{{--                    <h3 class="box-title">All Inbox</h3>--}}
-{{--                    <div class="box-tools pull-right">--}}
-{{--                    <span>--}}
-{{--                        {{ \LaravelGmail::user() }}--}}
-{{--                        @if(\LaravelGmail::check())--}}
-{{--                            <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>--}}
-{{--                        @else--}}
-{{--                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>--}}
-{{--                        @endif--}}
-{{--                    </span>--}}
-{{--                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i--}}
-{{--                                class="fa fa-minus"></i>--}}
-{{--                        </button>--}}
-{{--                        <button type="button" class="btn btn-box-tool"--}}
-{{--                                data-widget="remove"><i class="fa fa-times"></i>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <!-- /.box-header -->--}}
-{{--                <div class="box-body" id="email">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-xs-12 text-center">--}}
-{{--                            @if(\LaravelGmail::check())--}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <h3 class="box-title">All Inbox</h3>
+                    <div class="box-tools pull-right">
+                    <span>
+                        {{ \LaravelGmail::user() }}
+                        @if(\LaravelGmail::check())
+                            <a href="{{ url('oauth/gmail/logout') }}" class="nav-link">Logout</a>
+                        @else
+                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login</a>
+                        @endif
+                    </span>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool"
+                                data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" id="email">
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            @if(\LaravelGmail::check())
 
-{{--                                <button type="button" class="btn btn-default btn-lg">--}}
-{{--                                    <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Email--}}
-{{--                                </button>--}}
-{{--                            @else--}}
-{{--                                <a href="{{ url('oauth/gmail') }}" class="nav-link">Login to Your gmail account</a>--}}
-{{--                            @endif--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <!-- /.box-body -->--}}
-{{--                <div class="box-footer clearfix">--}}
-{{--                    <a href="{{route('mails.index')}}"--}}
-{{--                       class="btn btn-sm btn-default btn-flat pull-right">View All</a>--}}
-{{--                </div>--}}
-{{--                <!-- /.box-footer -->--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+                                <button type="button" class="btn btn-default btn-lg">
+                                    <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Email
+                                </button>
+                            @else
+                                <a href="{{ url('oauth/gmail') }}" class="nav-link">Login to Your gmail account</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="{{route('mails.index')}}"
+                       class="btn btn-sm btn-default btn-flat pull-right">View All</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </div>
 
 
 
 
 @endsection
 @push('scripts')
-{{--    @include('mails.scripts',['url'=>route('mails.inbox')])--}}
+    @include('mails.scripts',['url'=>route('mails.inbox')])
 @endpush

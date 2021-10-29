@@ -49,7 +49,7 @@ window.Echo = new Echo({
     host: process.env.MIX_APP_URL + ':6001'
 });
 
-window.Echo.private('mibsoftChat.isCiLByguAAA')
-    .listen('.MessageSent', (e) => {
-        console.log(e);
-    });
+// window.Echo.private('mibsoftChat.isCiLByguAAA')
+//     .listen('.MessageSent', (e) => {
+//         console.log(e);
+//     });
