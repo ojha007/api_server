@@ -6,7 +6,10 @@
 
 require('./bootstrap');
 
+let Vuex = require('vuex')
 window.Vue = require('vue').default;
+
+Vue.use(Vuex)
 
 /**
  * The following block of code may be used to automatically register your
@@ -24,6 +27,7 @@ Vue.component('passport-clients', require('./components/passport/Clients').defau
 Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients').default);
 Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens').default);
 Vue.component('chat-notification', require('./components/Notification').default);
+Vue.component('chat-box', require('./components/ChatBox').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,6 +35,37 @@ Vue.component('chat-notification', require('./components/Notification').default)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
+
+const store = new Vuex.Store(
+    {
+        state: {
+            showChatBox: false,
+            currentIdentifier: null,
+            chats: [],
+        },
+        getters: {},
+        actions: {},
+        mutations: {
+            TOGGLE_CHAT_BOX(state, identifier) {
+                state.showChatBox = !state.showChatBox;
+                state.currentIdentifier = identifier;
+            },
+            SET_CHATS(state, chats) {
+                console.log(chats);
+                if (Array.isArray(chats)) {
+                    state.chats = chats;
+                } else {
+                    state.chats.push(chats)
+                }
+            }
+
+        }
+    }
+)
+
 const app = new Vue({
     el: '#app',
+    store
 });
