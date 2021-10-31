@@ -48,4 +48,12 @@ class MessageSent implements ShouldBroadcast
         return 'MessageSent';
     }
 
+    public function broadcastWith(): array
+    {
+        return [
+            'message' => $this->message,
+            'identifier' => $this->identifier
+        ];
+    }
+
 }
