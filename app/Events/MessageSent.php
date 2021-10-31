@@ -40,7 +40,7 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn(): PrivateChannel
     {
 
-        return new PrivateChannel('mibsoftChat.' . $this->identifier);
+        return new PrivateChannel('mibsoftClientChat.' . $this->identifier);
     }
 
     public function broadcastAs(): string
