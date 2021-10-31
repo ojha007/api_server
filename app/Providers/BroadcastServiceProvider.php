@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Broadcast;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class BroadcastServiceProvider extends ServiceProvider
@@ -17,9 +16,9 @@ class BroadcastServiceProvider extends ServiceProvider
     {
         if (request()->wantsJson()) {
             Broadcast::routes(["middleware" => "auth:api"]);
-            Log::info("API");
+//            Log::info("API");
         } else {
-            Log::info("WEB");
+//            Log::info("WEB");
             Broadcast::routes();
         }
         require base_path('routes/channels.php');
