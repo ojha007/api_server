@@ -8,7 +8,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('mibsoftChat.admin', function () {
-    \Illuminate\Support\Facades\Log::info('Admin Routing');
+    \Illuminate\Support\Facades\Log::error('Admin Routing');
     $auth = auth()->user();
     if ($auth && $auth->is_super) {
         return true;
@@ -17,7 +17,7 @@ Broadcast::channel('mibsoftChat.admin', function () {
 });
 
 Broadcast::channel('mibsoftClientChat.{identifier}', function ($identifier) {
-    \Illuminate\Support\Facades\Log::info($identifier);
-    \Illuminate\Support\Facades\Log::info('Client Routing');
+    \Illuminate\Support\Facades\Log::error($identifier);
+    \Illuminate\Support\Facades\Log::error('Client Routing');
     return true;
 });
