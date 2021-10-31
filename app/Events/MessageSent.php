@@ -26,7 +26,7 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($message,  $identifier)
+    public function __construct($message, $identifier)
     {
         $this->message = $message;
 //        $this->userId = $userId;
@@ -36,17 +36,17 @@ class MessageSent implements ShouldBroadcast
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return Channel
+     * @return PrivateChannel
      */
-    public function broadcastOn(): Channel
+    public function broadcastOn(): PrivateChannel
     {
 
-        return new Channel('mibsoftChat.admin' );
+        return new PrivateChannel('mibsoftClientChat.' . $this->identifier);
     }
 
     public function broadcastAs(): string
     {
-        return 'MessageReceived';
+        return 'MessageSent';
     }
 
     public function broadcastWith(): array
