@@ -15,6 +15,7 @@ Broadcast::channel('mibsoftChat.admin', function () {
     return false;
 });
 
-Broadcast::channel('mibsoftChat.{identifier}', function () {
+Broadcast::channel('mibsoftChat.{identifier}', function ($id) {
+    \Illuminate\Support\Facades\Log::info($id);
     return true;
 });
