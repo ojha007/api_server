@@ -13,14 +13,26 @@
     </div>
     {!! Form::bsText('moving_from_suburb',old('moving_from_suburb'),['p'=>6]) !!}
     {!! Form::bsText('moving_to_suburb',old('moving_to_suburb'),['p'=>6]) !!}
-    {!! Form::bsText('pickup_address',old('pickup_address'),['p'=>6]) !!}
+    <div class="form-group col-md-6 col-sm-12">
+        <div class="col-md-3 col-sm-12">
+            <label for="pickup_address">PickUp Address:</label>
+        </div>
+        <div class="col-md-9 col-sm-12 @error('pickup_address') has-error @enderror">
+            {!! Form::text('pickup_address',null,['class'=>'form-control ',
+            'placeholder'=>'Enter a pickup address','autocomplete'=>'on',"runat"=>"server",'id'=>'pickup_address']) !!}
+        </div>
+        {{Form::hidden('pickup_latitude',null,['id'=>'pickup_latitude'])}}
+        {{Form::hidden('pickup_longitude',null,['id'=>'pickup_longitude'])}}
+
+    </div>
 
     <div class="form-group col-md-6 col-sm-12 p-sm-0">
         <div class="col-md-3 col-sm-12">
             <label for="size_of_moving">Size of moving</label>
         </div>
         <div class="col-md-9 col-sm-12 @error('size_of_moving') has-error @enderror">
-            {!! Form::select('size_of_moving',\App\Models\Booking::allSizeOfMoving(),null,['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}
+            {!! Form::select('size_of_moving',\App\Models\Booking::allSizeOfMoving(),null,
+            ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}
         </div>
     </div>
     <div class="form-group col-md-6 col-sm-12 p-sm-0">
@@ -34,11 +46,20 @@
                     {{$checkbox}}
                 </label>
             @endforeach
-            {{--            {!! Form::select('additional_service',\App\Models\Booking::allAdditionalServices(),null,--}}
-            {{--                ['class'=>'form-control','placeholder'=>'Select Moving Size']) !!}--}}
         </div>
     </div>
-    {!! Form::bsText('dropoff_address',old('dropoff_address'),['p'=>6]) !!}
+    <div class="form-group col-md-6 col-sm-12">
+        <div class="col-md-3 col-sm-12">
+            <label for="dropoff_address">Dropoff Address:</label>
+        </div>
+        <div class="col-md-9 col-sm-12 @error('dropoff_address') has-error @enderror">
+            {!! Form::text('dropoff_address',null,['class'=>'form-control ',
+            'placeholder'=>'Enter a dropoff address','autocomplete'=>'on',
+            "runat"=>"server",'id'=>'dropoff_address']) !!}
+        </div>
+        {{Form::hidden('dropoff_latitude',null,['id'=>'dropoff_latitude'])}}
+        {{Form::hidden('dropoff_longitude',null,['id'=>'dropoff_longitude'])}}
+    </div>
     {!! Form::bsText('additional_address',old('additional_address'),['p'=>6]) !!}
     {!! Form::bsText('access_parking',old('access_parking'),['p'=>6]) !!}
 
@@ -99,5 +120,8 @@
                 }
             })
         })
+        $('form input').on('keypress', function (e) {
+            return e.which !== 13;
+        });
     </script>
 @endpush

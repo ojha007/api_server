@@ -115,7 +115,7 @@ desired effect
             @yield('breadcrumb')
         </section>
         <!-- Main content -->
-        <section class="content container-fluid" >
+        <section class="content container-fluid">
             @include('messages')
             @yield('content')
         </section>
@@ -153,7 +153,30 @@ desired effect
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"
         integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKRIXsAO_CavppnwVeQP3whNVZQ-sUZJQ&libraries=places">
+</script>
+<script>
+    function initialize() {
+        let element = {
+            'pickup_address': ["pickup_latitude", 'pickup_longitude'],
+            'dropoff_address': ['dropoff_latitude', 'dropoff_longitude']
+        };
+        Object.keys(element).forEach(ele => {
+            console.log(ele);
+            let input = document.getElementById(ele);
+            let autocomplete = new google.maps.places.Autocomplete(input);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                let place = autocomplete.getPlace();
+                document.getElementById(ele).value = place.name;
+                document.getElementById(element[ele][0]).value = place.geometry.location.lat();
+                document.getElementById(element[ele][1]).value = place.geometry.location.lng();
+            });
+        });
 
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 
 @stack('scripts')
