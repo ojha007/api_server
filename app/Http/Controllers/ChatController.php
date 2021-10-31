@@ -28,7 +28,7 @@ class ChatController extends Controller
                     'admin_id' => auth()->id(),
                     'chat_id' => $chat->id,
                 ]);
-                broadcast(new MessageSent($message, null, $identifier));
+                broadcast(new MessageSent($message, $identifier));
             }
             return new SuccessResponse();
         } catch (Exception $exception) {

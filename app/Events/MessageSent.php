@@ -25,10 +25,10 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($message, $userId, $identifier)
+    public function __construct($message,  $identifier)
     {
         $this->message = $message;
-        $this->userId = $userId;
+//        $this->userId = $userId;
         $this->identifier = $identifier;
     }
 
@@ -45,7 +45,7 @@ class MessageSent implements ShouldBroadcast
 
     public function broadcastAs(): string
     {
-        return 'MessageSent';
+        return 'MessageReceived';
     }
 
     public function broadcastWith(): array
