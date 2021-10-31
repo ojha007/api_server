@@ -12,7 +12,7 @@ Broadcast::channel('mibsoftChat.admin', function () {
     if ($auth && $auth->is_super) {
         return true;
     }
-    return false;
+    return true;
 });
 
 Broadcast::channel('mibsoftChat.{identifier}', function ($id) {
