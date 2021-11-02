@@ -45,7 +45,7 @@ class ChatController extends Controller
     public function getAllChats(Request $request): SuccessResponse
     {
         $chats = DB::table('chats')
-            ->select('message', 'admin_id', 'chat_messages.id')
+            ->select('message', 'admin_id', 'chat_messages.id','identifier')
             ->join('chat_messages', 'chats.id', '=', 'chat_messages.chat_id')
             ->whereNull('chat_messages.deleted_at')
             ->where('identifier', $request->get('identifier'))
