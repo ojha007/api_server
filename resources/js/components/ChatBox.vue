@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="direct-chat-messages">
+                <div class="direct-chat-messages" ref='messageDisplay' id="direct-chat-messages">
                     <div class="direct-chat-msg" v-for="chat in chats" :class="chat.class">
                         <div class="direct-chat-info clearfix">
                             <span class="direct-chat-name pull-" :class="chat.pull ? 'left' :'right'"
@@ -55,6 +55,7 @@ export default {
     computed: mapState(['chats', 'currentIdentifier']),
     mounted() {
         this.getOldChatByIdentifier();
+        alert('');
     },
     methods: {
         getOldChatByIdentifier() {
@@ -67,6 +68,8 @@ export default {
         },
         toggleChatBox() {
             this.$store.commit('TOGGLE_CHAT_BOX');
+            let messageDisplay = this.$refs.messageDisplay;
+            messageDisplay.scrollTop = messageDisplay.scrollHeight;
         },
         submitForm() {
             let payload = {
@@ -80,6 +83,8 @@ export default {
             axios.post('/chat', payload)
                 .then(() => {
                     this.message = '';
+                    let messageDisplay = this.$refs.messageDisplay;
+                    messageDisplay.scrollTop = messageDisplay.scrollHeight;
                 }).catch(error => {
                 console.log(error);
             })

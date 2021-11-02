@@ -49,7 +49,7 @@ class ChatController extends Controller
             ->join('chat_messages', 'chats.id', '=', 'chat_messages.chat_id')
             ->whereNull('chat_messages.deleted_at')
             ->where('identifier', $request->get('identifier'))
-            ->where('user_id', auth()->id())
+//            ->where('user_id', auth()->id())
             ->orderByDesc('chat_messages.updated_at')
             ->limit($request->get('limit') ?? 20)
             ->offset($request->get('offset') ?? 0)
