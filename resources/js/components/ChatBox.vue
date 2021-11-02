@@ -55,7 +55,7 @@ export default {
     computed: mapState(['chats', 'currentIdentifier']),
     mounted() {
         this.getOldChatByIdentifier();
-        alert('');
+        // alert('');
     },
     methods: {
         getOldChatByIdentifier() {
