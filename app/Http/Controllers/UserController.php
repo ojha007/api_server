@@ -166,6 +166,7 @@ class UserController extends Controller
 
     public function updateAvatar(Request $request)
     {
+        
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
