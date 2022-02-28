@@ -11,6 +11,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
         $route->post('change-password', 'AuthController@changePassword');
         $route->post('edit-profile', 'AuthController@changeProfile');
         $route->get('dashboard', 'DashboardController@index');
+        $route->get('workerHistory', 'DashboardController@workerHistory');
         $route->get('user/detail', 'AuthController@getLoggedInUser');
         $route->get('faqs', 'FaqController@index');
         $route->apiResource('enquiries', 'EnquiryController');
@@ -22,6 +23,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
         $route->apiResource('bookings', 'BookingController');
         $route->get('countries', 'CountryController@getAllCountries');
         $route->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');
+
     });
 
 });

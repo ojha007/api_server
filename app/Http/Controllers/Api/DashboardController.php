@@ -65,4 +65,28 @@ class DashboardController extends Controller
         ];
         return new SuccessResponse($data);
     }
+
+
+    public function workerHistory(): SuccessResponse
+    {
+        $limit = request()->get('limit') ?? 10;
+        $offset = request()->get('offset') ?? 0;
+        $sub = DB::table('task_status')
+            ->select('task_id')
+            ->where('task_status.user_id', '=', auth()->id())
+            ->groupBy('task_id');
+        $data = DB::table('users as u')
+            ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time')
+            ->join('task_workers as tw', 'tw.worker_id', '=', 'u.id')
+            ->joinSub($sub, 'currentTaskStatus', 'currentTaskStatus.task_id', '=', 'tw.task_id')
+            ->join('task_status as ts', 'ts.task_id', '=', 'currentTaskStatus.task_id')
+            ->join('tasks as t', 't.id', '=', 'ts.task_id')
+            ->join('bookings as b', 'b.id', '=', 't.booking_id')
+            ->where('u.id', '=', auth()->id())
+            ->orderByDesc('b.moving_date')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+        return new SuccessResponse($data);
+    }
 }
