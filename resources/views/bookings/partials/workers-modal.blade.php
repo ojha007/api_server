@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-10 form-group">
                             {!! Form::select('worker_id',$workers,
-                               $booking->task->workers->first()->pluck('id'),
+                               $booking->task->workers->first()->pluck('id') ?? null,
                                ['class'=>'form-control','placeholder'=>'Select Workers',]) !!}
                             <input type="hidden" name="task_id" value="{{$booking->task->id}}">
                         </div>
