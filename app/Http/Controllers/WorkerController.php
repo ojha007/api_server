@@ -81,7 +81,7 @@ class WorkerController extends Controller
             $worker = $this->repository->create($attributes);
             $worker->assignRole(User::WORKER);
             DB::commit();
-            return new StoreResponse($worker, $request->get('password'), $this->routePath);
+            return new StoreResponse($worker, $password, $this->routePath);
         } catch (Exception $exception) {
             DB::rollBack();
             return new ErrorResponse($exception);
