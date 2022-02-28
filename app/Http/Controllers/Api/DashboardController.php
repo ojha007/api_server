@@ -78,7 +78,7 @@ class DashboardController extends Controller
         $data = DB::table('users as u')
             ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time','t.id')
             ->join('task_workers as tw', 'tw.worker_id', '=', 'u.id')
-            ->join('task_status as ts', 'ts.user_id', '=', 'u.id')
+            ->join('task_status as ts', 'ts.task_id', '=', 'tw.task_id')
             ->joinSub($sub, 'currentTaskStatus', 'currentTaskStatus.id', '=', 'ts.id')
             ->join('tasks as t', 't.id', '=', 'ts.task_id')
             ->join('bookings as b', 'b.id', '=', 't.booking_id')
