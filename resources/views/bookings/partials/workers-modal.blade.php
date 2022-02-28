@@ -9,7 +9,7 @@
             {!! Form::open(['route'=>'tasks.assigned']) !!}
             <div class="modal-body">
                 <div class="row">
-                    <input type="hidden" name="booking_id" value="{{$booking->id}}">
+{{--                    <input type="hidden" name="booking_id" value="{{$booking->id}}">--}}
                     <div class="form-group col-md-12">
                         <div class="col-md-2">
                             <label for="Select Workers">Select Worker</label>
