@@ -76,7 +76,7 @@ class DashboardController extends Controller
             ->where('user_id', '=', auth()->id())
             ->groupBy('task_id');
         $data = DB::table('users as u')
-            ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time')
+            ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time','t.id')
             ->join('task_workers as tw', 'tw.worker_id', '=', 'u.id')
             ->join('task_status as ts', 'ts.user_id', '=', 'u.id')
             ->joinSub($sub, 'currentTaskStatus', 'currentTaskStatus.id', '=', 'ts.id')
