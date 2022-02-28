@@ -1965,16 +1965,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      image: "".concat("http://mibsoft.test", "/backend/images/default-user.png")
+      image: "".concat("https://mibsoft.net.au", "/backend/images/default-user.png"),
+      message: ''
     };
   },
   computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)(['chats', 'currentIdentifier']),
   mounted: function mounted() {
-    this.getOldChatByIdentifier();
+    this.getOldChatByIdentifier(); // alert('');
   },
   methods: {
     getOldChatByIdentifier: function getOldChatByIdentifier() {
@@ -1989,6 +1991,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleChatBox: function toggleChatBox() {
       this.$store.commit('TOGGLE_CHAT_BOX');
+      var messageDisplay = this.$refs.messageDisplay;
+      messageDisplay.scrollTop = messageDisplay.scrollHeight;
+    },
+    submitForm: function submitForm() {
+      var _this2 = this;
+
+      var payload = {
+        message: this.message,
+        identifier: this.currentIdentifier,
+        type: 'You',
+        "class": 'right',
+        pull: 'right'
+      };
+      this.$store.commit('SET_CHATS', payload);
+      axios.post('/chat', payload).then(function () {
+        _this2.message = '';
+        var messageDisplay = _this2.$refs.messageDisplay;
+        messageDisplay.scrollTop = messageDisplay.scrollHeight;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -2044,7 +2067,7 @@ __webpack_require__.r(__webpack_exports__);
       messages: [],
       offset: 0,
       count: 0,
-      image: "".concat("http://mibsoft.test", "/backend/images/default-user.png")
+      image: "".concat("https://mibsoft.net.au", "/backend/images/default-user.png")
     };
   },
   mounted: function mounted() {
@@ -3006,11 +3029,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: 'socket.io',
-  host: "http://mibsoft.test" + ':6001'
+  host: "https://mibsoft.net.au" + ':6001'
 });
-window.Echo["private"]('mibsoftChat.isCiLByguAAA').listen('.MessageSent', function (e) {
-  console.log(e);
-});
+console.log("https://mibsoft.net.au" + ':6001');
 
 /***/ }),
 
@@ -50074,7 +50095,11 @@ var render = function() {
       _c("div", { staticClass: "box-body" }, [
         _c(
           "div",
-          { staticClass: "direct-chat-messages" },
+          {
+            ref: "messageDisplay",
+            staticClass: "direct-chat-messages",
+            attrs: { id: "direct-chat-messages" }
+          },
           _vm._l(_vm.chats, function(chat) {
             return _c(
               "div",
@@ -50107,7 +50132,50 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _c("div", { staticClass: "box-footer" }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submitForm($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.message,
+                    expression: "message"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "message",
+                  placeholder: "Type Message ..."
+                },
+                domProps: { value: _vm.message },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.message = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]
+        )
+      ])
     ])
   ])
 }
@@ -50116,30 +50184,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-footer" }, [
-      _c("form", { attrs: { action: "#", method: "post" } }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "message",
-              placeholder: "Type Message ..."
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "input-group-btn" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning btn-flat",
-                attrs: { type: "button" }
-              },
-              [_vm._v("Send")]
-            )
-          ])
-        ])
-      ])
+    return _c("span", { staticClass: "input-group-btn" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-warning btn-flat", attrs: { type: "submit" } },
+        [_vm._v("Send")]
+      )
     ])
   }
 ]

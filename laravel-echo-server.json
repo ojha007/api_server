@@ -1,27 +1,27 @@
 {
-	"authHost": "http://mibsoft.test",
+	"authHost": "https:/mibsoft.net.au",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
-			"appId": "12ff3ea173549064",
-			"key": "a6a88589dae5c9dbd0065c9978fa4055"
+			"appId": "a0d15207dcb9cf32",
+			"key": "b4958d29601f557141f4fead1222f3c4"
 		}
 	],
-	"database": "redis",
+	"database": "sqlite",
 	"databaseConfig": {
 		"redis": {},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
 	},
-	"devMode": true,
+	"devMode": false,
 	"host": null,
 	"port": "6001",
-	"protocol": "http",
+	"protocol": "https",
 	"socketio": {},
 	"secureOptions": 67108864,
-	"sslCertPath": "",
-	"sslKeyPath": "",
+	"sslCertPath": "/etc/letsencrypt/live/mibsoft.net.au/fullchain.pem",
+	"sslKeyPath": "/etc/letsencrypt/live/mibsoft.net.au/privkey.pem",
 	"sslCertChainPath": "",
 	"sslPassphrase": "",
 	"subscribers": {
@@ -30,7 +30,7 @@
 	},
 	"apiOriginAllow": {
 		"allowCors": true,
-		"allowOrigin": "http://mibsoft.test:80",
+		"allowOrigin": "https:mibsoft.net.au:80",
 		"allowMethods": "GET, POST",
 		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 	}

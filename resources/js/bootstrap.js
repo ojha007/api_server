@@ -49,3 +49,4 @@ window.Echo = new Echo({
     host: process.env.MIX_APP_URL + ':6001'
 });
 
+console.log(process.env.MIX_APP_URL + ':6001')
