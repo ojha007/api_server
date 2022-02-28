@@ -1,63 +1,65 @@
-version: "3"
+
+version: "3.7"
 services:
-  #PHP Service
   app:
     build:
-      context: .
+      args:
+        user: info
+        uid: 1001
+      context: ./
       dockerfile: Dockerfile
-    image: digitalocean.com/php
-    container_name: app
+    image: laravel-image
+    container_name: laravel-app
     restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www
+    working_dir: /var/www/
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+      - mibsoft
 
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
+  db:
+    image: 'mysql:8.0'
+    container_name: mibsoft-db
     restart: unless-stopped
-    tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: 'mibsoft'
+      MYSQL_ROOT_PASSWORD:  'root'
+      MYSQL_PASSWORD: 'lifesucks@321'
+      MYSQL_USER: 'mib'
+      SERVICE_TAGS: devdb
+      SERVICE_NAME: mysql
+    volumes:
+      - /var/data/mysql:/var/lib/mysql
+      - /etc/mysql:/etc/mysql
+      - ./mysql-files:/var/lib/mysql-files
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d
+    networks:
+      - mibsoft
+
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+      - mibsoft
 
-  #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
-    tty: true
+  mailhog:
+    image: 'mailhog/mailhog:latest'
     ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: mibsoft
-      MYSQL_ROOT_PASSWORD: mibsoft@321
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - 1025:1025
+      - 8025:8025
     networks:
-      - app-network
+      - mibsoft
 
-#Docker Networks
 networks:
-  app-network:
+  mibsoft:
     driver: bridge
-#Volumes
-volumes:
-  dbdata:
-    driver: local

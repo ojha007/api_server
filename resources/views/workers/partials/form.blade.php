@@ -23,22 +23,22 @@
             {!! Form::number('phone',null,['class'=>'form-control']) !!}
         </div>
     </div>
-    <div class="col-md-12 col-sm-12 form-group @error('password') has-error @enderror">
-        <div class="col-md-2 col-sm-12">
-            {!! Form::label('password','Password:') !!}
-        </div>
-        <div class="col-md-9 col-sm-12">
-            {!! Form::password('password',['class'=>'form-control']) !!}
-        </div>
-    </div>
-    <div class="col-md-12 col-sm-12 form-group @error('password_confirmation') has-error @enderror">
-        <div class="col-md-2 col-sm-12">
-            {!! Form::label('password_confirmation','Confirm Password:') !!}
-        </div>
-        <div class="col-md-9 col-sm-12">
-            {!! Form::password('password_confirmation',['class'=>'form-control']) !!}
-        </div>
-    </div>
+{{--    <div class="col-md-12 col-sm-12 form-group @error('password') has-error @enderror">--}}
+{{--        <div class="col-md-2 col-sm-12">--}}
+{{--            {!! Form::label('password','Password:') !!}--}}
+{{--        </div>--}}
+{{--        <div class="col-md-9 col-sm-12">--}}
+{{--            {!! Form::password('password',['class'=>'form-control']) !!}--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div class="col-md-12 col-sm-12 form-group @error('password_confirmation') has-error @enderror">--}}
+{{--        <div class="col-md-2 col-sm-12">--}}
+{{--            {!! Form::label('password_confirmation','Confirm Password:') !!}--}}
+{{--        </div>--}}
+{{--        <div class="col-md-9 col-sm-12">--}}
+{{--            {!! Form::password('password_confirmation',['class'=>'form-control']) !!}--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="col-md-12 col-sm-12 form-group @error('status') has-error @enderror">
         <div class="col-md-2 col-sm-12">
             {!! Form::label('status','Status:') !!}

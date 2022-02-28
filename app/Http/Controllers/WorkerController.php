@@ -13,7 +13,9 @@ use App\Http\Responses\Worker\UpdateResponse;
 use App\Models\User;
 use App\Models\Worker;
 use App\Repositories\WorkerRepository;
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class WorkerController extends Controller
 {
@@ -48,8 +50,8 @@ class WorkerController extends Controller
         try {
             $workers = $this->repository->getAllWorkers();
             return new IndexResponse($this->viewPath, $workers);
-        } catch (\Exception $exception) {
-           return ;
+        } catch (Exception $exception) {
+            return;
         }
 
     }
@@ -64,7 +66,7 @@ class WorkerController extends Controller
         try {
             $worker = $this->repository->getById($id);
             return view($this->viewPath . 'edit', compact('worker'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
@@ -74,13 +76,13 @@ class WorkerController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->all();
-            $attributes['password'] = bcrypt($attributes['password']);
-            $attributes['super'] = false;
+            $password = Str::random(10);
+            $attributes['password'] = bcrypt($password);
             $worker = $this->repository->create($attributes);
             $worker->assignRole(User::WORKER);
             DB::commit();
             return new StoreResponse($worker, $request->get('password'), $this->routePath);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             return new ErrorResponse($exception);
         }
@@ -92,25 +94,34 @@ class WorkerController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
-            $attributes['password'] = bcrypt($attributes['password']);
+            $password = Str::random(10);
+            $attributes['password'] = bcrypt($password);
             $attributes['super'] = false;
             $worker = $this->repository->update($id, $attributes);
             $worker->assignRole(User::WORKER);
             DB::commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             return new ErrorResponse($exception);
         }
         return new UpdateResponse($this->routePath);
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        try {
+            DB::beginTransaction();
+            $this->repository->delete($id);
+            DB::commit();
+            return redirect()->back()->with('success', 'Worker deleted successfully');
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
+        }
     }
 
     public function show($id): ShowResponse
     {
-
         return new  ShowResponse($this->viewPath, $id);
     }
 

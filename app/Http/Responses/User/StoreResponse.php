@@ -22,8 +22,8 @@ class StoreResponse implements Responsable
     public function toResponse($request)
     {
         Log::info($this->user);
-        dispatch(new SendUserInvitedEmail($this->user, $this->password_generated));
-        $request->session()->flash('success', 'New user added successfully.');
+//        dispatch(new SendUserInvitedEmail($this->user, $this->password_generated));
+        $request->session()->flash('success', 'User added successfully.');
         return redirect()->route('users.index');
     }
 }

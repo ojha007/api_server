@@ -8,6 +8,7 @@ use App\Http\Responses\User\IndexResponse;
 use App\Http\Responses\User\ShowResponse;
 use App\Http\Responses\User\StoreResponse;
 use App\Http\Responses\User\UpdateResponse;
+use App\Mail\UserCreated;
 use App\Models\User;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
@@ -15,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -60,7 +62,7 @@ class UserController extends Controller
         $request->request->add(['password_generated' => $password_generated]);
         $input = $request->all();
         $user = $this->repository->create($input);
-//        $user->assignRole($this->role->getById($input['roles'])->name, $this->routePrefix);
+        Mail::to($user->email)->send(new UserCreated($user,$password_generated));
         return new StoreResponse($user, $password_generated);
     }
 
@@ -129,7 +131,6 @@ class UserController extends Controller
                     $user->status = false;
                     $user->save();
                 }
-                //$this->repository->deleteFomApplication($id, $roles, $this->routePrefix);
                 DB::commit();
                 return redirect()->route('users.index')
                     ->with('warning', 'The user cannot be deleted. Thus, the user has been inactivated.');
@@ -166,7 +167,7 @@ class UserController extends Controller
 
     public function updateAvatar(Request $request)
     {
-        
+
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
