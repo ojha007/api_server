@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+
     const WORKER = 'Worker';
     const CUSTOMER = 'Customer';
     use HasApiTokens, HasFactory, Notifiable, HasRoles;

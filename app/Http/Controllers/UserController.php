@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Responses\User\IndexResponse;
 use App\Http\Responses\User\ShowResponse;
 use App\Http\Responses\User\StoreResponse;
-use App\Http\Responses\User\UpdateResponse;
 use App\Mail\UserCreated;
 use App\Models\User;
 use App\Repositories\RoleRepository;
@@ -16,7 +15,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -38,6 +36,7 @@ class UserController extends Controller
         $this->role = new RoleRepository($role);
     }
 
+
     /**
      * Display a listing of the resource.
      * @return IndexResponse
@@ -45,10 +44,7 @@ class UserController extends Controller
     public function index(): IndexResponse
     {
         $users = $this->repository->getAll()->sortByDesc('created_at');
-        $roles = $this->role->allRolesByGuard($this->routePrefix);
-        if (!Auth::user()->isSuper())
-            $users = $users->where('super', false)->sortByDesc('created_at');
-        return new IndexResponse($users, $roles, $this->routePrefix);
+        return new IndexResponse($users, $this->routePrefix);
     }
 
     /**
@@ -62,7 +58,7 @@ class UserController extends Controller
         $request->request->add(['password_generated' => $password_generated]);
         $input = $request->all();
         $user = $this->repository->create($input);
-        Mail::to($user->email)->send(new UserCreated($user,$password_generated));
+        $user->assignRole($this->role->getById($input['role_id'])->name, $this->routePrefix);
         return new StoreResponse($user, $password_generated);
     }
 
@@ -78,25 +74,52 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * @param UpdateUserRequest $request
-     * @param  $id
-     * @return UpdateResponse
+     * @param CreateUserRequest $request
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, $id): UpdateResponse
-    {
-        $input = $request->all();
-        $user = $this->repository->getById($id);
-        if (!isset($input['super']))
-            $input['super'] = false;
-        $user->update($input);
-        $roles = $user->roles->where('guard_name', $this->routePrefix);
-        foreach ($roles as $role) {
-            $user->removeRole($role);
-        }
-        $user->assignRole($this->role->getById($input['roles'])->name, $this->routePrefix);
-        return new UpdateResponse($user);
+    public function update(CreateUserRequest $request, $id): RedirectResponse
 
+    {
+        try {
+            DB::beginTransaction();
+            $input = $request->all();
+            $user = $this->repository->getById($id);
+            if (!isset($input['super']))
+                $input['super'] = false;
+            $user->update($input);
+            $roles = $user->roles->where('guard_name', $this->routePrefix);
+            foreach ($roles as $role) {
+                $user->removeRole($role);
+            }
+            $user->assignRole($this->role->getById($input['role_id'])->name, $this->routePrefix);
+            DB::commit();
+            return redirect()->route('users.show', $user->id)
+                ->with('success', 'User created successfully');
+        } catch (\Exception $exception) {
+            DB::commit();
+            return redirect()
+                ->back()
+                ->with('failed', 'Failed to create')
+                ->withInput();
+
+        }
+
+
+    }
+
+    public function edit(User $user)
+    {
+        $roles = $this->role->allRolesByGuard($this->routePrefix);
+        $roles = $roles->pluck('name', 'id');
+        return view('users.edit', compact('user', 'roles'));
+    }
+
+    public function create()
+    {
+        $roles = $this->role->allRolesByGuard($this->routePrefix);
+        $roles = $roles->pluck('name', 'id');
+        return view('users.create', compact('roles'));
     }
 
 
@@ -149,11 +172,11 @@ class UserController extends Controller
 
     public function profile()
     {
-        $user = $this->repository->getById(Auth::user()->id);
-        $locationRepo = new LocationRepository((new Location()));
-        $selectDepartments = $this->department->selectDepartments();
-        $selectLocations = $locationRepo->selectLocations();
-        return view('auth::users.profile', compact('user', 'selectDepartments', 'selectLocations'));
+//        $user = $this->repository->getById(Auth::user()->id);
+//        $locationRepo = new LocationRepository((new Location()));
+//        $selectDepartments = $this->department->selectDepartments();
+//        $selectLocations = $locationRepo->selectLocations();
+//        return view('auth::users.profile', compact('user', 'selectDepartments', 'selectLocations'));
     }
 
     public function updateProfile(UpdateProfileRequest $request, $id)

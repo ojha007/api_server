@@ -1,17 +1,20 @@
-<div class="modal-body">
-    <div class="form-group">
-        {{ Form::label('name', 'Name:', ['class'=>'col-sm-2 control-label required'])}}
-        <div class="col-sm-10">
+<div class="box-body">
+    <div class="col-md-12 col-sm-12 form-group @error('name') has-error @enderror">
+        <div class="col-md-2 col-sm-12">
+            {{ Form::label('name', 'Name:', ['class'=>'control-label required'])}}
+        </div>
+        <div class="col-md-10 col-sm-12">
             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control', 'autofocus')) !!}
         </div>
+
     </div>
-    <div class="form-group">
+    <div class="col-md-12 col-sm-12 form-group @error('email') has-error @enderror">
         {{ Form::label('email', 'Email:', ['class'=>'col-sm-2 control-label required'])}}
-        <div class="col-sm-10">
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+        <div class="col-md-10 col-sm-12">
+            {!! Form::email('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
         </div>
     </div>
-    <div class="form-group">
+    <div class="col-md-12 col-sm-12 form-group @error('status') has-error @enderror">
         {{ Form::label('status', 'Status:', ['class'=>'col-sm-2 control-label'])}}
         <div class="col-sm-10">
             {!! Form::hidden('status', 0) !!}
@@ -19,7 +22,7 @@
         </div>
     </div>
     @if (Auth::user()->isSuper())
-        <div class="form-group">
+        <div class="col-md-12 col-sm-12 form-group @error('super') has-error @enderror">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox icheck">
                     <label>
@@ -29,14 +32,11 @@
             </div>
         </div>
     @endif
-    <div class="form-group">
+    <div class="col-md-12 col-sm-12 form-group @error('role_id') has-error @enderror">
         {{ Form::label('role', 'Role:', ['class'=>'col-sm-2 control-label required'])}}
         <div class="col-sm-10">
-            {!! Form::select('roles', $roles, null ,array('placeholder' => 'Select Role','class' => 'form-control select2','style'=>'width:100%;')) !!}
+            {!! Form::select('role_id', $roles, null ,array('placeholder' => 'Select Role','class' => 'form-control select2','style'=>'width:100%;')) !!}
         </div>
     </div>
 </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default pull-left btn-flat" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary btn-flat">Submit</button>
-</div>
+

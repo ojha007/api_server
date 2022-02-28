@@ -10,24 +10,16 @@
 @stop
 @section('content')
     @can('user-create')
-        @include('users.create')
-    @endcan
-    @can('user-edit')
-        @include('users.edit' )
+        <div class="box-header">
+            <a href="{{route('users.create')}}" class="btn btn-primary btn-flat pull-right">
+                <i class="fa fa-plus"></i> Add User
+            </a>
+        </div>
     @endcan
     <div class="box">
-        <div class="box-header">
-            @can('user-create')
-                <button class="btn btn-primary btn-flat pull-right bootstrap-modal-form-open"
-                        data-toggle="modal"
-                        data-target="#modal-create"> Add User
-                </button>
-            @endcan
-        </div>
-
         <!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-condensed dataTable">
+            <table id="example1" class="table table-bordered table-condensed ">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -56,18 +48,17 @@
                         </td>
                         <td>
 
-                            {{--                                    @can('user-edit')--}}
-                            <button class="btn btn-primary btn-flat edit-button btn-sm" data-toggle="modal"
-                                    data-target="#modal-edit" value="{{ $user['id'] }}"><i
-                                    class="fa fa-edit "></i></button>
-                            {{--                                    @endcan--}}
+                            @can('user-edit')
+                                <a href="{{route('users.edit',$user['id'])}}"
+                                   class="btn btn-primary btn-flat edit-button btn-sm">
+                                    <i class="fa fa-edit "></i></a>
+                            @endcan
                             @if( $user['id'] != \Illuminate\Support\Facades\Auth::id())
-                                {{--                                        @can('user-delete')--}}
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user['id']], 'style'=>'display:inline', 'onsubmit' => "return confirm('Are you sure you want to delete?')"]) !!}
                                 {{ Form::button('<i class="fa fa-trash"></i>', ['class' => 'btn btn-danger btn-sm btn-flat', 'role' => 'button', 'type' => 'submit',"data-container"=>"body", "data-tooltip"=>"tooltip",
                                             "title"=>"Delete", "data-placement"=>"bottom"]) }}
                                 {!! Form::close() !!}
-                                {{--                                        @endcan--}}
+
                             @endif
                         </td>
                     </tr>
@@ -81,48 +72,3 @@
     <!-- /.col -->
 @endsection
 
-
-@push('scripts')
-
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.edit-button', function () {
-                var id = $(this).val();
-                var url = "/users/" + id;
-                $.ajax({
-                    url: url,
-                    method: "get"
-                }).done(function (response) {
-                    $("#modal-edit input[name='name']").val(response.name);
-                    $("#modal-edit input[name='email']").val(response.email);
-                    if (response.status == 1)
-                        $("#modal-edit input[name='status']").prop('checked', true).change();
-                    else
-                        $("#modal-edit input[name='status']").prop('checked', false).change();
-                    if (response.super == 1)
-                        $("#modal-edit input[name='super']").prop('checked', true).iCheck('update');
-                    else
-                        $("#modal-edit input[name='super']").prop('checked', false).iCheck('update');
-
-                    //get the role selected
-                    $("#modal-edit select[name='roles'] option").filter(function () {
-                        return $(this).text().trim() == response.roles;
-                    }).prop('selected', true).trigger('change.select2');
-                    //change the URL of the action of edit form
-                    $("#modal-edit form").attr('action', '{{ url('/users') }}' + '/' + id);
-                });
-            });
-
-
-            @if (Auth::user()->isSuper())
-            $("input[name='super']").on('ifChecked', function (event) {
-                $("select[name='roles']").val('1');
-            });
-            $("input[name='super']").on('ifUnchecked', function (event) {
-                $("select[name='roles']").val('');
-            });
-            @endif
-        });
-    </script>
-
-@endpush

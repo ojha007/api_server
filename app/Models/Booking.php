@@ -42,6 +42,8 @@ class Booking extends Model
         "dropoff_longitude",
     ];
 
+
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

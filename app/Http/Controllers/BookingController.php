@@ -14,8 +14,10 @@ use App\Http\Responses\SuccessResponse;
 use App\Jobs\BookingConfirmedJob;
 use App\Models\Booking;
 use App\Models\Task;
+use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\TaskRepository;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,8 +78,11 @@ class BookingController extends Controller
     public function show($id)
     {
         try {
-            $booking = $this->repository->getByIdWith($id, 'task', 'user', 'payment');
-            return new ShowResponse($this->viewPath, $booking);
+            $booking = $this->repository->getByIdWith($id, 'task.workers', 'user', 'payment');
+            $workers = (new UserRepository(new User()))
+                ->getUsersByRole(User::WORKER)
+                ->pluck('name', 'id');
+            return new ShowResponse($this->viewPath, $booking, $workers);
         } catch (Exception $exception) {
             return new ErrorResponse($exception);
         }

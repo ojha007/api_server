@@ -10,11 +10,8 @@ class IndexResponse implements Responsable
 {
     protected $users, $roles, $routePrefix;
 
-    /**
-     * IndexResponse constructor.
-     * @param Collection $users
-     */
-    public function __construct(Collection $users, Collection $roles, $routePrefix)
+
+    public function __construct(Collection $users, $routePrefix)
     {
         if (Auth::user()->isSuper())
             $this->users = $users;
@@ -22,17 +19,15 @@ class IndexResponse implements Responsable
             $this->users = $users->filter(function ($user) {
                 return $user->super = 1;
             });
-        $this->roles = $roles;
         $this->routePrefix = $routePrefix;
     }
 
     public function toResponse($request)
     {
-        return view('users.index')->with('users', $this->transformUsers())
-            ->with('roles', $this->transformRoles());
+        return view('users.index')->with('users', $this->transformUsers());
     }
 
-    public function transformUsers()
+    public function transformUsers(): Collection
     {
         return $this->users->map(function ($user) {
             return [
@@ -45,13 +40,4 @@ class IndexResponse implements Responsable
         });
     }
 
-    public function transformRoles()
-    {
-        return $this->roles->map(function ($role) {
-            return [
-                $role->id,
-                $role->name
-            ];
-        })->toAssoc();
-    }
 }

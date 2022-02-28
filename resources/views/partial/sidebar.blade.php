@@ -75,14 +75,14 @@
 
             </li>
         @endcan
-        <li class="{{request()->routeIs('invoices.index') ? 'active' : ''}}">
-            <a href="{{route('invoices.index')}}">
-                <i class="fa fa-envelope"></i>
-                <span>
-                    Myob
-                </span>
-            </a>
-        </li>
+{{--        <li class="{{request()->routeIs('invoices.index') ? 'active' : ''}}">--}}
+{{--            <a href="{{route('invoices.index')}}">--}}
+{{--                <i class="fa fa-envelope"></i>--}}
+{{--                <span>--}}
+{{--                    Myob--}}
+{{--                </span>--}}
+{{--            </a>--}}
+{{--        </li>--}}
         @can('task-view')
             <li class="{{request()->routeIs('tasks.*') ? 'active' : ''}}">
                 <a href="{{route('tasks.index')}}">

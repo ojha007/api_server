@@ -66,7 +66,7 @@ class TaskController extends Controller
         try {
             DB::beginTransaction();
             $attributes = $request->validated();
-            $attributes['images']= implode(',',$request->get('images'));
+            $attributes['images'] = implode(',', $request->get('images'));
             $this->repository->update($id, $attributes);
             DB::commit();
             return new UpdateResponse($this->routePath);
@@ -112,9 +112,9 @@ class TaskController extends Controller
     public function show($id)
     {
         try {
-            $task = $this->repository->getByIdWith($id, 'workers', 'statuses', 'booking','images');
+            $task = $this->repository->getByIdWith($id, 'workers', 'statuses', 'booking', 'images');
             return new ShowResponse($this->viewPath, $task);
-        } catch (ModelNotFoundException | Exception $exception) {
+        } catch (ModelNotFoundException|Exception $exception) {
             return new ErrorResponse($exception);
         }
     }
@@ -130,34 +130,35 @@ class TaskController extends Controller
     public function assigned(Request $request)
     {
 
-        if ($request->ajax()) {
-            $validator = Validator::make($request->all(), [
-                'task_id' => 'required|exists:tasks,id',
-                'worker_id' => 'required|exists:users,id',
-            ]);
-            $old = DB::table('task_workers')
-                ->where('task_id',$request->get('task_id'))
-                ->where('worker_id',$request->get('worker_id'))
-                ->count();
-            if($old){
-              return  new ValidationResponse(null,"User Already assigned.");
-            }
-            if ($validator->fails())
-                return  new ValidationResponse($validator);
+        $validator = Validator::make($request->all(), [
+            'task_id' => 'required|exists:tasks,id',
+            'worker_id' => 'required|exists:users,id',
+        ]);
+        $old = DB::table('task_workers')
+            ->where('task_id', $request->get('task_id'))
+            ->where('worker_id', $request->get('worker_id'))
+            ->count();
+        if ($old) {
+            return new ValidationResponse(null, "User Already assigned.");
+        }
+        if ($validator->fails())
+            return new ValidationResponse($validator);
 
-            try {
-                DB::beginTransaction();
-                $worker = (new UserRepository(new User()))->getById($request->get('worker_id'));
-                DB::table('task_workers')
-                    ->insert($request->except('_token'));
-                TaskStatus::create([
-                    'task_id'=>$request->get('task_id'),
-                    'status'=>TaskStatus::PENDING,
-                    'user_id'=>$request->get('worker_id')
-                ]);
-                $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'statuses', 'booking');
-                Notification::send($worker, new AssignedToTask($worker, $task));
-                DB::commit();
+        try {
+            DB::beginTransaction();
+            $worker = (new UserRepository(new User()))->getById($request->get('worker_id'));
+            DB::table('task_workers')
+                ->insert($request->except('_token'));
+            TaskStatus::create([
+                'task_id' => $request->get('task_id'),
+                'status' => TaskStatus::PENDING,
+                'user_id' => $request->get('worker_id')
+            ]);
+            $task = $this->repository->getByIdWith($request->get('task_id'), 'workers', 'statuses', 'booking');
+            Notification::send($worker, new AssignedToTask($worker, $task));
+            DB::commit();
+
+            if ($request->wantsJson()) {
                 return response()
                     ->json(
                         ['data' => [
@@ -166,11 +167,14 @@ class TaskController extends Controller
                             'code' => 201
                         ]
                         ]);
-
-            } catch (Exception $exception) {
-                DB::rollBack();
-                return new ErrorResponse($exception);
+            } else {
+                return redirect()->back()->with('success', 'Task Assigned Successfully');
             }
+
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return new ErrorResponse($exception);
         }
+
     }
 }

@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
 
     Route::get('/myob/callback', 'InvoiceController@setTokenAfterCallback');
     Route::get('/myob/getAccessCode', 'InvoiceController@getAccessTokenCode');
-    Route::resource('users', 'UserController')->except(['edit', 'create']);
+    Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
     $router->get('developers', function () {
         return view('developers.index');

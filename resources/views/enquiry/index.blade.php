@@ -6,9 +6,9 @@
 @section('subHeader')
     List of all enquiries
 @endsection
-@section('sidebar_type')
-    sidebar-collapse
-@endsection
+{{--@section('sidebar_type')--}}
+{{--    sidebar-collapse--}}
+{{--@endsection--}}
 @section('breadcrumb') @endsection
 @section('content')
     <div class="box box-default border-0">

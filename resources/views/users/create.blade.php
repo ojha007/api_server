@@ -1,18 +1,20 @@
-<div class="modal fade" id="modal-create">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Create New User</h4>
-            </div>
-            {!! Form::open(array('route' => 'users.store','method'=>'POST','class'=>'form-horizontal bootstrap-modal-form')) !!}
-
-            @include('users.form')
-            {!! Form::close() !!}
-
-        </div>
-        <!-- /.modal-content -->
+@extends('layouts.master')
+@section('title_postfix') | Users @endsection
+@section('header')
+    Users
+@endsection
+@section('subHeader')
+    Create User
+@endsection
+@section('breadcrumb') @endsection
+@section('content')
+    {{--    <div class="col-md-9">--}}
+    <div class="box box-default ">
+        {!! Form::open(['route'=>'users.store']) !!}
+        @include('users.form')
+        {!! Form::formButton('Submit') !!}
+        {!! Form::close() !!}
     </div>
-    <!-- /.modal-dialog -->
-</div>
+    {{--    </div>--}}
+
+@endsection

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Requests\FormRequestForApi;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateUserRequest extends FormRequest
@@ -14,11 +13,14 @@ class CreateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
+            'status' => 'required|boolean',
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'roles' => 'required'
+            'email' => 'required|email|max:255|unique:users,email,' . $this->route('user'),
+            'role_id' => 'required'
         ];
+
     }
 
     /**

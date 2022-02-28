@@ -29,12 +29,18 @@ class ValidationResponse implements Responsable
         if ($this->validation instanceof Validator)
             $message = $this->validation->errors()->first();
 
-        $response = [
-            'status' => 422,
-            'message' => $message,
-            'data' => []
-        ];
-        return response()->json($response);
+        if ($request->wantsJson()) {
+            $response = [
+                'status' => 422,
+                'message' => $message,
+                'data' => []
+            ];
+            return response()->json($response);
+        } else {
+            return redirect()->back()
+                ->with('failed', $message);
+        }
+
 
     }
 }

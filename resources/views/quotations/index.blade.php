@@ -4,15 +4,12 @@
 @section('subHeader') List of Quotations @endsection
 @section('breadcrumb') @endsection
 @section('content')
+    <div class="box-header">
+        <a href="{{route('quotations.create')}}" class="btn btn-primary btn-flat pull-right">
+            <i class="fa fa-plus"></i> Create Quotations
+        </a>
+    </div>
     <div class="box box-default border-0">
-        <div class="box-header">
-            <div class="box-tools pull-right">
-                <a href="{{route('quotations.create')}}">
-                    <i class="fa fa-plus"></i>
-                    Create Quotations
-                </a>
-            </div>
-        </div>
         <div class="box-body">
             <table class="table table-responsive table-bordered">
                 <thead>
