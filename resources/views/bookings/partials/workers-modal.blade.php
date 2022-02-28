@@ -18,7 +18,7 @@
                             {!! Form::select('worker_id',$workers,
                                $booking->task ? $booking->task->workers ? $booking->task->workers->first()->pluck('id') : null:null ,
                                ['class'=>'form-control','placeholder'=>'Select Workers',]) !!}
-                            <input type="hidden" name="task_id" value="{{$booking->task->id}}">
+                            <input type="hidden" name="task_id" value="{{$booking->task ? $booking->task->id:null}}">
                         </div>
                     </div>
 
