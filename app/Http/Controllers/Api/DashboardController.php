@@ -35,7 +35,7 @@ class DashboardController extends Controller
         return DB::table('users')
             ->join('task_status as taskStatus', 'users.id', '=', 'taskStatus.user_id')
             ->joinSub($sub, 'completedTask', 'completedTask.id', '=', 'taskStatus.id')
-            ->where('taskStatus.status', '', TaskStatus::COMPLETED)
+            ->where('taskStatus.status', '=', TaskStatus::COMPLETED)
             ->where('users.id', '=', auth()->id())
             ->count('taskStatus.id');
 
