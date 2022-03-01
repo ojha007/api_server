@@ -54,7 +54,7 @@ class TaskController extends \App\Http\Controllers\TaskController
         try {
             $latestStatus = $this->latestStatusQuery();
             $tasks = DB::table('tasks')
-                ->select('tasks.code', 'tasks.id', 'tasks.title', 'taskStatus.status', 'tasks.description')
+                ->select('tasks.code', 'tasks.id', 'tasks.title', 'taskStatus.status', 'tasks.description', 'task_workers.id as taskWorkerId')
                 ->join('task_workers', 'tasks.id', '=', 'task_workers.task_id')
                 ->join('bookings', 'bookings.id', '=', 'tasks.booking_id')
                 ->joinSub($latestStatus, 'taskStatus', 'taskStatus.task_id', '=', 'tasks.id')
@@ -145,7 +145,7 @@ class TaskController extends \App\Http\Controllers\TaskController
                 ->limit(1);
             $task = DB::table('tasks as t')
                 ->select(['t.title', 't.code', 'ts.status', 'ts.id as taskId',
-                    'b.name', 'email', 'phone', 'moving_date',
+                    'b.name', 'email', 'phone', 'moving_date', 'tw.id as taskWorkerId',
                     'moving_from_suburb', 'moving_to_suburb',
                     'pickup_address', 'comments', 'b.description',
                     'quotes', 'size_of_moving', 'additional_service',
