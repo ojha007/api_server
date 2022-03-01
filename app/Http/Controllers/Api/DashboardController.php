@@ -30,12 +30,12 @@ class DashboardController extends Controller
     private function completedTask(): int
     {
         $sub = DB::table('task_status')
-            ->select('task_id')
-            ->where('status', '=', TaskStatus::COMPLETED)
+            ->selectRaw('MAX(id) as id')
             ->groupBy('task_id');
         return DB::table('users')
             ->join('task_status as taskStatus', 'users.id', '=', 'taskStatus.user_id')
-            ->joinSub($sub, 'completedTask', 'completedTask.task_id', '=', 'taskStatus.id')
+            ->joinSub($sub, 'completedTask', 'completedTask.id', '=', 'taskStatus.id')
+            ->where('taskStatus.status', '', TaskStatus::COMPLETED)
             ->where('users.id', '=', auth()->id())
             ->count('taskStatus.id');
 
@@ -44,13 +44,13 @@ class DashboardController extends Controller
     private function rejectedTask(): int
     {
         $sub = DB::table('task_status')
-            ->select('task_id')
-            ->where('status', '=', TaskStatus::REJECTED)
+            ->selectRaw('MAX(id) as id')
             ->groupBy('task_id');
         return DB::table('users')
             ->join('task_status as taskStatus', 'users.id', '=', 'taskStatus.user_id')
-            ->joinSub($sub, 'rejectedTask', 'rejectedTask.task_id', '=', 'taskStatus.id')
+            ->joinSub($sub, 'rejectedTask', 'rejectedTask.id', '=', 'taskStatus.id')
             ->where('users.id', '=', auth()->id())
+            ->where('taskStatus.status', '=', TaskStatus::REJECTED)
             ->count('taskStatus.id');
 
     }
@@ -76,7 +76,7 @@ class DashboardController extends Controller
             ->where('user_id', '=', auth()->id())
             ->groupBy('task_id');
         $data = DB::table('users as u')
-            ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time','t.id')
+            ->select('ts.status', 'ts.reason', 't.description', 't.code', 'b.pickup_address', 'b.dropoff_address', 'b.moving_date', 'b.time', 't.id')
             ->join('task_workers as tw', 'tw.worker_id', '=', 'u.id')
             ->join('task_status as ts', 'ts.task_id', '=', 'tw.task_id')
             ->joinSub($sub, 'currentTaskStatus', 'currentTaskStatus.id', '=', 'ts.id')

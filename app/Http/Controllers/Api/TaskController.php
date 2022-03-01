@@ -6,11 +6,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
-
 use App\Http\Responses\ValidationResponse;
 use App\Models\Task;
 use App\Models\TaskFile;
+use App\Models\TaskJourney;
 use App\Models\TaskStatus;
+use App\Repositories\TaskJourneyRepository;
 use App\Repositories\TaskRepository;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -70,9 +71,10 @@ class TaskController extends \App\Http\Controllers\TaskController
 
     public function changeStatus(Request $request, $id)
     {
+        $status = $request->get('status');
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:Pending,Started,Rejected,Completed',
-            'reason' => 'nullable'
+            'reason' => 'nullable',
         ]);
         if ($validator->fails())
             return new ValidationResponse($validator);
@@ -87,6 +89,20 @@ class TaskController extends \App\Http\Controllers\TaskController
                 'user_id' => auth()->id(),
                 'reason' => $request->get('reason'),
             ]);
+
+            $time = $request->get('time');
+            $journeyStatus = null;
+            if ($status == TaskStatus::STARTED) $journeyStatus = TaskJourney::START;
+            elseif ($status == TaskStatus::COMPLETED) $journeyStatus = TaskJourney::END;
+            $taskWorkerId = DB::table('task_workers')->where('task_id', $id)->first();
+            if ($time && $journeyStatus && $taskWorkerId) {
+                $journey = [
+                    'task_worker_id' => $taskWorkerId->id,
+                    'status' => $journeyStatus,
+                    'time' => $time
+                ];
+                (new TaskJourneyRepository(new TaskJourney()))->storeJourney($journey);
+            }
             return new SuccessResponse();
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
@@ -134,7 +150,7 @@ class TaskController extends \App\Http\Controllers\TaskController
                     'pickup_address', 'comments', 'b.description',
                     'quotes', 'size_of_moving', 'additional_service',
                     'access_parking', 'dropoff_address', 'pickup_address',
-                    'pickup_latitude','pickup_longitude','dropoff_latitude','dropoff_longitude',
+                    'pickup_latitude', 'pickup_longitude', 'dropoff_latitude', 'dropoff_longitude',
                     'inventory', 'b.id as bookingId', 't.created_at as taskTime'])
                 ->join('bookings as  b', 'b.id', '=', 't.booking_id')
                 ->join('task_workers as tw', 'tw.task_id', '=', 't.id')
