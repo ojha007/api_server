@@ -30,7 +30,6 @@ class TaskJourneyController extends Controller
             $this->repository->create($attributes);
             return new SuccessResponse([]);
         } catch (\Exception $exception) {
-
             return new ErrorResponse($exception);
         }
     }
