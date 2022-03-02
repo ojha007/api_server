@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Api'], function ($router) {
         $route->get('countries', 'CountryController@getAllCountries');
         $route->get('states/country/{country_id}', 'StateController@getAllStatesByCountry');
         $route->apiResource('task-journey', 'TaskJourneyController');
+        $route->get('taskTime/{workerId}','TaskJourneyController@taskTime');
 
     });
 

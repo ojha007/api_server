@@ -121,6 +121,8 @@ class AuthController extends Controller
                         ->put($file_name, base64_decode($file_data));
                     $attributes['avatar'] = Storage::url($file_name);
                 }
+            } else {
+                unset($attributes['avatar']);
             }
             User::find($user->id)
                 ->update($attributes);
