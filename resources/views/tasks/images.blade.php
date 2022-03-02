@@ -4,7 +4,7 @@
             <h2 class="page-header">
                 <b>{{$title}}:</b>
             </h2>
-        </div>P
+        </div>
         <div class="row flex">
             @foreach($task->images->where('type',$type) as $image)
                 <div class="col-lg-4 col-sm-6">
