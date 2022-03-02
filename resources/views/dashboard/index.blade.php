@@ -108,7 +108,13 @@
                             <tbody>
                             @forelse($tasks ?? [] as $task)
                                 <tr>
-                                    <td><strong>{{$task->code}}</strong></td>
+                                    <td>
+                                        <strong>
+                                            <a href="{{route('tasks.show',$task->id)}}">
+                                                {{$task->code}}
+                                            </a>
+                                        </strong>
+                                    </td>
                                     <td>{{$task->title}}</td>
                                     <td>{{$task->all_workers}}</td>
                                     <td></td>
