@@ -6,7 +6,7 @@
             </h2>
         </div>
         <div class="row flex">
-            @foreach($task->images as $image)
+            @foreach($task->images->where('type',$type) as $image)
                 <div class="col-lg-4 col-sm-6">
                     <div class="thumbnail">
                         <img src="{{url($image->url)}}" class="img-fluid" alt="">
