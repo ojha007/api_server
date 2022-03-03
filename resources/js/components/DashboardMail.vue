@@ -1,6 +1,6 @@
 <template>
     <div class="box-body" id="email">
-        <vue-modal :show="showModal" :modalData="mail" modalTitle="View Mail"></vue-modal>
+        <vue-modal :show="showModal" :modalData="mail" modalTitle="View Mail" @closeModal="closeParent"></vue-modal>
         <div class="col-xs-12 text-center" v-if="!isLogged">
             <a href="/oauth/gmail" class="nav-link">Login to Your gmail account</a>
         </div>
@@ -62,6 +62,9 @@ export default {
                 this.allMail = response.data.data;
             }
 
+        },
+        closeParent(variable) {
+            this.showModal = variable
         }
     },
 

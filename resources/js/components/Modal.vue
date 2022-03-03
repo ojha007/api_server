@@ -44,14 +44,12 @@ export default {
         show: {
             immediate: true,
             handler(val, old) {
-                console.log(val,'DDDDDDDDDD');
                 this.showModal = val
             }
         },
         modalData: {
             immediate: true,
             handler(val, old) {
-                console.log(val);
                 this.toShow = val
             }
         }
@@ -70,6 +68,7 @@ export default {
     methods: {
         close() {
             this.showModal = false
+            this.$emit('closeModal', this.showModal)
         },
         changeHtmlToString(string) {
             return string.replace(/[\r]/g, '<br/>');

@@ -2170,6 +2170,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    closeParent: function closeParent(variable) {
+      this.showModal = variable;
     }
   }
 });
@@ -2232,14 +2235,12 @@ __webpack_require__.r(__webpack_exports__);
     show: {
       immediate: true,
       handler: function handler(val, old) {
-        console.log(val, 'DDDDDDDDDD');
         this.showModal = val;
       }
     },
     modalData: {
       immediate: true,
       handler: function handler(val, old) {
-        console.log(val);
         this.toShow = val;
       }
     }
@@ -2258,6 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     close: function close() {
       this.showModal = false;
+      this.$emit('closeModal', this.showModal);
     },
     changeHtmlToString: function changeHtmlToString(string) {
       return string.replace(/[\r]/g, '<br/>');
@@ -51379,7 +51381,8 @@ var render = function() {
           show: _vm.showModal,
           modalData: _vm.mail,
           modalTitle: "View Mail"
-        }
+        },
+        on: { closeModal: _vm.closeParent }
       }),
       _vm._v(" "),
       !_vm.isLogged
