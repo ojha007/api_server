@@ -19,23 +19,25 @@
                 </div>
                 <!-- /.box-tools -->
             </div>
+            <dashboard-mail url="{{route('mails.inbox')}}"
+                            logged="{{\LaravelGmail::check()}}">
+            </dashboard-mail>
             <!-- /.box-header -->
-            <div class="box-body " id="email">
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        @if(\LaravelGmail::check())
+{{--            <div class="box-body " id="email">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-xs-12 text-center">--}}
+{{--                        @if(\LaravelGmail::check())--}}
+{{--                            <button type="button" class="btn btn-default btn-lg">--}}
+{{--                                <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Mails--}}
+{{--                            </button>--}}
 
-                            <button type="button" class="btn btn-default btn-lg">
-                                <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Mails
-                            </button>
-
-                        @else
-                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login to Your gmail account</a>
-                        @endif
-                    </div>
-                </div>
-                <!-- /.mail-box-messages -->
-            </div>
+{{--                        @else--}}
+{{--                            <a href="{{ url('oauth/gmail') }}" class="nav-link">Login to Your gmail account</a>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <!-- /.mail-box-messages -->--}}
+{{--            </div>--}}
         {{--            <div class="overlay">--}}
         {{--                <i class="fa fa-refresh fa-spin"></i>--}}
         {{--            </div>--}}
@@ -44,6 +46,6 @@
         <!-- /. box -->
     </div>
 @endsection
-@push('scripts')
-    @include('mails.scripts',['url'=>$url])
-@endpush
+{{--@push('scripts')--}}
+{{--    @include('mails.scripts',['url'=>$url])--}}
+{{--@endpush--}}
