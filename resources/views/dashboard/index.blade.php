@@ -148,7 +148,9 @@
                             <tbody>
                             @forelse($enquiries ?? [] as $enquiry)
                                 <tr>
-                                    <td>{{$enquiry->id}}</td>
+                                    <td><strong><a href="{{route('enquiries.show',$enquiry->id)}}">
+                                                #{{$enquiry->id}}</a></strong>
+                                    </td>
                                     <td>{{$enquiry->name}}</td>
                                     <td>{{$enquiry->email}}</td>
                                     <td>{{$enquiry->phone}}</td>
@@ -265,7 +267,7 @@
                 </dashboard-mail>
                 <!-- /.box-header -->
 
-            <!-- /.box-body -->
+                <!-- /.box-body -->
 
                 <div class="box-footer clearfix">
                     <a href="{{route('mails.index')}}"
