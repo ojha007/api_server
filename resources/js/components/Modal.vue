@@ -14,7 +14,7 @@
                         </button>
                     </div>
                     <div class="row" v-else>
-                        <div class="col-xs-12" :title="toShow.message">
+                        <div class="col-xs-12">
                             <div class="text-left text-bold text-black" style="padding-bottom: 10px;">
                                 From: {{ toShow.fromName }}
                                 <small><{{ toShow.fromEmail }}></small>

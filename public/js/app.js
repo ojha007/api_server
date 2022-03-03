@@ -51516,58 +51516,51 @@ var render = function() {
                 !Object.keys(_vm.toShow).length
                   ? _c("div", { staticClass: "row text-center" }, [_vm._m(0)])
                   : _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-xs-12",
-                          attrs: { title: _vm.toShow.message }
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "text-left text-bold text-black",
-                              staticStyle: { "padding-bottom": "10px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            From: " +
-                                  _vm._s(_vm.toShow.fromName) +
-                                  "\n                            "
-                              ),
-                              _c("small", [
-                                _vm._v("<" + _vm._s(_vm.toShow.fromEmail) + ">")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "text-left text-bold",
-                              staticStyle: { "padding-bottom": "20px" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                            Subject: " +
-                                  _vm._s(_vm.toShow.subject) +
-                                  "\n                        "
+                      _c("div", { staticClass: "col-xs-12" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "text-left text-bold text-black",
+                            staticStyle: { "padding-bottom": "10px" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            From: " +
+                                _vm._s(_vm.toShow.fromName) +
+                                "\n                            "
+                            ),
+                            _c("small", [
+                              _vm._v("<" + _vm._s(_vm.toShow.fromEmail) + ">")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "text-left text-bold",
+                            staticStyle: { "padding-bottom": "20px" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Subject: " +
+                                _vm._s(_vm.toShow.subject) +
+                                "\n                        "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c("p", {
+                            staticStyle: { "word-wrap": "break-word" },
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.changeHtmlToString(_vm.toShow.message)
                               )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c("p", {
-                              staticStyle: { "word-wrap": "break-word" },
-                              domProps: {
-                                innerHTML: _vm._s(
-                                  _vm.changeHtmlToString(_vm.toShow.message)
-                                )
-                              }
-                            })
-                          ])
-                        ]
-                      )
+                            }
+                          })
+                        ])
+                      ])
                     ])
               ]),
               _vm._v(" "),
