@@ -11,33 +11,29 @@
 @section('content')
     <div class="box-header">
         @if($booking->is_verified ==0)
-            <div class="btn-group">
-                <button type="button" class="btn btn-success btn-flat pull-right ml-2"
-                        data-toggle="modal" data-target="#modal-booking-confirm">
-                    <i class="fa fa-check"></i> Confirmed
-                </button>
-            </div>
-            <div class="btn-group">
-                <a type="button" href="{{route('bookings.edit',$booking->id)}}"
-                   class="btn btn-primary  btn-flat pull-right">
-                    <i class="fa fa-edit"></i>
-                    Edit
-                </a>
-            </div>
+            <button type="button" class="btn btn-success btn-flat "
+                    data-toggle="modal" data-target="#modal-booking-confirm">
+                <i class="fa fa-check"></i> Confirmed
+            </button>
+
+            <a type="button" href="{{route('bookings.edit',$booking->id)}}"
+               class="btn btn-primary  btn-flat ">
+                <i class="fa fa-edit"></i>
+                Edit
+            </a>
         @else
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-flat pull-right ml-2"
-                        data-toggle="modal" data-target="#modal-booking-assigned">
-                    <i class="fa fa-user"></i> Assign Worker
-                </button>
-            </div>
+            <button type="button" class="btn btn-primary btn-flat "
+                    data-toggle="modal" data-target="#modal-booking-assigned">
+                <i class="fa fa-user"></i> Assign Worker
+            </button>
+
         @endif
     </div>
     {{--    <section class="invoice" style="margin: 1px">--}}
     <!-- title row -->
     <div class="box">
         <div class="box-header with-border">
-            <h2>
+            <h3>
                 <i class="fa fa-user"></i>
                 {{$booking->name}} <br>
                 <small>
@@ -46,8 +42,10 @@
                 <small>
                     Time : {!! $booking->time ? \Carbon\Carbon::parse($booking->time)->format('g:i A') : ''!!}
                 </small>
-            </h2>
-
+            </h3>
+            <div class="pull-right">
+                Booking Status:&nbsp;{!! spanByStatus($booking->is_verified) !!}
+            </div>
         </div>
         <div class="box-body">
             <!-- info row -->
@@ -71,9 +69,14 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    <b>Task #{{$booking->task->code ?? ''}}</b>
+                    <b>Task <br>
+                        @if($booking->task)
+                            <a href="{{route('tasks.show',$booking->task->id)}}">#{{$booking->task->code}}</a>
+
+                    </b>
                     <br>
-                    <p>{!! spanByStatus($booking->is_verified) !!}</p>
+                    <p>{!! spanByStatus($booking->task->currentStatus) !!}</p>
+                    @endif
                 </div>
                 <!-- /.col -->
             </div>

@@ -8,30 +8,35 @@
 @endsection
 @section('breadcrumb') @endsection
 @section('content')
+    @can('worker-create')
+    <div class="box-header">
+        <a href="{{route('workers.create')}}" class="btn btn-primary btn-flat pull-right">
+            <i class="fa fa-plus"></i> Add Worker
+        </a>
+    </div>
+    @endcan
     <div class="box box-default border-0">
-        <div class="box-header">
-            <h3 class="box-title"></h3>
-            <div class="box-tools pull-right">
-                <a href="{{route('workers.create')}}">
-                    <i class="fa fa-plus"></i>
-                    Create Worker
-                </a>
-            </div>
-        </div>
         <div class="box-body">
             <table class="table table-bordered table-responsive">
                 <thead>
                 <tr>
+                    <td>S.No</td>
                     <td>Name</td>
                     <td>Email</td>
+                    <td>Phone</td>
+                    <td>Status</td>
                     <td>Actions</td>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($workers as $worker)
+
                     <tr>
+                        <td><strong>#{{$worker->id}}</strong></td>
                         <td>{{$worker->name}}</td>
                         <td>{{$worker->email}}</td>
+                        <td>{{$worker->phone}}</td>
+                        <td>{!! spanByStatus($worker->status)!!}</td>
                         <td>
                             {!! Form::open(['route'=>['workers.destroy',$worker->id],'class'=>'form-horizontal']) !!}
                             @method('DELETE')

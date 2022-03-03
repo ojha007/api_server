@@ -24,13 +24,6 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Today Bookings</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -56,6 +49,7 @@
                                     <td>{{$booking->name}}</td>
                                     <td>{{$booking->email}}</td>
                                     <td>{{$booking->phone}}</td>
+
                                     <td>{!! spanByStatus($booking->is_verified) !!}</td>
                                 </tr>
                             @empty
@@ -84,14 +78,6 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Tasks</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool"
-                                data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -117,7 +103,7 @@
                                     </td>
                                     <td>{{$task->title}}</td>
                                     <td>{{$task->all_workers}}</td>
-                                    <td></td>
+                                    <td>{!! spanByStatus($task->currentStatus) !!}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -146,14 +132,6 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Enquiries</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool"
-                                data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -200,14 +178,6 @@
             <div class="box box-solid">
                 <div class="box-header with-border">
                     <h3 class="box-title">Workers</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool"
-                                data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -225,10 +195,10 @@
                             @forelse($workers ?? [] as $worker)
                                 <tr>
                                     <td>
-                                        {{$worker->id}}
+                                        #{{$worker->id}}
                                     </td>
                                     <td>
-                                        <a href="#">
+                                        <a href="{{route('workers.show',$worker->id)}}">
                                             {{$worker->name}}
                                         </a>
                                     </td>

@@ -35,16 +35,20 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        $workers = Role::findByName(User::WORKER)->users()->paginate(10);
+        $workers = Role::findByName(User::WORKER)
+            ->users()
+            ->orderByDesc('created_at')
+            ->paginate(5);
+
         $bookings = Booking::select('id', 'name', 'email', 'phone', 'is_verified')
             ->whereDate('created_at', Carbon::today())
             ->orderByDesc('id')
-            ->paginate(10);
+            ->paginate(5);
         $tasks = Task::with('workers')
             ->orderByDesc('id')
-            ->paginate(10);
+            ->paginate(5);
         $enquiries = Enquiry::orderByDesc('id')
-            ->paginate(10);
+            ->paginate(5);
         return view($this->viewPath . 'index', compact('workers', 'bookings', 'tasks', 'enquiries'));
     }
 

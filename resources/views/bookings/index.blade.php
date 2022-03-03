@@ -46,7 +46,7 @@
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-flat btn-primary">
-                Filter
+               <i class="fa fa-filter"></i> Apply Filter
             </button>
         </div>
     </div>
