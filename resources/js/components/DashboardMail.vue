@@ -35,7 +35,7 @@ export default {
             allMail: [],
             loading: true,
             isLogged: this.logged,
-            showModal: true,
+            showModal: false,
             mail: {},
         }
     },

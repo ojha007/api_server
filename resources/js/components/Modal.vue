@@ -8,22 +8,22 @@
                     <h4 class="modal-title">{{ this.modalTitle }}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row text-center" v-if="!Object.keys(this.modalData).length">
+                    <div class="row text-center" v-if="!Object.keys(toShow).length">
                         <button class="btn btn-default btn-flat">
                             <i class="fa fa-refresh fa-spin"> </i> Loading.........
                         </button>
                     </div>
                     <div class="row" v-else>
-                        <div class="col-xs-12" :title="this.modalData.message">
+                        <div class="col-xs-12" :title="toShow.message">
                             <div class="text-left text-bold text-black" style="padding-bottom: 10px;">
-                                From: {{this.modalData.fromName}}
-                                <small><{{this.modalData.fromEmail}}></small>
+                                From: {{ toShow.fromName }}
+                                <small><{{ this.modalData.fromEmail }}></small>
                             </div>
                             <div class="text-left text-bold" style="padding-bottom: 20px">
-                                Subject: {{this.modalData.subject}}
+                                Subject: {{ toShow.subject }}
                             </div>
                             <div>
-                                <p style=" word-wrap: break-word">{{changeHtmlToString(this.modalData.message)}}</p>
+                                <p style=" word-wrap: break-word">{{ changeHtmlToString(toShow.message) }}</p>
                             </div>
                         </div>
                     </div>
@@ -40,6 +40,20 @@
 <script>
 export default {
     name: 'Modal',
+    watch: {
+        show: {
+            immediate: true,
+            handler(val, old) {
+                this.showModal = val.show
+            }
+        },
+        modalData: {
+            immediate: true,
+            handler(val, old) {
+                this.toShow = val
+            }
+        }
+    },
     props: {
         show: Boolean,
         modalTitle: String,
@@ -48,6 +62,7 @@ export default {
     data() {
         return {
             showModal: this.show,
+            toShow: this.modalData
         }
     },
     methods: {

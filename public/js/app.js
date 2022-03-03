@@ -2083,7 +2083,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allMail: [],
       loading: true,
       isLogged: this.logged,
-      showModal: true,
+      showModal: false,
       mail: {}
     };
   },
@@ -2229,6 +2229,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Modal',
+  watch: {
+    show: {
+      immediate: true,
+      handler: function handler(val, old) {
+        this.showModal = val.show;
+      }
+    },
+    modalData: {
+      immediate: true,
+      handler: function handler(val, old) {
+        this.toShow = val;
+      }
+    }
+  },
   props: {
     show: Boolean,
     modalTitle: String,
@@ -2236,7 +2250,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      showModal: this.show
+      showModal: this.show,
+      toShow: this.modalData
     };
   },
   methods: {
@@ -51494,14 +51509,14 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                !Object.keys(this.modalData).length
+                !Object.keys(_vm.toShow).length
                   ? _c("div", { staticClass: "row text-center" }, [_vm._m(0)])
                   : _c("div", { staticClass: "row" }, [
                       _c(
                         "div",
                         {
                           staticClass: "col-xs-12",
-                          attrs: { title: this.modalData.message }
+                          attrs: { title: _vm.toShow.message }
                         },
                         [
                           _c(
@@ -51513,7 +51528,7 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                            From: " +
-                                  _vm._s(this.modalData.fromName) +
+                                  _vm._s(_vm.toShow.fromName) +
                                   "\n                            "
                               ),
                               _c("small", [
@@ -51533,7 +51548,7 @@ var render = function() {
                             [
                               _vm._v(
                                 "\n                            Subject: " +
-                                  _vm._s(this.modalData.subject) +
+                                  _vm._s(_vm.toShow.subject) +
                                   "\n                        "
                               )
                             ]
@@ -51546,9 +51561,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(
-                                    _vm.changeHtmlToString(
-                                      this.modalData.message
-                                    )
+                                    _vm.changeHtmlToString(_vm.toShow.message)
                                   )
                                 )
                               ]
