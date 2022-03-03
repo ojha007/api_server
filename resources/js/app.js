@@ -44,6 +44,7 @@ Vue.component(
     require('./components/DashboardMail').default
 );
 Vue.component("chat-box", require("./components/ChatBox").default);
+Vue.component("vue-modal", require("./components/Modal").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

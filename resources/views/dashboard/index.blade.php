@@ -260,7 +260,6 @@
                     </div>
                 </div>
                 <dashboard-mail url="{{route('mails.inbox')}}"
-                                oauthurl="{{url('oauth/gmail')}}"
                                 logged="{{\LaravelGmail::check()}}">
 
                 </dashboard-mail>
