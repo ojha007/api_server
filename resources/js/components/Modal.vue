@@ -8,7 +8,7 @@
                     <h4 class="modal-title">{{ this.modalTitle }}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row text-center" v-if="!Object.keys(toShow).length">
+                    <div class="row text-center" v-if="Object.keys(toShow).length ===0">
                         <button class="btn btn-default btn-flat">
                             <i class="fa fa-refresh fa-spin"> </i> Loading.........
                         </button>
@@ -68,6 +68,7 @@ export default {
     methods: {
         close() {
             this.showModal = false
+            this.toShow= {}
             this.$emit('closeModal', this.showModal)
         },
         changeHtmlToString(string) {

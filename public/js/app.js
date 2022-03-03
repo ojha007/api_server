@@ -2259,6 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     close: function close() {
       this.showModal = false;
+      this.toShow = {};
       this.$emit('closeModal', this.showModal);
     },
     changeHtmlToString: function changeHtmlToString(string) {
@@ -51513,7 +51514,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                !Object.keys(_vm.toShow).length
+                Object.keys(_vm.toShow).length === 0
                   ? _c("div", { staticClass: "row text-center" }, [_vm._m(0)])
                   : _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-xs-12" }, [
