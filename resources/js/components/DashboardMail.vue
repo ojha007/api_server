@@ -5,7 +5,7 @@
             <a href="/oauth/gmail" class="nav-link">Login to Your gmail account</a>
         </div>
         <div v-if="isLogged && !allMail.length" class="text-center">
-            <button class="btn btn-default btn-flat"><i class="fa fa-refresh"></i> Loading......</button>
+            <button class="btn btn-default btn-flat"><i class="fa fa-refresh fa-spin"></i> Loading......</button>
         </div>
         <div v-if="allMail.length && isLogged">
             <div class="table-responsive mailbox-messages">

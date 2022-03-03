@@ -51446,7 +51446,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-default btn-flat" }, [
-      _c("i", { staticClass: "fa fa-refresh" }),
+      _c("i", { staticClass: "fa fa-refresh fa-spin" }),
       _vm._v(" Loading......")
     ])
   }
