@@ -259,22 +259,15 @@
                         </button>
                     </div>
                 </div>
-                <!-- /.box-header -->
-                <div class="box-body" id="email">
-                    <div class="row">
-                        <div class="col-xs-12 text-center">
-                            @if(\LaravelGmail::check())
+                <dashboard-mail url="{{route('mails.inbox')}}"
+                                oauthurl="{{url('oauth/gmail')}}"
+                                logged="{{\LaravelGmail::check()}}">
 
-                                <button type="button" class="btn btn-default btn-lg">
-                                    <i class="fa fa-spin fa-refresh"></i>&nbsp; Loading Email
-                                </button>
-                            @else
-                                <a href="{{ url('oauth/gmail') }}" class="nav-link">Login to Your gmail account</a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <!-- /.box-body -->
+                </dashboard-mail>
+                <!-- /.box-header -->
+
+            <!-- /.box-body -->
+
                 <div class="box-footer clearfix">
                     <a href="{{route('mails.index')}}"
                        class="btn btn-sm btn-default btn-flat pull-right">View All</a>
@@ -283,11 +276,7 @@
             </div>
         </div>
     </div>
-
-
-
-
 @endsection
-@push('scripts')
-    @include('mails.scripts',['url'=>route('mails.inbox')])
-@endpush
+{{--@push('scripts')--}}
+{{--    @include('mails.scripts',['url'=>route('mails.inbox')])--}}
+{{--@endpush--}}

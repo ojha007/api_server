@@ -39,6 +39,10 @@ Vue.component(
     "chat-notification",
     require("./components/Notification").default
 );
+Vue.component(
+    'dashboard-mail',
+    require('./components/DashboardMail').default
+);
 Vue.component("chat-box", require("./components/ChatBox").default);
 
 /**
@@ -52,10 +56,12 @@ const store = new Vuex.Store({
         showChatBox: false,
         currentIdentifier: null,
         chats: [],
+
     },
     getters: {},
     actions: {},
     mutations: {
+
         TOGGLE_CHAT_BOX(state, identifier) {
             state.showChatBox = !state.showChatBox;
             state.currentIdentifier = identifier;
