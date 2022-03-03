@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade in" id="modal-default" v-if="showModal" style="display: block">
+    <div class="modal fade in" id="modal-default" v-if="showModal" style="display: block;overflow-y: auto">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">

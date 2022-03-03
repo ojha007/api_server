@@ -51486,7 +51486,7 @@ var render = function() {
         "div",
         {
           staticClass: "modal fade in",
-          staticStyle: { display: "block" },
+          staticStyle: { display: "block", "overflow-y": "auto" },
           attrs: { id: "modal-default" }
         },
         [
