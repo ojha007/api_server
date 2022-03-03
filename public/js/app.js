@@ -2128,7 +2128,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
-                console.log(response);
+                console.log(response.data.data);
 
                 if (response !== null && response !== void 0 && (_response$data = response.data) !== null && _response$data !== void 0 && _response$data.data) {
                   _this2.mail = response.data.data;
