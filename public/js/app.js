@@ -51490,97 +51490,101 @@ var render = function() {
           attrs: { id: "modal-default" }
         },
         [
-          _c("div", { staticClass: "modal-dialog modal-lg" }, [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
+          _c(
+            "div",
+            { staticClass: "modal-dialog modal-lg modal-dialog-scrollable" },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      },
+                      on: { click: _vm.close }
                     },
-                    on: { click: _vm.close }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                ),
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h4", { staticClass: "modal-title" }, [
+                    _vm._v(_vm._s(this.modalTitle))
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("h4", { staticClass: "modal-title" }, [
-                  _vm._v(_vm._s(this.modalTitle))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                Object.keys(_vm.toShow).length === 0
-                  ? _c("div", { staticClass: "row text-center" }, [_vm._m(0)])
-                  : _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xs-12" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "text-left text-bold text-black",
-                            staticStyle: { "padding-bottom": "10px" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            From: " +
-                                _vm._s(_vm.toShow.fromName) +
-                                "\n                            "
-                            ),
-                            _c("small", [
-                              _vm._v("<" + _vm._s(_vm.toShow.fromEmail) + ">")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "text-left text-bold",
-                            staticStyle: { "padding-bottom": "20px" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Subject: " +
-                                _vm._s(_vm.toShow.subject) +
-                                "\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", [
-                          _c("p", {
-                            staticStyle: { "word-wrap": "break-word" },
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.changeHtmlToString(_vm.toShow.message)
+                _c("div", { staticClass: "modal-body" }, [
+                  Object.keys(_vm.toShow).length === 0
+                    ? _c("div", { staticClass: "row text-center" }, [_vm._m(0)])
+                    : _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-xs-12" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "text-left text-bold text-black",
+                              staticStyle: { "padding-bottom": "10px" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            From: " +
+                                  _vm._s(_vm.toShow.fromName) +
+                                  "\n                            "
+                              ),
+                              _c("small", [
+                                _vm._v("<" + _vm._s(_vm.toShow.fromEmail) + ">")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "text-left text-bold",
+                              staticStyle: { "padding-bottom": "20px" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Subject: " +
+                                  _vm._s(_vm.toShow.subject) +
+                                  "\n                        "
                               )
-                            }
-                          })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("p", {
+                              staticStyle: { "word-wrap": "break-word" },
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.changeHtmlToString(_vm.toShow.message)
+                                )
+                              }
+                            })
+                          ])
                         ])
                       ])
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-default pull-right",
-                    attrs: { type: "button", "data-dismiss": "modal" },
-                    on: { click: _vm.close }
-                  },
-                  [_vm._v("Close\n                ")]
-                )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default pull-right",
+                      attrs: { type: "button", "data-dismiss": "modal" },
+                      on: { click: _vm.close }
+                    },
+                    [_vm._v("Close\n                ")]
+                  )
+                ])
               ])
-            ])
-          ])
+            ]
+          )
         ]
       )
     : _vm._e()
