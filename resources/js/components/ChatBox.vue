@@ -48,7 +48,7 @@ export default {
 
     data() {
         return {
-            image: `${process.env.MIX_APP_URL}/backend/images/default-user.png`,
+            image: `/backend/images/default-user.png`,
             message: '',
         }
     },
