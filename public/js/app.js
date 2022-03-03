@@ -2077,8 +2077,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DashboardMail",
   props: ['oauthurl', 'logged', 'url'],
@@ -51159,53 +51157,49 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "box-body", attrs: { id: "email" } }, [
-    _c("div", { staticClass: "row" }, [
-      !_vm.isLogged
-        ? _c("div", { staticClass: "col-xs-12 text-center" }, [
-            _c(
-              "a",
-              { staticClass: "nav-link", attrs: { href: this.oauthurl } },
-              [_vm._v("Login to Your gmail account")]
-            )
+    !_vm.isLogged
+      ? _c("div", { staticClass: "col-xs-12 text-center" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: this.oauthurl } }, [
+            _vm._v("Login to Your gmail account")
           ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.isLogged && !_vm.allMail.length
-        ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.allMail.length && _vm.isLogged
-        ? _c("div", [
-            _c("div", { staticClass: "table-responsive mailbox-messages" }, [
-              _c("table", { staticClass: "table table-hover table-striped" }, [
-                _c(
-                  "tbody",
-                  _vm._l(_vm.allMail, function(mail, key) {
-                    return _c("tr", { key: key }, [
-                      _c("td", { staticClass: "mailbox-name" }, [
-                        _c("a", { attrs: { href: "" } }, [
-                          _vm._v(_vm._s(mail.from))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "mailbox-subject" }, [
-                        _c("b", [_vm._v(_vm._s(mail.subject))])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "mailbox-attachment" }),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "mailbox-date" }, [
-                        _vm._v(_vm._s(mail.time))
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.isLogged && !_vm.allMail.length
+      ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.allMail.length && _vm.isLogged
+      ? _c("div", [
+          _c("div", { staticClass: "table-responsive mailbox-messages" }, [
+            _c("table", { staticClass: "table table-hover table-striped" }, [
+              _c(
+                "tbody",
+                _vm._l(_vm.allMail, function(mail, key) {
+                  return _c("tr", { key: key }, [
+                    _c("td", { staticClass: "mailbox-name" }, [
+                      _c("a", { attrs: { href: "" } }, [
+                        _vm._v(_vm._s(mail.from))
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "mailbox-subject" }, [
+                      _c("b", [_vm._v(_vm._s(mail.subject))])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "mailbox-attachment" }),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "mailbox-date" }, [
+                      _vm._v(_vm._s(mail.date))
                     ])
-                  }),
-                  0
-                )
-              ])
+                  ])
+                }),
+                0
+              )
             ])
           ])
-        : _vm._e()
-    ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
