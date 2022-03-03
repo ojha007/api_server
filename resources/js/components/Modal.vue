@@ -23,7 +23,7 @@
                                 Subject: {{ toShow.subject }}
                             </div>
                             <div>
-                                <p style=" word-wrap: break-word">{{ changeHtmlToString(toShow.message) }}</p>
+                                <p style=" word-wrap: break-word" v-html="changeHtmlToString(toShow.message)"></p>
                             </div>
                         </div>
                     </div>

@@ -51557,17 +51557,14 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("div", [
-                            _c(
-                              "p",
-                              { staticStyle: { "word-wrap": "break-word" } },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.changeHtmlToString(_vm.toShow.message)
-                                  )
+                            _c("p", {
+                              staticStyle: { "word-wrap": "break-word" },
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.changeHtmlToString(_vm.toShow.message)
                                 )
-                              ]
-                            )
+                              }
+                            })
                           ])
                         ]
                       )
