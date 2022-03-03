@@ -11,7 +11,8 @@ try {
     window.$ = window.jQuery = require("jquery");
 
     require("bootstrap");
-} catch (e) {}
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -44,7 +45,7 @@ import Echo from "laravel-echo";
 window.io = require("socket.io-client");
 window.Echo = new Echo({
     broadcaster: "socket.io",
-    host: process.env.MIX_APP_URL + ":6001",
+    host: process.env.MIX_APP_URL ?? 'https://mibsoft.net.au' + ":6001",
 });
 
 console.log(process.env.MIX_APP_URL + ":6001");

@@ -2313,13 +2313,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
+    var _process$env$MIX_APP_;
+
     return {
       loading: true,
       limit: 10,
       messages: [],
       offset: 0,
       count: 0,
-      image: "".concat(process.env.MIX_APP_URL, "/backend/images/default-user.png")
+      image: "".concat((_process$env$MIX_APP_ = process.env.MIX_APP_URL) !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au', "/backend/images/default-user.png")
     };
   },
   mounted: function mounted() {
@@ -3243,6 +3245,8 @@ var app = new Vue({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 /* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
+var _process$env$MIX_APP_;
+
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -3284,7 +3288,7 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: "socket.io",
-  host: process.env.MIX_APP_URL + ":6001"
+  host: (_process$env$MIX_APP_ = process.env.MIX_APP_URL) !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au' + ":6001"
 });
 console.log(process.env.MIX_APP_URL + ":6001");
 

@@ -38,7 +38,7 @@ export default {
             messages: [],
             offset: 0,
             count: 0,
-            image: `${process.env.MIX_APP_URL}/backend/images/default-user.png`
+            image: `${process.env.MIX_APP_URL ?? 'https://mibsoft.net.au'}/backend/images/default-user.png`
         }
     },
     mounted() {
