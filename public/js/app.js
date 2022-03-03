@@ -2128,13 +2128,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
+                console.log(response);
 
                 if (response !== null && response !== void 0 && (_response$data = response.data) !== null && _response$data !== void 0 && _response$data.data) {
                   _this2.mail = response.data.data;
                   _this2.showModal = true;
                 }
 
-              case 4:
+              case 5:
               case "end":
                 return _context2.stop();
             }

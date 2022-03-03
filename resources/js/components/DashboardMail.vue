@@ -49,6 +49,7 @@ export default {
     methods: {
         async viewModal(id) {
             let response = await axios.get(`/mails/view/${id}`);
+            console.log(response)
             if (response?.data?.data) {
                 this.mail = response.data.data;
                 this.showModal = true
