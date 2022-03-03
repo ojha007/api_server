@@ -24,7 +24,9 @@ class DashboardController extends Controller
 
         return DB::table('users')
             ->join('task_workers as task', 'users.id', '=', 'task.worker_id')
+            ->where('users.id', '=', auth()->id())
             ->count('task.id');
+
     }
 
     private function completedTask(): int

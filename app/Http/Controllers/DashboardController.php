@@ -39,7 +39,6 @@ class DashboardController extends Controller
             ->users()
             ->orderByDesc('created_at')
             ->paginate(5);
-
         $bookings = Booking::select('id', 'name', 'email', 'phone', 'is_verified')
             ->whereDate('created_at', Carbon::today())
             ->orderByDesc('id')
