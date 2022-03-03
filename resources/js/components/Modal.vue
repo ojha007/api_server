@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade in" id="modal-default" v-if="this.showModal" style="display: block">
+    <div class="modal fade in" id="modal-default" v-if="showModal" style="display: block">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,7 +17,7 @@
                         <div class="col-xs-12" :title="toShow.message">
                             <div class="text-left text-bold text-black" style="padding-bottom: 10px;">
                                 From: {{ toShow.fromName }}
-                                <small><{{ this.modalData.fromEmail }}></small>
+                                <small><{{ toShow.fromEmail }}></small>
                             </div>
                             <div class="text-left text-bold" style="padding-bottom: 20px">
                                 Subject: {{ toShow.subject }}
