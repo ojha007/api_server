@@ -44,8 +44,8 @@ export default {
         show: {
             immediate: true,
             handler(val, old) {
-                console.log(val);
-                this.showModal = val.show
+                console.log(val,'DDDDDDDDDD');
+                this.showModal = val
             }
         },
         modalData: {

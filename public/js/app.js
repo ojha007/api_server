@@ -2232,8 +2232,8 @@ __webpack_require__.r(__webpack_exports__);
     show: {
       immediate: true,
       handler: function handler(val, old) {
-        console.log(val);
-        this.showModal = val.show;
+        console.log(val, 'DDDDDDDDDD');
+        this.showModal = val;
       }
     },
     modalData: {
