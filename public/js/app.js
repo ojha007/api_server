@@ -2067,6 +2067,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DashboardMail",
   props: ['oauthurl', 'logged', 'url'],
@@ -51162,7 +51174,37 @@ var render = function() {
         ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
         : _vm._e(),
       _vm._v(" "),
-      _vm.allMail.length && _vm.isLogged ? _c("div") : _vm._e()
+      _vm.allMail.length && _vm.isLogged
+        ? _c("div", [
+            _c("div", { staticClass: "table-responsive mailbox-messages" }, [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _c(
+                  "tbody",
+                  _vm._l(_vm.allMail, function(mail, key) {
+                    return _c("tr", { key: key }, [
+                      _c("td", { staticClass: "mailbox-name" }, [
+                        _c("a", { attrs: { href: "" } }, [
+                          _vm._v(_vm._s(mail.from))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-subject" }, [
+                        _c("b", [_vm._v(_vm._s(mail.subject))])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-attachment" }),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-date" }, [
+                        _vm._v(_vm._s(mail.time))
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ])
+          ])
+        : _vm._e()
     ])
   ])
 }

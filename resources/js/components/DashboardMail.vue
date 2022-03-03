@@ -8,7 +8,19 @@
                 <button class="btn btn-default btn-flat"><i class="fa fa-refresh"></i> Loading......</button>
             </div>
             <div v-if="allMail.length && isLogged">
+                <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped">
+                        <tbody>
+                        <tr v-for="(mail,key) in allMail" :key="key">
+                            <td class="mailbox-name"><a href="">{{mail.from}}</a></td>
+                            <td class="mailbox-subject"><b>{{mail.subject}}</b></td>
+                            <td class="mailbox-attachment"></td>
+                            <td class="mailbox-date">{{mail.time}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
+                </div>
             </div>
         </div>
 
@@ -25,7 +37,7 @@ export default {
         return {
             allMail: [],
             loading: true,
-            isLogged:this.logged
+            isLogged: this.logged
         }
     },
 
