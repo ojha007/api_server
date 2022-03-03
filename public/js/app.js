@@ -2074,6 +2074,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DashboardMail",
   props: ['logged', 'url'],
@@ -2083,7 +2084,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: true,
       isLogged: this.logged,
       showModal: false,
-      mail: {}
+      mail: {},
+      showOverlay: false
     };
   },
   mounted: function mounted() {
@@ -2120,19 +2122,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                _this2.showOverlay = true;
+                _context2.next = 3;
                 return axios.get("/mails/view/".concat(id));
 
-              case 2:
+              case 3:
                 response = _context2.sent;
                 console.log(response.data);
 
                 if (response !== null && response !== void 0 && response.data) {
                   _this2.mail = response.data;
                   _this2.showModal = true;
+                  _this2.showOverlay = false;
                 }
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -51404,43 +51408,47 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.allMail.length && _vm.isLogged
-        ? _c("div", [
-            _c("div", { staticClass: "table-responsive mailbox-messages" }, [
-              _c("table", { staticClass: "table table-hover table-striped" }, [
-                _c(
-                  "tbody",
-                  _vm._l(_vm.allMail, function(mail, key) {
-                    return _c(
-                      "tr",
-                      {
-                        key: key,
-                        staticStyle: { cursor: "pointer" },
-                        on: {
-                          click: function($event) {
-                            return _vm.viewModal(mail.id)
-                          }
+        ? _c("div", { staticClass: "table-responsive mailbox-messages" }, [
+            _vm.showOverlay
+              ? _c("div", { staticClass: "overlay" }, [
+                  _c("i", { staticClass: "fa fa-refresh fa-spin" })
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("table", { staticClass: "table table-hover table-striped" }, [
+              _c(
+                "tbody",
+                _vm._l(_vm.allMail, function(mail, key) {
+                  return _c(
+                    "tr",
+                    {
+                      key: key,
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.viewModal(mail.id)
                         }
-                      },
-                      [
-                        _c("td", { staticClass: "mailbox-name" }, [
-                          _vm._v(_vm._s(mail.from))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "mailbox-subject" }, [
-                          _c("b", [_vm._v(_vm._s(mail.subject))])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "mailbox-attachment" }),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "mailbox-date" }, [
-                          _vm._v(_vm._s(mail.date))
-                        ])
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ])
+                      }
+                    },
+                    [
+                      _c("td", { staticClass: "mailbox-name" }, [
+                        _vm._v(_vm._s(mail.from))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-subject" }, [
+                        _c("b", [_vm._v(_vm._s(mail.subject))])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-attachment" }),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "mailbox-date" }, [
+                        _vm._v(_vm._s(mail.date))
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
             ])
           ])
         : _vm._e()

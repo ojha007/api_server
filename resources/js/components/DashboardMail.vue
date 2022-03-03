@@ -7,19 +7,20 @@
         <div v-if="isLogged && !allMail.length" class="text-center">
             <button class="btn btn-default btn-flat"><i class="fa fa-refresh fa-spin"></i> Loading......</button>
         </div>
-        <div v-if="allMail.length && isLogged">
-            <div class="table-responsive mailbox-messages">
-                <table class="table table-hover table-striped">
-                    <tbody>
-                    <tr v-for="(mail,key) in allMail" :key="key" @click="viewModal(mail.id)" style="cursor: pointer;">
-                        <td class="mailbox-name">{{ mail.from }}</td>
-                        <td class="mailbox-subject"><b>{{ mail.subject }}</b></td>
-                        <td class="mailbox-attachment"></td>
-                        <td class="mailbox-date">{{ mail.date }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="table-responsive mailbox-messages" v-if="allMail.length && isLogged">
+            <div class="overlay" v-if="showOverlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
+            <table class="table table-hover table-striped">
+                <tbody>
+                <tr v-for="(mail,key) in allMail" :key="key" @click="viewModal(mail.id)" style="cursor: pointer;">
+                    <td class="mailbox-name">{{ mail.from }}</td>
+                    <td class="mailbox-subject"><b>{{ mail.subject }}</b></td>
+                    <td class="mailbox-attachment"></td>
+                    <td class="mailbox-date">{{ mail.date }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -37,6 +38,7 @@ export default {
             isLogged: this.logged,
             showModal: false,
             mail: {},
+            showOverlay: false,
         }
     },
 
@@ -48,11 +50,13 @@ export default {
     },
     methods: {
         async viewModal(id) {
+            this.showOverlay = true;
             let response = await axios.get(`/mails/view/${id}`);
             console.log(response.data)
             if (response?.data) {
                 this.mail = response.data;
-                this.showModal = true
+                this.showModal = true;
+                this.showOverlay = false;
             }
         },
         async getMailInbox(url) {
