@@ -2228,20 +2228,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Modal',
-  // watch: {
-  //     show: {
-  //         immediate: true,
-  //         handler(val, old) {
-  //             this.showModal = val.show
-  //         }
-  //     },
-  //     modalData: {
-  //         immediate: true,
-  //         handler(val, old) {
-  //             this.toShow = val
-  //         }
-  //     }
-  // },
+  watch: {
+    show: {
+      immediate: true,
+      handler: function handler(val, old) {
+        console.log(val);
+        this.showModal = val.show;
+      }
+    },
+    modalData: {
+      immediate: true,
+      handler: function handler(val, old) {
+        console.log(val);
+        this.toShow = val;
+      }
+    }
+  },
   props: {
     show: Boolean,
     modalTitle: String,

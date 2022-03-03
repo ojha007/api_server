@@ -40,20 +40,22 @@
 <script>
 export default {
     name: 'Modal',
-    // watch: {
-    //     show: {
-    //         immediate: true,
-    //         handler(val, old) {
-    //             this.showModal = val.show
-    //         }
-    //     },
-    //     modalData: {
-    //         immediate: true,
-    //         handler(val, old) {
-    //             this.toShow = val
-    //         }
-    //     }
-    // },
+    watch: {
+        show: {
+            immediate: true,
+            handler(val, old) {
+                console.log(val);
+                this.showModal = val.show
+            }
+        },
+        modalData: {
+            immediate: true,
+            handler(val, old) {
+                console.log(val);
+                this.toShow = val
+            }
+        }
+    },
     props: {
         show: Boolean,
         modalTitle: String,
