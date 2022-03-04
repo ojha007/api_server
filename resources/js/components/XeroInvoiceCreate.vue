@@ -174,6 +174,7 @@ export default {
     async mounted() {
         await this.getTaxRates();
         await this.getAllContacts();
+        await  this.getAccounts();
     },
     methods: {
         removeRow(rowId) {
@@ -201,10 +202,17 @@ export default {
             }
         },
         async getTaxRates() {
-            console.log('AA');
+
             let response = await axios.get('/api/manage/xero/taxRates');
             if (response.data) {
                 this.allTaxRates = response.data.data;
+            }
+        },
+        async getAccounts() {
+
+            let response = await axios.get('/api/manage/xero/accounts');
+            if (response.data) {
+                this.allAccounts = response.data.data;
             }
         }
     }
