@@ -109,7 +109,7 @@ class XeroController extends Controller
             if ($xeroCredentials->exists()) {
 //                $ge = $request->get('page') ?? 1;
                 $order = $request->get('order') ?? 'Name DESC';
-                $where = $request->get('where') ;
+                $where = $request->get('where') ?? 'Status=ACTIVE';
                 $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
                 $contacts = $xero->getTaxRates($xeroCredentials->getTenantId(),$where,$order);
                 return new SuccessResponse($contacts);
