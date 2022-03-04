@@ -104,6 +104,17 @@
             </li>
         @endcan
 
+        @can('invoice-view')
+            <li class="{{request()->routeIs('xero.*') ? 'active' : ''}}">
+                <a href="{{route('xero.auth.success')}}">
+                    <i class="fa fa-book"></i>
+                    <span>
+                    Invoices
+                </span>
+                </a>
+            </li>
+        @endcan
+
         <li class="header">SETTINGS</li>
         {{--@if(Auth::user()->hasAnyPermission(['user-view','role-view']))--}}
         <li class="treeview {{request()->is('users','roles','roles/*') ? 'active' : '' }}">

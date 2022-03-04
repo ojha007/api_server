@@ -22,13 +22,14 @@ Route::group(['middleware' => 'auth'], function ($router) {
     $router->get('tasks/calendar', 'TaskController@calendar')->name('tasks.calendar');
     $router->post('tasks/assigned', 'TaskController@assigned')->name('tasks.assigned');
     $router->resource('tasks', 'TaskController');
-    $router->resource('invoices', 'InvoiceController');
+//    $router->resource('invoices', 'InvoiceController');
     include 'subRoutes/mails.php';
 
     Route::get('/myob/callback', 'InvoiceController@setTokenAfterCallback');
     Route::get('/myob/getAccessCode', 'InvoiceController@getAccessTokenCode');
     Route::resource('users', 'UserController');
     Route::resource('roles', 'RoleController');
+    include 'subRoutes/xero.php';
     $router->get('developers', function () {
         return view('developers.index');
     })->name('developer.index');

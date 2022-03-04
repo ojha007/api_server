@@ -2284,7 +2284,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 //
 //
 //
@@ -2325,7 +2324,7 @@ __webpack_require__.r(__webpack_exports__);
       messages: [],
       offset: 0,
       count: 0,
-      image: "".concat((_process$env$MIX_APP_ = process.env.MIX_APP_URL) !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au', "/backend/images/default-user.png")
+      image: "".concat((_process$env$MIX_APP_ = "https://mibsoft.net.au/") !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au', "/backend/images/default-user.png")
     };
   },
   mounted: function mounted() {
@@ -2377,6 +2376,146 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleChatBox: function toggleChatBox(identifier) {
       this.$store.commit('TOGGLE_CHAT_BOX', identifier);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "XeroInvoice",
+  props: ['logged'],
+  data: function data() {
+    return {
+      params: {
+        page: 1,
+        if_modified_since: null,
+        order: 'InvoiceNumber Desc'
+      },
+      invoices: [],
+      loading: true,
+      userLogged: this.logged
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.getAllInvoices();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  methods: {
+    viewInvoice: function viewInvoice(InvoiceId) {
+      confirm('Are you sure to view ?');
+      window.open(window.location.href + '/invoices/' + InvoiceId, '_blank');
+    },
+    getAllInvoices: function getAllInvoices() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("/invoices/xero", {
+                  params: _this2.params
+                });
+
+              case 2:
+                response = _context2.sent;
+                console.log(response);
+
+                if (response.data.status === 201) {
+                  _this2.invoices = response.data.data;
+                  _this2.loading = false;
+                }
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -3201,6 +3340,7 @@ Vue.component("passport-personal-access-tokens", __webpack_require__(/*! ./compo
 Vue.component("chat-notification", __webpack_require__(/*! ./components/Notification */ "./resources/js/components/Notification.vue").default);
 Vue.component('dashboard-mail', __webpack_require__(/*! ./components/DashboardMail */ "./resources/js/components/DashboardMail.vue").default);
 Vue.component("chat-box", __webpack_require__(/*! ./components/ChatBox */ "./resources/js/components/ChatBox.vue").default);
+Vue.component("xero-invoice", __webpack_require__(/*! ./components/XeroInvoice */ "./resources/js/components/XeroInvoice.vue").default);
 Vue.component("vue-modal", __webpack_require__(/*! ./components/Modal */ "./resources/js/components/Modal.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -3248,7 +3388,6 @@ var app = new Vue({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 var _process$env$MIX_APP_;
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
@@ -3292,9 +3431,9 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: "socket.io",
-  host: (_process$env$MIX_APP_ = process.env.MIX_APP_URL) !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au' + ":6001"
+  host: (_process$env$MIX_APP_ = "https://mibsoft.net.au/") !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au' + ":6001"
 });
-console.log(process.env.MIX_APP_URL + ":6001");
+console.log("https://mibsoft.net.au/" + ":6001");
 
 /***/ }),
 
@@ -50817,6 +50956,45 @@ component.options.__file = "resources/js/components/Notification.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/XeroInvoice.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/XeroInvoice.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./XeroInvoice.vue?vue&type=template&id=3b450970& */ "./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970&");
+/* harmony import */ var _XeroInvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./XeroInvoice.vue?vue&type=script&lang=js& */ "./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _XeroInvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__.render,
+  _XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/XeroInvoice.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/passport/AuthorizedClients.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/passport/AuthorizedClients.vue ***!
@@ -51004,6 +51182,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_XeroInvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./XeroInvoice.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_XeroInvoice_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/passport/AuthorizedClients.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/passport/AuthorizedClients.vue?vue&type=script&lang=js& ***!
@@ -51168,6 +51362,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Notification_vue_vue_type_template_id_6a4ce154_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Notification_vue_vue_type_template_id_6a4ce154_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Notification.vue?vue&type=template&id=6a4ce154&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Notification.vue?vue&type=template&id=6a4ce154&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__.render,
+/* harmony export */   "staticRenderFns": () => /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_XeroInvoice_vue_vue_type_template_id_3b450970___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./XeroInvoice.vue?vue&type=template&id=3b450970& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970&");
 
 
 /***/ }),
@@ -51706,6 +51917,152 @@ var staticRenderFns = [
     return _c("li", { staticClass: "footer" }, [
       _c("a", { attrs: { href: "#" } }, [_vm._v("See All Messages")])
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/XeroInvoice.vue?vue&type=template&id=3b450970& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render,
+/* harmony export */   "staticRenderFns": () => /* binding */ staticRenderFns
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.userLogged
+    ? _c("div", { staticClass: "box box-default box-solid" }, [
+        _c("div", { staticClass: "box-body" }, [
+          _vm.loading
+            ? _c(
+                "div",
+                { staticClass: "overlay", staticStyle: { padding: "5rem" } },
+                [_c("i", { staticClass: "fa fa-refresh fa-spin" })]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.loading && _vm.invoices.length
+            ? _c(
+                "table",
+                { staticClass: "table table-responsive  table-hover" },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.invoices, function(invoice, key) {
+                      return _c(
+                        "tr",
+                        {
+                          key: key,
+                          staticStyle: { cursor: "pointer" },
+                          on: {
+                            click: function($event) {
+                              return _vm.viewInvoice(invoice.InvoiceID)
+                            }
+                          }
+                        },
+                        [
+                          _c("td", [_vm._v(_vm._s(invoice.InvoiceNumber))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(invoice.Contact.Name))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            _vm._l(invoice.LineItems || [], function(
+                              item,
+                              key
+                            ) {
+                              return _c("small", { key: key }, [
+                                _vm._v(
+                                  "\n                       " +
+                                    _vm._s(item.Description) +
+                                    " " +
+                                    _vm._s(
+                                      key !==
+                                        (invoice.LineItems || []).length - 1
+                                        ? "|"
+                                        : ""
+                                    ) +
+                                    "\n\n                   "
+                                )
+                              ])
+                            }),
+                            0
+                          ),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(invoice.AmountDue))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(invoice.AmountPaid))])
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        !_vm.loading
+          ? _c("div", { staticClass: "box-footer clearfix" }, [_vm._m(1)])
+          : _vm._e()
+      ])
+    : _c("div", [
+        _c("h3", { staticClass: "text-center" }, [
+          _vm._v("Please login Before viewing Xero ")
+        ])
+      ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { width: "15%" } }, [_vm._v("InvoiceNumber")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "20%" } }, [_vm._v("Customer Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Line Items")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("AmountDue")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("AmountPaid")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      { staticClass: "pagination pagination-lg no-margin pull-right" },
+      [
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("«")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("1")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("»")])])
+      ]
+    )
   }
 ]
 render._withStripped = true

@@ -44,6 +44,7 @@ Vue.component(
     require('./components/DashboardMail').default
 );
 Vue.component("chat-box", require("./components/ChatBox").default);
+Vue.component("xero-invoice", require("./components/XeroInvoice").default);
 Vue.component("vue-modal", require("./components/Modal").default);
 
 /**
