@@ -2727,6 +2727,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     removeRow: function removeRow(rowId) {
       if (rowId === 0) return false;
       delete this.allItems[rowId];
+      this.allItems = this.allItems.filter(function (obj, index) {
+        return index !== rowId;
+      });
     },
     addNewRow: function addNewRow() {
       this.allItems.push({

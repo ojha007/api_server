@@ -113,7 +113,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="row" style="display: flex;margin-top: 5em;justify-content: flex-end" >
+                <div class="row" style="display: flex;margin-top: 5em;justify-content: flex-end">
                     <div class="col-md-4 form-group">
                         <div class="col-md-2">
                             <label class="control-label pull-md-right">Total:</label>
@@ -171,6 +171,9 @@ export default {
         removeRow(rowId) {
             if (rowId === 0) return false;
             delete this.allItems[rowId];
+            this.allItems = this.allItems.filter(function (obj,index) {
+                return index !== rowId;
+            });
         },
         addNewRow() {
             this.allItems.push({
