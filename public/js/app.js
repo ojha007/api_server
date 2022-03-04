@@ -3431,7 +3431,7 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.io = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__.default({
   broadcaster: "socket.io",
-  host: (_process$env$MIX_APP_ = "https://mibsoft.net.au/") !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au' + ":6001"
+  host: (_process$env$MIX_APP_ = "https://mibsoft.net.au/") !== null && _process$env$MIX_APP_ !== void 0 ? _process$env$MIX_APP_ : 'https://mibsoft.net.au:6001' + ":6001"
 });
 console.log("https://mibsoft.net.au/" + ":6001");
 
