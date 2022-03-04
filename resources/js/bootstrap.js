@@ -45,7 +45,7 @@ import Echo from "laravel-echo";
 window.io = require("socket.io-client");
 window.Echo = new Echo({
     broadcaster: "socket.io",
-    host: process.env.MIX_APP_URL ?? 'https://mibsoft.net.au:6001' + ":6001",
+    host: process.env.MIX_APP_URL ?  process.env.MIX_APP_URL + ':6001' : 'https://mibsoft.net.au:6001',
 });
 
 console.log(process.env.MIX_APP_URL + ":6001");
