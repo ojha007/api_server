@@ -113,6 +113,16 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="row" style="display: flex;margin-top: 5em;justify-content: flex-end" >
+                    <div class="col-md-4 form-group">
+                        <div class="col-md-2">
+                            <label class="control-label pull-md-right">Total:</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-flat btn-primary pull-right">Save Invoice</button>
@@ -136,7 +146,7 @@ export default {
             issueDate: null,
             invoiceNumber: null,
             dueDate: null,
-            allContact: [],
+            allContacts: [],
             allItems: [
                 {
                     item: null,

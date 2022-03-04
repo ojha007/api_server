@@ -2667,6 +2667,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "XeroInvoiceCreate",
@@ -2679,7 +2689,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       issueDate: null,
       invoiceNumber: null,
       dueDate: null,
-      allContact: [],
+      allContacts: [],
       allItems: [{
         item: null,
         description: null,
@@ -52737,10 +52747,12 @@ var render = function() {
             }),
             0
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(7)
       ]),
       _vm._v(" "),
-      _vm._m(7)
+      _vm._m(8)
     ])
   ])
 }
@@ -52826,6 +52838,38 @@ var staticRenderFns = [
         _c("th")
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "row",
+        staticStyle: {
+          display: "flex",
+          "margin-top": "5em",
+          "justify-content": "flex-end"
+        }
+      },
+      [
+        _c("div", { staticClass: "col-md-4 form-group" }, [
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("label", { staticClass: "control-label pull-md-right" }, [
+              _vm._v("Total:")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-10" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", readonly: "" }
+            })
+          ])
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
