@@ -58,8 +58,6 @@ export default {
             invoices: [],
             loading: true,
             userLogged:this.logged
-
-
         }
     },
     async mounted() {
