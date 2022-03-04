@@ -95,6 +95,9 @@
                         <td>
                             <select class="form-control" v-model="item.account">
                                 <option>-----SELECT-----</option>
+                                <option v-for="(account,key) in allAccounts" :key="key" :value="account.AccountID">
+                                    {{ account.Name }}
+                                </option>
                             </select>
                         </td>
                         <td>
