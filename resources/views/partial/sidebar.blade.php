@@ -109,7 +109,7 @@
                 <a href="{{route('xero.auth.success')}}">
                     <i class="fa fa-book"></i>
                     <span>
-                    Invoices
+                    Invoices - XERO
                 </span>
                 </a>
             </li>

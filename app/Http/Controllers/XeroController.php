@@ -83,5 +83,8 @@ class XeroController extends Controller
         }
     }
 
+    public function create(){
+        return view($this->basePath.'create');
+    }
 
 }

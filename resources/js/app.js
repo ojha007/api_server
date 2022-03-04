@@ -46,6 +46,7 @@ Vue.component(
 Vue.component("chat-box", require("./components/ChatBox").default);
 Vue.component("xero-invoice", require("./components/XeroInvoice").default);
 Vue.component("vue-modal", require("./components/Modal").default);
+Vue.component("xero-invoice-create", require("./components/XeroInvoiceCreate").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -63,7 +64,6 @@ const store = new Vuex.Store({
     getters: {},
     actions: {},
     mutations: {
-
         TOGGLE_CHAT_BOX(state, identifier) {
             state.showChatBox = !state.showChatBox;
             state.currentIdentifier = identifier;

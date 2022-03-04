@@ -66,7 +66,7 @@ export default {
     methods: {
         viewInvoice(InvoiceId){
             confirm('Are you sure to view ?')
-            window.open(window.location.href + '/invoices/'+InvoiceId, '_blank');
+            window.open(window.location.href + '/invoices/'+InvoiceId);
         },
 
         async getAllInvoices() {
