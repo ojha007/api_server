@@ -98,7 +98,7 @@ class XeroController extends Controller
                 $order = $request->get('order') ?? 'Name DESC';
                 $where = $request->get('where');
                 $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $contacts = $xero->getContacts($xeroCredentials->getTenantId(), null, null, $order);
+                $contacts = $xero->getContacts($xeroCredentials->getTenantId(), null, null, $order,null,$page);
                 return new SuccessResponse($contacts);
             }
         } catch (\throwable $e) {
@@ -127,7 +127,7 @@ class XeroController extends Controller
     {
         try {
             if ($xeroCredentials->exists()) {
-                $order = $request->get('order') ?? 'Name DESC';
+                $order = $request->get('order') ;
                 $where = $request->get('where');
                 $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
                 $accounts = $xero->getAccounts($xeroCredentials->getTenantId(), $where, $order);
