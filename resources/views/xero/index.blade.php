@@ -11,7 +11,7 @@
 @section('content')
     <div class="box-header d-flex">
         @if($error)
-            <p>{{ $error }}</p>
+            <p class="text-danger">{{ $error }}</p>
             <a href="{{ route('xero.auth.authorize') }}" class="btn btn-primary btn-large mt-4 pull-right">
                 <i class="fa fa-refresh"></i>
                 Reconnect to Xero
