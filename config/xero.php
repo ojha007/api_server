@@ -43,10 +43,7 @@ return [
             'accounting.attachments',
             "accounting.contacts",
             'accounting.attachments',
-            'assets',
-            'files',
-            'paymentservices',
-            'bankfeeds'
+
         ],
 
         /************************************************************************

@@ -11,8 +11,11 @@
                             <label class="control-label pull-md-right">To:</label>
                         </div>
                         <div class="col-md-10">
-                            <select class="form-control">
+                            <select class="form-control" v-model="to">
                                 <option>------SELECT--------</option>
+                                <option v-for="(contact,key) in allContacts" :key="key" :value="contact.ContactID">
+                                    {{ contact.Name }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -96,7 +99,10 @@
                         </td>
                         <td>
                             <select class="form-control" v-model="item.taxRate">
-                                <option>-----SELECT-----</option>
+                                <option>------SELECT--------</option>
+                                <option v-for="(tax,key) in allTaxRates" :key="key" :value="tax.TaxID">
+                                    {{ tax.Name }}
+                                </option>
                             </select>
                         </td>
                         <td>
@@ -142,6 +148,7 @@ export default {
     },
     data() {
         return {
+            to: null,
             reference: null,
             issueDate: null,
             invoiceNumber: null,
@@ -165,13 +172,14 @@ export default {
         }
     },
     async mounted() {
+        await this.getTaxRates();
         await this.getAllContacts();
     },
     methods: {
         removeRow(rowId) {
             if (rowId === 0) return false;
             delete this.allItems[rowId];
-            this.allItems = this.allItems.filter(function (obj,index) {
+            this.allItems = this.allItems.filter(function (obj, index) {
                 return index !== rowId;
             });
         },
@@ -187,7 +195,17 @@ export default {
             })
         },
         async getAllContacts() {
-
+            let response = await axios.get('/api/manage/xero/contacts');
+            if (response.data) {
+                this.allContacts = response.data.data;
+            }
+        },
+        async getTaxRates() {
+            console.log('AA');
+            let response = await axios.get('/api/manage/xero/taxRates');
+            if (response.data) {
+                this.allTaxRates = response.data.data;
+            }
         }
     }
 }

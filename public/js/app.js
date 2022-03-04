@@ -2677,6 +2677,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "XeroInvoiceCreate",
@@ -2685,6 +2691,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      to: null,
       reference: null,
       issueDate: null,
       invoiceNumber: null,
@@ -2713,9 +2720,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.getAllContacts();
+              return _this.getTaxRates();
 
             case 2:
+              _context.next = 4;
+              return _this.getAllContacts();
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -2743,16 +2754,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     getAllContacts: function getAllContacts() {
+      var _this2 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.next = 2;
+                return axios.get('/api/manage/xero/contacts');
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.data) {
+                  _this2.allContacts = response.data.data;
+                }
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
+      }))();
+    },
+    getTaxRates: function getTaxRates() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log('AA');
+                _context3.next = 3;
+                return axios.get('/api/manage/xero/taxRates');
+
+              case 3:
+                response = _context3.sent;
+
+                if (response.data) {
+                  _this3.allTaxRates = response.data.data;
+                }
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -52401,7 +52454,59 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "box-body" }, [
         _c("div", { staticClass: "row" }, [
-          _vm._m(1),
+          _c("div", { staticClass: "col-md-6 form-group" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.to,
+                      expression: "to"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.to = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", [_vm._v("------SELECT--------")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.allContacts, function(contact, key) {
+                    return _c(
+                      "option",
+                      { key: key, domProps: { value: contact.ContactID } },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(contact.Name) +
+                            "\n                            "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 form-group" }, [
             _vm._m(2),
@@ -52693,7 +52798,24 @@ var render = function() {
                         }
                       }
                     },
-                    [_c("option", [_vm._v("-----SELECT-----")])]
+                    [
+                      _c("option", [_vm._v("------SELECT--------")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.allTaxRates, function(tax, key) {
+                        return _c(
+                          "option",
+                          { key: key, domProps: { value: tax.TaxID } },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(tax.Name) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
                   )
                 ]),
                 _vm._v(" "),
@@ -52772,17 +52894,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 form-group" }, [
-      _c("div", { staticClass: "col-md-2" }, [
-        _c("label", { staticClass: "control-label pull-md-right" }, [
-          _vm._v("To:")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("select", { staticClass: "form-control" }, [
-          _c("option", [_vm._v("------SELECT--------")])
-        ])
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c("label", { staticClass: "control-label pull-md-right" }, [
+        _vm._v("To:")
       ])
     ])
   },

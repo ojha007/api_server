@@ -87,4 +87,37 @@ class XeroController extends Controller
         return view($this->basePath.'create');
     }
 
+
+    public function getContacts(Request $request,OauthCredentialManager $xeroCredentials){
+        try {
+            if ($xeroCredentials->exists()) {
+                $page = $request->get('page') ?? 1;
+                $order = $request->get('order') ?? 'Name DESC';
+                $where = $request->get('where') ;
+                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
+                $contacts = $xero->getContacts($xeroCredentials->getTenantId(),null,null,$order);
+                return new SuccessResponse($contacts);
+            }
+        } catch (\throwable $e) {
+
+            return new ErrorResponse($e);
+        }
+    }
+
+    public function TaxRates(Request $request,OauthCredentialManager $xeroCredentials){
+        try {
+            if ($xeroCredentials->exists()) {
+//                $ge = $request->get('page') ?? 1;
+                $order = $request->get('order') ?? 'Name DESC';
+                $where = $request->get('where') ;
+                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
+                $contacts = $xero->getTaxRates($xeroCredentials->getTenantId(),$where,$order);
+                return new SuccessResponse($contacts);
+            }
+        } catch (\throwable $e) {
+
+            return new ErrorResponse($e);
+        }
+    }
+
 }
