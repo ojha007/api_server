@@ -130,7 +130,7 @@ class XeroController extends Controller
                 $order = $request->get('order') ;
                 $where = $request->get('where');
                 $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $accounts = $xero->getAccounts($xeroCredentials->getTenantId(), $where, $order);
+                $accounts = $xero->getAccounts($xeroCredentials->getTenantId());
                 return new SuccessResponse($accounts);
             }
         } catch (\throwable $e) {
