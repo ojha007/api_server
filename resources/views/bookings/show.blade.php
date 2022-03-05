@@ -15,7 +15,6 @@
                     data-toggle="modal" data-target="#modal-booking-confirm">
                 <i class="fa fa-check"></i> Confirmed
             </button>
-
             <a type="button" href="{{route('bookings.edit',$booking->id)}}"
                class="btn btn-primary  btn-flat ">
                 <i class="fa fa-edit"></i>

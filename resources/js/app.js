@@ -6,6 +6,9 @@
 
 require("./bootstrap");
 
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+
 let Vuex = require("vuex");
 window.Vue = require("vue").default;
 
@@ -47,23 +50,54 @@ Vue.component("chat-box", require("./components/ChatBox").default);
 Vue.component("xero-invoice", require("./components/XeroInvoice").default);
 Vue.component("vue-modal", require("./components/Modal").default);
 Vue.component("xero-invoice-create", require("./components/XeroInvoiceCreate").default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
+Vue.component('v-select', vSelect)
+Vue.component('xero-invoice-filter', require('./components/XeroInvoiceFilter').default)
 const store = new Vuex.Store({
     state: {
         showChatBox: false,
         currentIdentifier: null,
         chats: [],
-
+        xeroInvoices: {},
+        invoiceStatus: '',
+        allInvoices: [],
+        invoice: {
+            loading: true,
+            page: 1,
+            status: null
+        },
     },
     getters: {},
-    actions: {},
+    actions: {
+        async getAllInvoices({commit}, params = {}) {
+            if (params.invoiceLoading) {
+                commit('SET_INVOICE_LOADING', true)
+            }
+            if (params.page) {
+                commit('SET_INVOICE_PAGE', params.page)
+            }
+            if (params.invoiceStatus) {
+                commit('SET_INVOICE_STATUS', params.invoiceStatus)
+            }
+            let response = await axios.get(`/invoices/xero`, {params});
+            if (response.data.status === 201) {
+                commit('SET_ALL_INVOICES', response.data.data)
+                commit('SET_INVOICE_LOADING', false)
+            }
+        }
+    },
     mutations: {
+        SET_INVOICE_LOADING(state, payload) {
+            state.invoice = Object.assign({}, state.invoice, {loading: payload})
+        },
+        SET_INVOICE_PAGE(state, payload) {
+            state.invoice = Object.assign({}, state.invoice, {page: payload})
+        },
+        SET_ALL_INVOICES(state, payload) {
+            state.allInvoices = payload;
+        },
+        SET_XERO_INVOICE_FILTER(state, payload) {
+            state.xeroInvoices = payload
+        },
         TOGGLE_CHAT_BOX(state, identifier) {
             state.showChatBox = !state.showChatBox;
             state.currentIdentifier = identifier;
@@ -76,6 +110,9 @@ const store = new Vuex.Store({
                 state.chats.push(chats);
             }
         },
+        SET_INVOICE_STATUS(state, payload) {
+            state.invoice = Object.assign({}, state.invoice, {status: payload})
+        }
     },
 });
 

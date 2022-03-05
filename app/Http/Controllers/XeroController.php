@@ -9,10 +9,23 @@ use App\Http\Responses\SuccessResponse;
 use Illuminate\Http\Request;
 use League\OAuth2\Client\Token\AccessToken;
 use Webfox\Xero\OauthCredentialManager;
+use XeroAPI\XeroPHP\Models\Accounting\CurrencyCode;
+use XeroAPI\XeroPHP\Models\Accounting\Invoice;
+use XeroAPI\XeroPHP\Models\Accounting\Invoices;
+use XeroAPI\XeroPHP\Models\Accounting\LineItem;
 
 
 class XeroController extends Controller
 {
+
+    public $xeroClass;
+    public $xeroAuth;
+
+    public function __construct(OauthCredentialManager $xeroCredentials)
+    {
+        $this->xeroAuth = $xeroCredentials;
+        $this->xeroClass = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
+    }
 
     public function logout(OauthCredentialManager $xeroCredentials)
     {
@@ -22,43 +35,42 @@ class XeroController extends Controller
 
     protected $basePath = 'xero.';
 
-    public function index(Request $request, OauthCredentialManager $xeroCredentials)
+    public function index(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $organisationName = $xero->getOrganisations($xeroCredentials->getTenantId())->getOrganisations()[0]->getName();
-                $user = $xeroCredentials->getUser();
+            if ($this->xeroAuth->exists()) {
+                $organisationName = $this->xeroClass->getOrganisations($this->xeroAuth->getTenantId())->getOrganisations()[0]->getName();
+                $user = $this->xeroAuth->getUser();
                 $username = "{$user['given_name']} {$user['family_name']} ({$user['username']})";
                 $tokens = [
-                    'refresh_token' => $xeroCredentials->getRefreshToken(),
-                    'access_token' => $xeroCredentials->getAccessToken(),
-                    'id_token' => $xeroCredentials->getData()['id_token'],
-                    'expires' => $xeroCredentials->getExpires(),
-                    'tenant_id' => $xeroCredentials->getTenantId()
+                    'refresh_token' => $this->xeroAuth->getRefreshToken(),
+                    'access_token' => $this->xeroAuth->getAccessToken(),
+                    'id_token' => $this->xeroAuth->getData()['id_token'],
+                    'expires' => $this->xeroAuth->getExpires(),
+                    'tenant_id' => $this->xeroAuth->getTenantId()
                 ];
                 $token = new AccessToken($tokens);
-                $xeroCredentials->store($token);
+                $this->xeroAuth->store($token);
             }
         } catch (\throwable $e) {
             $error = $e->getMessage();
         }
         return view($this->basePath . '.index', [
-            'connected' => $xeroCredentials->exists(),
+            'connected' => $this->xeroAuth->exists(),
             'error' => $error ?? null,
             'organisationName' => $organisationName ?? null,
             'username' => $username ?? null
         ]);
     }
 
-    public function invoices(Request $request, OauthCredentialManager $xeroCredentials)
+    public function invoices(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
+            if ($this->xeroAuth->exists()) {
                 $page = $request->get('page') ?? 1;
-                $order = $request->get('order');
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $invoices = $xero->getInvoices($xeroCredentials->getTenantId(), null, null, $order, null, null, null, null, $page);
+                $order = $request->get('order') ?? 'InvoiceNumber DESC';
+                $status = $request->get('invoiceStatus');
+                $invoices = $this->xeroClass->getInvoices($this->xeroAuth->getTenantId(), null, null, $order, null, null, null, $status, $page, null, null, null, false);
                 return new SuccessResponse($invoices);
             }
         } catch (\throwable $e) {
@@ -68,15 +80,23 @@ class XeroController extends Controller
 
     public function show($invoiceId)
     {
-        return view($this->basePath . 'show', compact('invoiceId'));
+        try {
+            if ($this->xeroAuth->exists()) {
+                $invoices = $this->xeroClass->getInvoice($this->xeroAuth->getTenantId(), $invoiceId);
+                return view($this->basePath . 'show', compact('invoices'));
+            }
+        } catch (\Exception $e) {
+            return new ErrorResponse($e);
+        }
+
     }
 
-    public function getInvoice(Request $request, OauthCredentialManager $xeroCredentials)
+    public function getInvoice(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $invoice = $xero->getInvoice($xeroCredentials->getTenantId(), $request->get('invoiceId'));
+            if ($this->xeroAuth->exists()) {
+                $invoice = $this->xeroClass->getInvoice($this->xeroAuth->getTenantId(), $request->get('invoiceId'));
+
                 return new SuccessResponse($invoice);
             }
         } catch (\throwable $e) {
@@ -90,48 +110,80 @@ class XeroController extends Controller
     }
 
 
-    public function getContacts(Request $request, OauthCredentialManager $xeroCredentials)
+    public function getContacts(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
-                $page = $request->get('page') ?? 1;
-                $order = $request->get('order') ?? 'Name DESC';
+            if ($this->xeroAuth->exists()) {
+                $page = $request->get('page');
+                $order = $request->get('order');
                 $where = $request->get('where');
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $contacts = $xero->getContacts($xeroCredentials->getTenantId(), null, null, $order,null,$page);
+                $contacts = $this->xeroClass->getContacts($this->xeroAuth->getTenantId(), null, $where, $order, null, $page, null, true);
                 return new SuccessResponse($contacts);
             }
         } catch (\throwable $e) {
-
             return new ErrorResponse($e);
         }
     }
 
-    public function TaxRates(Request $request, OauthCredentialManager $xeroCredentials)
+    public function TaxRates(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
-                $order = $request->get('order') ?? 'Name DESC';
+            if ($this->xeroAuth->exists()) {
+                $order = $request->get('order');
                 $where = $request->get('where');
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $contacts = $xero->getTaxRates($xeroCredentials->getTenantId(), $where, $order);
+                $contacts = $this->xeroClass->getTaxRates($this->xeroAuth->getTenantId(), $where, $order);
                 return new SuccessResponse($contacts);
             }
         } catch (\throwable $e) {
-
             return new ErrorResponse($e);
         }
     }
 
-    public function getAccounts(Request $request, OauthCredentialManager $xeroCredentials)
+    public function getAccounts(Request $request)
     {
         try {
-            if ($xeroCredentials->exists()) {
-                $order = $request->get('order') ;
+            if ($this->xeroAuth->exists()) {
+                $order = $request->get('order');
                 $where = $request->get('where');
-                $xero = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
-                $accounts = $xero->getAccounts($xeroCredentials->getTenantId());
+                $accounts = $this->xeroClass->getAccounts($this->xeroAuth->getTenantId(), null, $where, $order);
                 return new SuccessResponse($accounts);
+            }
+        } catch (\throwable $e) {
+            return new ErrorResponse($e);
+        }
+    }
+
+    public function saveInvoice(Request $request)
+    {
+        try {
+            if ($this->xeroAuth->exists()) {
+                $attributes = $request->toArray();
+                $invoices = [];
+                for ($i = 0; $i < count($attributes); $i++) {
+                    $lineItems = [];
+                    $LineItems = $attributes['Invoices']['LineItems'] ?? [];
+                    for ($j = 0; $j < count($LineItems); $j++) {
+                        $lineItem = new LineItem();
+                        $lineItem->setQuantity($LineItems[$j]['Quantity']);
+                        $lineItem->setUnitAmount($LineItems[$j]['UnitAmount']);
+                        $lineItem->setDescription($LineItems[$j]['Description']);
+                        $lineItem->setTaxType($LineItems[$j]['TaxType']);
+                        $lineItem->setAccountCode($LineItems[$j]['AccountCode']);
+                        $lineItems[$j] = $lineItem;
+                    }
+                    $xeroInvoice = new Invoice();
+                    $xeroInvoice->setType(Invoice::TYPE_ACCREC);
+                    $xeroInvoice->setContact($attributes['Invoices']['Contact']);
+                    $xeroInvoice->setReference($attributes['Invoices']['Reference']);
+                    $xeroInvoice->setLineItems($lineItems);
+                    $xeroInvoice->setCurrencyCode(CurrencyCode::AUD);
+                    $xeroInvoice->setDueDate(date('Y-m-d', strtotime($attributes['Invoices']['DueDate'])));
+                    $xeroInvoice->setDate(date('Y-m-d', strtotime($attributes['Invoices']['Date'])));
+                    $invoices[$i] = $xeroInvoice;
+                }
+                $invoice = $this->xeroClass->createInvoices($this->xeroAuth->getTenantId(), new Invoices(['invoices' => $invoices]));
+                $message = "New Invoice Created Successfully";
+                return new SuccessResponse($invoice, $message);
             }
         } catch (\throwable $e) {
             return new ErrorResponse($e);

@@ -9,6 +9,7 @@
 @section('breadcrumb')
 @stop
 @section('content')
+    <xero-invoice-filter></xero-invoice-filter>
     <div class="box-header d-flex">
         @if($error)
             <p class="text-danger">{{ $error }}</p>

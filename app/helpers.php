@@ -63,3 +63,15 @@ if (!function_exists('successResponse')) {
         ];
     }
 }
+
+if (!function_exists('dateFormat')) {
+    function dateFormat($input)
+    {
+        if ($input) {
+            $date = str_replace('/Date(', '', $input);
+            $parts = explode('+', $date);
+            return date("Y-m-d", $parts[0] / 1000);
+        }
+        return '';
+    }
+}

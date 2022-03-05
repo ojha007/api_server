@@ -8,4 +8,5 @@ Route::get('/manage/xero/invoices/{invoiceId}','XeroController@show');
 Route::get('/api/manage/xero/contacts','XeroController@getContacts');
 Route::get('/api/manage/xero/taxRates','XeroController@TaxRates');
 Route::get('/api/manage/xero/accounts','XeroController@getAccounts');
+Route::post('/api/manage/xero/save-invoice','XeroController@saveInvoice');
 
