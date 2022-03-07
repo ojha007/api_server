@@ -196,8 +196,7 @@ class XeroController extends Controller
             if ($this->xeroAuth->exists()) {
                 $pdf = $this->xeroClass->getInvoiceAsPdf($this->xeroAuth->getTenantId(), $invoiceId);
                 $myFile = $invoiceId . ".pdf";
-                response()->download($pdf, $myFile, ['Content-Type: application/pdf']);
-                return new SuccessResponse([], 'Pdf downloaded.');
+                return  response()->download($pdf, $myFile, ['Content-Type: application/pdf']);
             }
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
