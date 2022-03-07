@@ -22,6 +22,7 @@
         </div>
         @if($invoices->getInvoices())
             @foreach($invoices->getInvoices() as $invoice)
+{{--                @dd($invoice)--}}
                 <div class="row invoice-info">
                     <div class="col-sm-4 invoice-col">
                         INVOICE DETAIL
@@ -52,7 +53,7 @@
                                     <br>
                                 @endif
                             @endfor
-                            {!! $invoice['contact']['email_address'] ? 'Email'.$invoice['contact']['email_address'] .'<br>':''  !!}
+                            {!! $invoice['contact']['email_address'] ? 'Email: '.$invoice['contact']['email_address'] .'<br>':''  !!}
 
                             Status: {!! spanByStatus($invoice['contact']['contact_status'])!!}
                         </address>

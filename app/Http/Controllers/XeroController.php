@@ -8,7 +8,6 @@ use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
 use App\Repositories\XeroRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\Token\AccessToken;
 use Webfox\Xero\OauthCredentialManager;
 use XeroAPI\XeroPHP\Models\Accounting\CurrencyCode;
@@ -77,7 +76,7 @@ class XeroController extends Controller
                 $page = $request->get('page') ?? 1;
                 $order = $request->get('order') ?? 'InvoiceNumber DESC';
                 $status = $request->get('invoiceStatus');
-                $invoices = $this->xeroClass->getInvoices($this->xeroAuth->getTenantId(), null, null, $order, null, null, null, $status, $page, null, null, null, false);
+                $invoices = $this->repository->getAllInvoices($order, $status, $page);
                 return new SuccessResponse($invoices);
             }
         } catch (\throwable $e) {
@@ -90,7 +89,7 @@ class XeroController extends Controller
     {
         try {
             if ($this->xeroAuth->exists()) {
-                $invoices = $this->xeroClass->getInvoice($this->xeroAuth->getTenantId(), $invoiceId);
+                $invoices = $this->repository->getInvoiceById($invoiceId);
                 return view($this->basePath . 'show', compact('invoices'));
             }
         } catch (\Exception $e) {
@@ -104,8 +103,7 @@ class XeroController extends Controller
     {
         try {
             if ($this->xeroAuth->exists()) {
-                $invoice = $this->xeroClass->getInvoice($this->xeroAuth->getTenantId(), $request->get('invoiceId'));
-
+                $invoice = $this->repository->getInvoiceById($request->get('invoiceId'));
                 return new SuccessResponse($invoice);
             }
         } catch (\throwable $e) {
@@ -127,7 +125,7 @@ class XeroController extends Controller
                 $page = $request->get('page');
                 $order = $request->get('order');
                 $where = $request->get('where');
-                $contacts = $this->xeroClass->getContacts($this->xeroAuth->getTenantId(), null, $where, $order, null, $page, null, true);
+                $contacts = $this->repository->getContacts($where, $order, $page);
                 return new SuccessResponse($contacts);
             }
         } catch (\throwable $e) {
@@ -142,8 +140,8 @@ class XeroController extends Controller
             if ($this->xeroAuth->exists()) {
                 $order = $request->get('order');
                 $where = $request->get('where');
-                $contacts = $this->xeroClass->getTaxRates($this->xeroAuth->getTenantId(), $where, $order);
-                return new SuccessResponse($contacts);
+                $taxRates = $this->repository->getAllTaxRates($where, $order);
+                return new SuccessResponse($taxRates);
             }
         } catch (\throwable $e) {
             return new ErrorResponse($e);
@@ -235,17 +233,15 @@ class XeroController extends Controller
 
     public function payment($invoiceId)
     {
-        $accounts = Cache::get('selectAccounts', function () {
-            $accounts = [];
-            $data = $this->repository->getAccounts(null, null);
-            if ($data && $data->getAccounts()) {
-                $allAccounts = $data->getAccounts();
-                for ($i = 0; $i <= count($allAccounts) - 1; $i++) {
-                    $accounts[$allAccounts[$i]['account_id']] = $allAccounts[$i]['name'];
-                }
+
+        $accounts = [];
+        $data = $this->repository->getAccounts(null, null);
+        if ($data && $data->getAccounts()) {
+            $allAccounts = $data->getAccounts();
+            for ($i = 0; $i <= count($allAccounts) - 1; $i++) {
+                $accounts[$allAccounts[$i]['account_id']] = $allAccounts[$i]['name'];
             }
-            return $accounts;
-        });
+        }
         return view($this->basePath . 'payment', compact('invoiceId', 'accounts'));
     }
 
