@@ -5,7 +5,7 @@ namespace App\Http\Responses\Tasks;
 
 
 use App\Models\User;
-use App\Repositories\WorkerRepository;
+use App\Repositories\XeroRepository;
 use Illuminate\Contracts\Support\Responsable;
 
 class CreateResponse implements Responsable
@@ -25,7 +25,7 @@ class CreateResponse implements Responsable
     {
 
         $selectStates = [];
-        $selectWorkers = (new WorkerRepository(new User()))->getSelectItems('name');
+        $selectWorkers = (new XeroRepository(new User()))->getSelectItems('name');
         return view($this->viewPath . 'create', compact('selectStates',
             'selectWorkers'));
     }

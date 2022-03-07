@@ -20,9 +20,9 @@ class EnquiryRequest extends FormRequestForApi
         ];
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
+//    public function authorize(): bool
+//    {
+//        return true;
+//    }
 
 }

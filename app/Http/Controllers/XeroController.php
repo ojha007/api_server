@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Responses\ErrorResponse;
 use App\Http\Responses\SuccessResponse;
+use App\Repositories\XeroRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\Token\AccessToken;
 use Webfox\Xero\OauthCredentialManager;
 use XeroAPI\XeroPHP\Models\Accounting\CurrencyCode;
@@ -20,11 +22,16 @@ class XeroController extends Controller
 
     public $xeroClass;
     public $xeroAuth;
+    /**
+     * @var XeroRepository
+     */
+    protected $repository;
 
     public function __construct(OauthCredentialManager $xeroCredentials)
     {
         $this->xeroAuth = $xeroCredentials;
         $this->xeroClass = resolve(\XeroAPI\XeroPHP\Api\AccountingApi::class);
+        $this->repository = new XeroRepository($xeroCredentials);
     }
 
     public function logout(OauthCredentialManager $xeroCredentials)
@@ -76,6 +83,7 @@ class XeroController extends Controller
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function show($invoiceId)
@@ -88,6 +96,7 @@ class XeroController extends Controller
         } catch (\Exception $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
 
     }
 
@@ -102,6 +111,7 @@ class XeroController extends Controller
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function create()
@@ -123,6 +133,7 @@ class XeroController extends Controller
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function TaxRates(Request $request)
@@ -137,6 +148,7 @@ class XeroController extends Controller
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function getAccounts(Request $request)
@@ -145,12 +157,13 @@ class XeroController extends Controller
             if ($this->xeroAuth->exists()) {
                 $order = $request->get('order');
                 $where = $request->get('where');
-                $accounts = $this->xeroClass->getAccounts($this->xeroAuth->getTenantId(), null, $where, $order);
+                $accounts = $this->repository->getAccounts($where, $order);
                 return new SuccessResponse($accounts);
             }
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function saveInvoice(Request $request)
@@ -188,6 +201,7 @@ class XeroController extends Controller
         } catch (\throwable $e) {
             return new ErrorResponse($e);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function downloadPdf($invoiceId)
@@ -196,23 +210,55 @@ class XeroController extends Controller
             if ($this->xeroAuth->exists()) {
                 $pdf = $this->xeroClass->getInvoiceAsPdf($this->xeroAuth->getTenantId(), $invoiceId);
                 $myFile = $invoiceId . ".pdf";
-                return  response()->download($pdf, $myFile, ['Content-Type: application/pdf']);
+                return response()->download($pdf, $myFile, ['Content-Type: application/pdf']);
             }
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 
     public function emailInvoice($invoiceId)
     {
+        $status = \request()->get('status');
         try {
             if ($this->xeroAuth->exists()) {
-                $status= \request()->get('status');
                 $this->xeroClass->emailInvoice($this->xeroAuth->getTenantId(), $invoiceId, $status);
                 return new SuccessResponse([], 'Email Send successfully');
             }
         } catch (\Exception $exception) {
             return new ErrorResponse($exception);
         }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
+    }
+
+
+    public function payment($invoiceId)
+    {
+        $accounts = Cache::get('selectAccounts', function () {
+            $accounts = [];
+            $data = $this->repository->getAccounts(null, null);
+            if ($data && $data->getAccounts()) {
+                $allAccounts = $data->getAccounts();
+                for ($i = 0; $i <= count($allAccounts) - 1; $i++) {
+                    $accounts[$allAccounts[$i]['account_id']] = $allAccounts[$i]['name'];
+                }
+            }
+            return $accounts;
+        });
+        return view($this->basePath . 'payment', compact('invoiceId', 'accounts'));
+    }
+
+    public function invoicePayment(Request $request, $invoiceId)
+    {
+        try {
+            if ($this->xeroAuth->exists()) {
+                $this->repository->createPayment($invoiceId, $request->all());
+                return new SuccessResponse([], 'Payment successfully completed');
+            }
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
+        return redirect()->back()->with('failed', 'Oops! Something went wrong');
     }
 }

@@ -7,7 +7,7 @@ namespace App\Http\Responses\Worker;
 use App\Http\Collection\WorkerCollection;
 use App\Models\User;
 use App\Models\Worker;
-use App\Repositories\WorkerRepository;
+use App\Repositories\XeroRepository;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Collection;
 
@@ -16,7 +16,7 @@ class IndexResponse implements Responsable
 
     private $viewPath;
     /**
-     * @var WorkerRepository
+     * @var XeroRepository
      */
     protected $repository;
     /**
@@ -36,7 +36,7 @@ class IndexResponse implements Responsable
     public function __construct($viewPath, Collection $collection)
     {
         $this->viewPath = $viewPath;
-        $this->repository = new WorkerRepository(new User());
+        $this->repository = new XeroRepository(new User());
         $this->collection = $collection;
     }
 

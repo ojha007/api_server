@@ -7,7 +7,7 @@ namespace App\Http\Responses\Worker;
 use App\Http\Resources\WorkerResource;
 use App\Models\User;
 use App\Models\Worker;
-use App\Repositories\WorkerRepository;
+use App\Repositories\XeroRepository;
 use Illuminate\Contracts\Support\Responsable;
 
 class ShowResponse implements Responsable
@@ -16,7 +16,7 @@ class ShowResponse implements Responsable
 
     protected $viewPath;
     /**
-     * @var WorkerRepository
+     * @var XeroRepository
      */
     protected $repository;
     /**
@@ -36,7 +36,7 @@ class ShowResponse implements Responsable
     public function __construct(string $viewPath, int $id)
     {
         $this->viewPath = $viewPath;
-        $this->repository = new WorkerRepository(new User());
+        $this->repository = new XeroRepository(new User());
         $this->id = $id;
     }
 

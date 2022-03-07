@@ -12,7 +12,7 @@ use App\Http\Responses\Worker\StoreResponse;
 use App\Http\Responses\Worker\UpdateResponse;
 use App\Models\User;
 use App\Models\Worker;
-use App\Repositories\WorkerRepository;
+use App\Repositories\XeroRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -33,7 +33,7 @@ class WorkerController extends Controller
      */
     protected $model;
     /**
-     * @var WorkerRepository
+     * @var XeroRepository
      */
     protected $repository;
 
@@ -42,7 +42,7 @@ class WorkerController extends Controller
         $this->middleware('auth');
         $this->middleware('permission:worker-view', ['only' => 'index', 'show']);
         $this->middleware('permission:worker-edit', ['expect' => 'destroy']);
-        $this->repository = new WorkerRepository(new User());
+        $this->repository = new XeroRepository(new User());
     }
 
     public function index()

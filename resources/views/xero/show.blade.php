@@ -183,12 +183,13 @@
                             <i class="fa fa-share"></i>
                             Share via Email
                         </a>
-                        <button type="button" class="btn btn-info  btn-flat pull-right"><i
+                        <a type="button" href="{{route('xero.invoice.payment',$invoice['invoice_id'])}}"
+                           class="btn btn-info  btn-flat pull-right"><i
                                 class="fa fa-credit-card"></i>
                             Submit Payment
-                        </button>
+                        </a>
                         <a type="button" class="btn btn-primary btn-flat   pull-right"
-                           href="{{route('xero.invoice.pdf',$invoice['invoice_id'],)}}"
+                           href="{{route('xero.invoice.pdf',$invoice['invoice_id'])}}"
                            style="margin-right: 5px;">
                             <i class="fa fa-download"></i> Generate PDF
                         </a>

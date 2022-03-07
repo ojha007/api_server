@@ -46,10 +46,23 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{{asset('backend/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/ionicons.min.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     @stack('styles')
     <style>
+        .select2-selection__rendered {
+            line-height: 31px !important;
+        }
+
+        .select2-container .select2-selection--single {
+            height: 35px !important;
+        }
+
+        .select2-selection__arrow {
+            height: 34px !important;
+        }
+
         .box.border-0 {
             border-top: none !important;
         }
@@ -175,12 +188,16 @@ desired effect
         });
 
     }
+
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @stack('scripts')
 <script>
+    $(document).ready(function () {
+        $('select.select2').select2();
+    });
     $('.datepicker').datepicker({
         autoclose: true,
         todayHighlight: true,
