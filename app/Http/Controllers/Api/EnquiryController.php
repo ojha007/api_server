@@ -14,7 +14,7 @@ class EnquiryController extends \App\Http\Controllers\EnquiryController
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
         $this->repository = new EnquiryRepository(new Enquiry());
     }
 }

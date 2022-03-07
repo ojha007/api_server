@@ -17,7 +17,7 @@ class BookingController extends \App\Http\Controllers\BookingController
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+//        $this->middleware('auth:api');
         $this->repository = new BookingRepository(new Booking());
     }
 }
