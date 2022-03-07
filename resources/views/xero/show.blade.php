@@ -175,19 +175,21 @@
                 </div>
                 <div class="row no-print">
                     <div class="col-xs-12">
-                        <a href="" target="_blank" class="btn btn-default"><i class="fa fa-print"></i>
-                            Print
+                        <a href="{{route('xero.invoice.email',$invoice['invoice_id'])}}"
+                           class="btn btn-default"><i class="fa fa-share"></i>
+                            Share via Email
                         </a>
                         <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
                             Submit Payment
                         </button>
-                        <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                        <a type="button" class="btn btn-primary pull-right"
+                           href="{{route('xero.invoice.pdf',$invoice['invoice_id'],)}}" target="_blank"
+                           style="margin-right: 5px;">
                             <i class="fa fa-download"></i> Generate PDF
-                        </button>
+                        </a>
                     </div>
                 </div>
             @endforeach
         @endif
-
     </section>
 @endsection

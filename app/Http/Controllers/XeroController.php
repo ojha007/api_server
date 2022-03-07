@@ -189,4 +189,30 @@ class XeroController extends Controller
             return new ErrorResponse($e);
         }
     }
+
+    public function downloadPdf($invoiceId)
+    {
+        try {
+            if ($this->xeroAuth->exists()) {
+                $pdf = $this->xeroClass->getInvoiceAsPdf($this->xeroAuth->getTenantId(), $invoiceId);
+                $myFile = $invoiceId . ".pdf";
+                response()->download($pdf, $myFile, ['Content-Type: application/pdf']);
+                return new SuccessResponse([], 'Pdf downloaded.');
+            }
+        } catch (\Exception $exception) {
+            return new ErrorResponse($exception);
+        }
+    }
+
+    public function emailInvoice($invoiceId)
+    {
+        try {
+            if ($this->xeroAuth->exists()) {
+                $email = $this->xeroClass->emailInvoice($this->xeroAuth->getTenantId(), $invoiceId,['ACTIVE']);
+            }
+            return new SuccessResponse([], 'Email Send successfully');
+        } catch (\Exception $exception) {
+
+        }
+    }
 }
