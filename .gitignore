@@ -16,3 +16,4 @@ yarn-error.log
 node_modules
 laravel-echo-server.json
 laravel-echo-server.lock
+/storage/framework/xero.json
