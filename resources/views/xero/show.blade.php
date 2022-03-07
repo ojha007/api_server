@@ -9,7 +9,7 @@
 @section('breadcrumb')
 @stop
 @section('content')
-    <section class="invoice">
+    <section class="invoice" style="margin: 0">
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header" style="margin-top: 0">
@@ -175,15 +175,19 @@
                 </div>
                 <div class="row no-print">
                     <div class="col-xs-12">
-                        <a href="{{route('xero.invoice.email',$invoice['invoice_id'])}}"
-                           {{in_array($invoice['status'],['DRAFT','VOIDED','DELETED']) ? 'disabled title="Draft,voided or deleted invoices cannot be emailed "':"" }}
-                           class="btn btn-default"><i class="fa fa-share"></i>
+                        @php($canMail = in_array($invoice['status'],['DRAFT','VOIDED','DELETED']) )
+                        <a href="{{ $canMail  ? 'javascript:void(0)' :route('xero.invoice.email',[$invoice['invoice_id'],'status'=>$invoice['status']])}}"
+                           {{ $canMail? "disabled":"" }}
+                           title="{{$canMail ?"Draft,voided or deleted invoices cannot be emailed":''}}"
+                           class="btn btn-flat {{ $canMail ? 'btn-danger' : "btn-success"}}">
+                            <i class="fa fa-share"></i>
                             Share via Email
                         </a>
-                        <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i>
+                        <button type="button" class="btn btn-info  btn-flat pull-right"><i
+                                class="fa fa-credit-card"></i>
                             Submit Payment
                         </button>
-                        <a type="button" class="btn btn-primary pull-right"
+                        <a type="button" class="btn btn-primary btn-flat   pull-right"
                            href="{{route('xero.invoice.pdf',$invoice['invoice_id'],)}}" target="_blank"
                            style="margin-right: 5px;">
                             <i class="fa fa-download"></i> Generate PDF

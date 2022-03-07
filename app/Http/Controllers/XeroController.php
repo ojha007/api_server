@@ -208,12 +208,12 @@ class XeroController extends Controller
     {
         try {
             if ($this->xeroAuth->exists()) {
-                $email = $this->xeroClass->emailInvoice($this->xeroAuth->getTenantId(), $invoiceId,['ACTIVE']);
-                dd($email);
+                $status= \request()->get('status');
+                $this->xeroClass->emailInvoice($this->xeroAuth->getTenantId(), $invoiceId, $status);
+                return new SuccessResponse([], 'Email Send successfully');
             }
-            return new SuccessResponse([], 'Email Send successfully');
         } catch (\Exception $exception) {
-            return  new ErrorResponse($exception);
+            return new ErrorResponse($exception);
         }
     }
 }
