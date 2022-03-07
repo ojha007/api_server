@@ -176,6 +176,7 @@
                 <div class="row no-print">
                     <div class="col-xs-12">
                         <a href="{{route('xero.invoice.email',$invoice['invoice_id'])}}"
+                           {{in_array($invoice['status'],['DRAFT','VOIDED','DELETED']) ? 'disabled title="Draft,voided or deleted invoices cannot be emailed "':"" }}
                            class="btn btn-default"><i class="fa fa-share"></i>
                             Share via Email
                         </a>
