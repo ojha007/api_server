@@ -188,7 +188,7 @@
                             Submit Payment
                         </button>
                         <a type="button" class="btn btn-primary btn-flat   pull-right"
-                           href="{{route('xero.invoice.pdf',$invoice['invoice_id'])}}"
+                           href="{{route('xero.invoice.pdf',$invoice['invoice_id'],)}}" target="_blank"
                            style="margin-right: 5px;">
                             <i class="fa fa-download"></i> Generate PDF
                         </a>
