@@ -209,10 +209,11 @@ class XeroController extends Controller
         try {
             if ($this->xeroAuth->exists()) {
                 $email = $this->xeroClass->emailInvoice($this->xeroAuth->getTenantId(), $invoiceId,['ACTIVE']);
+                dd($email);
             }
             return new SuccessResponse([], 'Email Send successfully');
         } catch (\Exception $exception) {
-
+            return  new ErrorResponse($exception);
         }
     }
 }
