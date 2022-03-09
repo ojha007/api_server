@@ -43,7 +43,7 @@ class XeroRepository extends Repository
 
     public function getAllInvoices($order, $status, $page)
     {
-        return Cache::remember('_allInvoices', 1800, function () use ($order, $status, $page) {
+        return Cache::remember('_allInvoices_'.$status, 1800, function () use ($order, $status, $page) {
             return $this->xeroClass->getInvoices($this->xeroAuth->getTenantId(), null, null, $order, null, null, null, $status, $page, null, null, null, false);
 
         });

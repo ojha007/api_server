@@ -36,7 +36,7 @@ export default {
         return {
             selectedStatus: '',
             boxState: 'fa-plus',
-            invoiceStatus: ['DRAFT', 'PAID', 'AUTHORISED', 'VOIDED'],
+            invoiceStatus: ['DRAFT', 'PAID', 'AUTHORISED', 'VOIDED','DELETED'],
         }
     },
     methods: {
