@@ -115,6 +115,8 @@ export default {
                     return 'bg-green';
                 case 'VOIDED':
                     return 'bg-blue';
+                case "DELETED":
+                    return  'bg-red';
                 default:
                     return 'bg-aqua';
             }
